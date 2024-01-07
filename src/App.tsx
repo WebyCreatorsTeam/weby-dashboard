@@ -1,34 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './App.css'
 
+interface AppQQQ {
+  _id: string
+  _v?: string
+  userName: string
+  userPhone: string
+  userEmail: string
+  userHelp: string
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [info, setInfo] = useState<Array<AppQQQ>>([])
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get("https://weby-team.onrender.com/dashboard/get-all-data-users")
+      console.log(data)
+      return setInfo(data)
+    })()
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div dir='rtl'>
+      {info.length > 0 ? info.map(i => (
+        <>
+          <h2>{i.userName}</h2>
+          <p>
+            <a href={`tel:${i.userPhone}`}>{i.userPhone}</a>
+          </p>
+          <p>
+            <a href={`mailto:${i.userEmail}`}>{i.userEmail}</a>
+          </p>
+          <p>{i.userHelp}</p>
+        </>
+      )) :
+        <>No data</>
+      }
+    </div>
   )
 }
 
