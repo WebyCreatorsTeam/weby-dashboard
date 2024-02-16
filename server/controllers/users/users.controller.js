@@ -7,7 +7,7 @@ const { httpCodes } = require("../../utils/httpCodes");
 // ---- Register Admin ---- //
 exports.registerAdmin = async (req, res) => {
     try {
-        const { userName, email, password, repeatPassword } = req.body
+        const { userRegData: { userName, email, password, repeatPassword } } = req.body
 
         const { error } = adminRegValidation.validate({ userName, email, password, repeatPassword });
 
@@ -23,7 +23,8 @@ exports.registerAdmin = async (req, res) => {
 
         return res.status(httpCodes.OK).send({ continue: true, message: "משתמש חדש נרשם" })
     } catch (error) {
-        console.log(error)
+        console.log(`user/admin cont error registerAdmin`)
+        console.error(error);
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 }
@@ -32,21 +33,16 @@ exports.registerAdmin = async (req, res) => {
 // ---- Login Admin ---- //
 exports.loginAdmin = async (req, res) => {
     try {
-        const { email, password } = req.body;
-
-        console.log(email, password)
+        const { userLoginData: { email, password } } = req.body;
 
         const { error } = adminLogValidation.validate({ email, password });
 
-        // console.log(error)
         if (error) {
             console.error("users.controller validation error of registerAdmin:", error.message);
             return res.status(httpCodes.FORBIDDEN).send({ continueWork: false, message: error.message })
         }
 
         const existAdmin = await Admin.findOne({ email })
-
-        console.log(existAdmin)
 
         if (!existAdmin) {
             console.log("users.controller user not exist");
@@ -64,11 +60,10 @@ exports.loginAdmin = async (req, res) => {
         const token = jwt.encode(cookiesData, process.env.SECRET);
         res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
 
-        return res.status(httpCodes.OK).send({
-            continueWork: true,
-        })
+        return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {
-        console.error("UserCont.js line:83 function loginUser", error);
+        console.log(`user/admin cont error loginAdmin`)
+        console.error(error);
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 };
@@ -79,7 +74,8 @@ exports.adminLogout = async (req, res) => {
         console.log(`out`);
         return res.status(httpCodes.OK).send({ continueWork: false, isLogin: false });
     } catch (error) {
-        console.log(`auth.js userLogout server error`);
-        console.error(error); return res.status(httpCodes.SERVER_ERROR).send({ message: "Server Feiled, try again" });
+        console.log(`user/admin cont error adminLogout`)
+        console.error(error);
+        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 }
