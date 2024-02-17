@@ -79,12 +79,13 @@ app.post("/upload", upload.single("my_file"), async (req, res) => {
 //         // return res
 // }
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
 
 app.use('/auth', require("./router/admin/admin.route"))
 app.use('/dashboard',  require("./router/dashboard/dashboard.router"))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 //adminRole,
 app.listen(PORT, () => {
     console.log(`listen on http://localhost:${PORT}`);
