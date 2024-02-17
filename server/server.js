@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 9090;
 const cookieParser = require('cookie-parser');
 const adminLogin = require('./middleware/admin.login')
 const adminRole = require('./middleware/admin.role')
+const path = require('node:path'); 
 
 app.use(express.json());
 app.use(cookieParser());
@@ -77,6 +78,10 @@ app.post("/upload", upload.single("my_file"), async (req, res) => {
 //         //     function (error, result) { console.log(result); });
 //         // return res
 // }
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+});
 
 app.use('/auth', require("./router/admin/admin.route"))
 app.use('/dashboard',  require("./router/dashboard/dashboard.router"))
