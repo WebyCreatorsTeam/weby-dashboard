@@ -1,0 +1,17 @@
+.dashboard_nav {
+    background-color: #fafafa;
+    // padding: 1% 2%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+        margin: 0% 2%;
+    }
+
+    &__links {
+        width: 50%;
+        display: flex;
+    }
+}

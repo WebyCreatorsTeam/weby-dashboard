@@ -1,0 +1,21 @@
+@import './nav';
+@import './userCall';
+
+.dashboard_main {
+    text-align: center;
+    color: #8902ff;
+
+    &__callList {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        align-items: center;
+    }
+}
+
+.no_data_text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50vh;
+}

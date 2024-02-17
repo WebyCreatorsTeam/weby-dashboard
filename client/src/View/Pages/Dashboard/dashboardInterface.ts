@@ -5,4 +5,6 @@ export interface ICallUsers {
     userEmail: string,
     userPhone: string,
     userHelp: string,
+    archive?:boolean
+    favorite?: boolean
   }

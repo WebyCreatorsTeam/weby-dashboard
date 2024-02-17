@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
-import './App.css';
+import './style/index.scss';
+
 import { Outlet } from 'react-router-dom';
 
 const App: FC = ()=> {
