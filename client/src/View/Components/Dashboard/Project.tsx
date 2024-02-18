@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { IProject } from '../../Pages/Dashboard/dashboardInterface'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export interface IProjectProps {
     project: IProject
@@ -18,7 +19,7 @@ const ProjectItem: FC<IProjectProps> = ({ project }) => {
             <p>{project.name}</p>
             <p>{project.description}</p>
             <a href={project.urlSite}>לינק לאתר</a>
-            <button type="button" disabled>עריכת פרויקט</button>
+            <Link to={`/dashboard/projects/project/${project._id}`}>עריכת פרויקט</Link>
             <button onClick={() => hendleDeleteProject(project._id, project.urlImage)} type="button">מחיקת פרויקט לצמיתות</button>
         </>
     )

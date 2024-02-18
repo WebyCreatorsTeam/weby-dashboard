@@ -6,6 +6,7 @@ import Login from "../View/Components/Auth/Login/Login";
 import DashMain from "../View/Pages/Dashboard/DashMain";
 import Projects from "../View/Pages/Projects/Projects";
 import AddNewProject from "../View/Pages/AddNewProject/AddNewProject";
+import ProjectEdit, { projectLoader } from "../View/Components/Dashboard/ProjectEdit";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -17,6 +18,7 @@ const RouterPage = () => {
                     <Route path="reg" element={<Register/>}/>
                     <Route path="projects" element={< Projects/>}/>
                     <Route path="projects/add-new-roject" element={< AddNewProject/>}/>
+                    <Route path="projects/project/:id" element={< ProjectEdit/>} loader={projectLoader}/>
                 </Route>
             </Route>
         )
