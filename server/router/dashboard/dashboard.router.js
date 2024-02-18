@@ -3,6 +3,6 @@ const { getAllUsersDetails, arhiveUser } = require("../../controllers/dashboard/
 
 router
 .get("/get-all-data-users", getAllUsersDetails)
-// .post("/archive-user", arhiveUser)
+.post("/archive-user", arhiveUser)
 
 module.exports = router;

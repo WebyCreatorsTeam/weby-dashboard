@@ -5,6 +5,7 @@ import Register from "../View/Components/Auth/Reg/Register";
 import Login from "../View/Components/Auth/Login/Login";
 import DashMain from "../View/Pages/Dashboard/DashMain";
 import Projects from "../View/Pages/Projects/Projects";
+import AddNewProject from "../View/Pages/AddNewProject/AddNewProject";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -15,6 +16,7 @@ const RouterPage = () => {
                     <Route index element={< DashMain/>}/>
                     <Route path="reg" element={<Register/>}/>
                     <Route path="projects" element={< Projects/>}/>
+                    <Route path="projects/add-new-roject" element={< AddNewProject/>}/>
                 </Route>
             </Route>
         )

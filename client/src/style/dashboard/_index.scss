@@ -1,13 +1,24 @@
 @import './nav';
 @import './userCall';
+@import './projectItem';
 
-.dashboard_main {
+.big_header {
     text-align: center;
     color: #8902ff;
+}
 
+.dashboard_main {
     &__callList {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        align-items: center;
+    }
+}
+
+.project_main {
+    &__projectList {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
         align-items: center;
     }
 }

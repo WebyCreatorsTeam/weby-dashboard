@@ -27,7 +27,7 @@ exports.arhiveUser = async (req, res) => {
         const connection = mongoose.connection;
 
         const collection = connection.db.collection("users");
-        const aaa = await collection.update({_id: userID}, {$set:{ archive: true }})
+        const aaa = await collection.updateOne({_id: userID}, {$set:{ archive: true }})
 
         console.log(aaa)
 
@@ -69,3 +69,4 @@ exports.arhiveUser = async (req, res) => {
 
     }
 }
+

@@ -10,8 +10,8 @@ const Layout = () => {
       <nav className='dashboard_nav'>
         <div className='dashboard_nav__links'>
           {location.pathname !== "/dashboard" && <Link to="/dashboard">עמוד ראשי</Link>}
-          <Link to="/dashboard/reg">רישום משתמש חדש</Link>
           <Link to="/dashboard/projects">פרויקטים שלנו</Link>
+          <Link to="/dashboard/reg">רישום משתמש חדש</Link>
         </div>
         <div>
           <Link to="/dashboard">
