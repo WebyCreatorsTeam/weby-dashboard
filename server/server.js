@@ -81,8 +81,7 @@ app.post("/upload", upload.single("my_file"), async (req, res) => {
 
 
 app.use('/auth', require("./router/admin/admin.route"))
-app.use('/dashboard',  require("./router/dashboard/dashboard.router"))
-//adminRole,
+app.use('/dashboard', adminRole, require("./router/dashboard/dashboard.router"))
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));

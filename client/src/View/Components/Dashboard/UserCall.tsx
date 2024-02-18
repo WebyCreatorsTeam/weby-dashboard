@@ -18,10 +18,10 @@ const UserCall: FC<IUserCall> = ({ user }) => {
             <p>{user.userHelp}</p>
             <p>{user.userEmail}</p>
             <p>{user.userPhone}</p>
-            <button>העבר לערכיון</button>
-            <button>העבר למועדפים</button>
-            <button>מחיקה</button>
-        </>
+            <button type="button" disabled>העבר לערכיון</button>
+            <button type="button" disabled>העבר למועדפים</button>
+            <button type="button" disabled>מחיקה</button>
+        </> 
     )
 }
 

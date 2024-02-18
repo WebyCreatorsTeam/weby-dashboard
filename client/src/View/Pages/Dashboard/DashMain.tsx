@@ -23,12 +23,12 @@ const DashMain = () => {
     <>
       <h2 className='dashboard_main'>ניהול עמוד WEBY</h2>
       <div>
-        <div onClick={() => {
+        {/* <div onClick={() => {
           setShowArchive(false)
           setShowFavorite(false)
         }}>הכל</div>
         <div onClick={() => setShowFavorite(true)}>מועדפים</div>
-        <div onClick={() => setShowArchive(true)}>ערכיון</div>
+        <div onClick={() => setShowArchive(true)}>ערכיון</div> */}
       </div>
       {usersToCall.length > 0 ?
         <div className='dashboard_main__callList'>
