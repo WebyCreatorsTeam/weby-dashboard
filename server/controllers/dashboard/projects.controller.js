@@ -1,17 +1,20 @@
 // const { mongoose } = require('mongoose');
+const cloudinary = require("cloudinary").v2;
 const { Projects } = require("../../model/project.model");
 const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
 const { httpCodes } = require("../../utils/httpCodes/index")
 
+const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
+
 exports.saveNewProject = async (req, res) => {
     try {
         const { name, description, urlSite } = req.query
-       
+
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
         const cldRes = await handleUpload(dataURI);
 
-        if(!cldRes.secure_url)  {
+        if (!cldRes.secure_url) {
             console.error("project controller validation error of saveNewProject:", error.message)
             return res.status(httpCodes.BAD_REQUEST).send({ continueWork: false, message: "שגיא" });
         }
@@ -36,3 +39,25 @@ exports.getAllProjects = async (req, res) => {
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 };
+
+exports.deleteProject = async (req, res) => {
+    try {
+        const { id, url } = req.body
+        const publicId = getPublicId(url)
+        await cloudinary.uploader.destroy(`weby/${publicId}`);
+        await Projects.findByIdAndDelete(id)
+        return res.status(httpCodes.OK).send({ continue: true })
+    } catch (error) {
+        console.log(`projects cont error getAllProjects`)
+        console.error(error);
+        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+    }
+};
+
+exports.updateProductImage = async (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}

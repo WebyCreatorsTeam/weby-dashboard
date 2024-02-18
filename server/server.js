@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser');
 const adminLogin = require('./middleware/admin.login')
 const adminRole = require('./middleware/admin.role')
 const path = require('node:path');
+const cloudinary = require("cloudinary").v2;
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -16,6 +18,13 @@ app.use(express.static('../client/build'))
 app.use(adminLogin)
 
 dbconnect()
+
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_KEY,
+    api_secret: process.env.CLOUD_SECRET
+});
 
 // cloudinary.config({
 //     cloud_name: process.env.CLOUD_NAME,

@@ -18,7 +18,7 @@ const Projects = () => {
     } catch (error) {
       alert(error);
     } finally {
-      setLoading(true)
+      setLoading(false)
     }
   }
 
@@ -40,7 +40,7 @@ const Projects = () => {
               <ProjectItem project={pro} key={pro._id} />
             ))}
         </div>
-        : <h3 className='no_data_text'>{loading ? "טעון" : "אין שיחות חדשות"}</h3>}
+        : <h3 className='no_data_text'>{loading ? "טעון" : "אין פרויקטים"}</h3>}
     </div>
   )
 }
