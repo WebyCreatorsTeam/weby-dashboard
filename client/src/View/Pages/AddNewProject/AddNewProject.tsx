@@ -40,7 +40,7 @@ const AddNewProject = () => {
                 }
             })
 
-            if(res.data.continue) return navigate("/dashboard/projects",{replace: true})
+            if (res.data.continue) return navigate("/dashboard/projects", { replace: true })
         } catch (error) {
             alert(error);
         } finally {
@@ -51,7 +51,7 @@ const AddNewProject = () => {
     return (
         <div>
             <h2 className='big_header'>הוספת פרויקט חדש</h2>
-            <Form submit={handleUpload} btnText="הוספה">
+            <Form submit={handleUpload} btnText={"הוספה"} loading={loading}>
                 {addNewInputs.map((inp, index) => (
                     <Input
                         key={index}
@@ -75,40 +75,3 @@ const AddNewProject = () => {
 }
 
 export default AddNewProject
-
-// const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
-// const navigate = useNavigate();
-
-// const handleChangeInput = (ev: React.SyntheticEvent) => {
-//     let target = ev.target as HTMLInputElement;
-
-//     // const { message, continueWork } = validateValues({ [target.name]: target.value });
-
-//     // setMessage(message);
-//     // setGreen(continueWork);
-//     // setInputsError({ ...inputsError, [target.name]: message });
-
-//     return setUserLoginData({ ...userLoginData, [target.name]: target.value });
-// };
-
-// const hendleLogin = async (ev: React.SyntheticEvent) => {
-//     ev.preventDefault()
-
-//     const { data } = await axios.post("/auth/login-admin", { userLoginData })
-//     if (data.continueWork) return navigate("/dashboard",{replace: true});
-// }
-
-// return (
-//     <div>
-//         <h2>כניסה</h2>
-//         <Form submit={hendleLogin} btnText="כניסה" >
-//             {loginInputs.map((inp, index) => (
-//                 <Input
-//                     key={index}
-//                     {...inp}
-//                     changeInput={handleChangeInput}
-//                 />
-//             ))}
-//         </Form>
-//     </div>
-// )

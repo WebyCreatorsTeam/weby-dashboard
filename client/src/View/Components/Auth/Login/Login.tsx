@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
@@ -23,16 +24,23 @@ const Login = () => {
     };
 
     const hendleLogin = async (ev: React.SyntheticEvent) => {
-        ev.preventDefault()
-
-        const { data } = await axios.post("/auth/login-admin", { userLoginData })
-        if (data.continueWork) return navigate("/dashboard",{replace: true});
+        try {
+            setLoading(true)
+            ev.preventDefault()
+    
+            const { data } = await axios.post("/auth/login-admin", { userLoginData })
+            if (data.continueWork) return navigate("/dashboard",{replace: true});
+        } catch (error) {
+            alert(error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
         <div>
             <h2>כניסה</h2>
-            <Form submit={hendleLogin} btnText="כניסה" >
+            <Form submit={hendleLogin} btnText={"כניסה"} loading={loading}>
                 {loginInputs.map((inp, index) => (
                     <Input
                         key={index}

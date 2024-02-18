@@ -8,6 +8,7 @@ import Input from '../../../UI/Input/Input'
 const Register = () => {
     const [userRegData, setUserRegData] = useState<IUserRegData>({ userName: "", email: "", password: "", repeatPassword: "" })
     const [message, setMessage] = useState<string>("")
+    const [loading, setLoading] = useState(false);
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
         let target = ev.target as HTMLInputElement;
@@ -22,19 +23,23 @@ const Register = () => {
     };
 
     const hendleRegister = async (ev: React.SyntheticEvent) => {
-        ev.preventDefault()
-
-        console.log(userRegData)
-        const { data } = await axios.post("/auth/reg-admin", { userRegData })
-        console.log(data)
-        if (data.continue) return setMessage(data.message);
+        try {
+            setLoading(true)
+            ev.preventDefault()
+            const { data } = await axios.post("/auth/reg-admin", { userRegData })
+            if (data.continue) return setMessage(data.message);
+        } catch (error) {
+            alert(error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
         <div>
             <h2>הרשמה</h2>
             {message}
-            <Form submit={hendleRegister} btnText="הרשם" >
+            <Form submit={hendleRegister} btnText="הרשם" loading={loading}>
             {registerInputs.map((inp, index) => (
                     <Input
                         key={index}
