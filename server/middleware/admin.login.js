@@ -6,12 +6,9 @@ module.exports = async (req, res, next) => {
     try {
         const { admin } = req.cookies
 
-        if (!admin) {
-            return next()
-        }
+        if (!admin) return next()
 
         const { userID } = await jwt.decode(admin, process.env.SECRET)
-
         const existAdmin = await Admin.findOne({ _id: userID })
 
         req.user = existAdmin

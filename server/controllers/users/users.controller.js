@@ -51,12 +51,14 @@ exports.loginAdmin = async (req, res) => {
 
         const comparePass = await bcrypt.compare(password, existAdmin.password);
 
+        // if(password !== existAdmin.password) return console.log(`users.controller Password not correc`);
+
         if (!comparePass) {
             console.log(`users.controller Password not correc`);
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })
         }
 
-        const cookiesData = { userID: existAdmin._id, userRole: existAdmin.role, };
+        const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
         res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
 
