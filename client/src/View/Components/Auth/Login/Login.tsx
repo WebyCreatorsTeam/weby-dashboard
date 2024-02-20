@@ -5,6 +5,8 @@ import Input from '../../../UI/Input/Input'
 import { IUserLoginData } from '../inputsIntarface'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import Logo from '../../../../images/logo-big.png'
+import { CardMedia } from '@mui/material'
 
 const Login = () => {
     const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
@@ -13,13 +15,6 @@ const Login = () => {
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
         let target = ev.target as HTMLInputElement;
-
-        // const { message, continueWork } = validateValues({ [target.name]: target.value });
-
-        // setMessage(message);
-        // setGreen(continueWork);
-        // setInputsError({ ...inputsError, [target.name]: message });
-
         return setUserLoginData({ ...userLoginData, [target.name]: target.value });
     };
 
@@ -27,9 +22,11 @@ const Login = () => {
         try {
             setLoading(true)
             ev.preventDefault()
-    
+
             const { data } = await axios.post("/auth/login-admin", { userLoginData })
-            if (data.continueWork) return navigate("/dashboard",{replace: true});
+            const {continueWork, message} = data
+            if (continueWork) return navigate("/dashboard", { replace: true });
+            if(!continueWork) return alert(message)
         } catch (error) {
             alert(error)
         } finally {
@@ -38,17 +35,33 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <h2>כניסה</h2>
-            <Form submit={hendleLogin} btnText={"כניסה"} loading={loading}>
-                {loginInputs.map((inp, index) => (
-                    <Input
-                        key={index}
-                        {...inp}
-                        changeInput={handleChangeInput}
-                    />
-                ))}
-            </Form>
+        <div className='auth-page'>
+                <CardMedia
+                    component="img"
+                    // height="194"
+                    // width={15}
+                    sx={{ maxWidth: 300 }}
+                    className='auth-page__image-logo-login'
+                    image={Logo}
+                    alt="Paella dish"
+                />
+            <div className='auth__window'>
+                {/* <img src={Logo} alt="weby logo" /> */}
+                <h2>כניסה</h2>
+                <Form
+                    submit={hendleLogin}
+                    btnText={"כניסה"}
+                    loading={loading}
+                >
+                    {loginInputs.map((inp, index) => (
+                        <Input
+                            key={index}
+                            {...inp}
+                            changeInput={handleChangeInput}
+                        />
+                    ))}
+                </Form>
+            </div>
         </div>
     )
 }

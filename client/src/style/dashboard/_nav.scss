@@ -13,5 +13,10 @@
     &__links {
         width: 50%;
         display: flex;
+
+        &--lefts-ide {
+            display: flex;
+            align-items: center;
+        }
     }
 }

@@ -6,7 +6,7 @@ import Login from "../View/Components/Auth/Login/Login";
 import DashMain from "../View/Pages/Dashboard/DashMain";
 import Projects from "../View/Pages/Projects/Projects";
 import AddNewProject from "../View/Pages/AddNewProject/AddNewProject";
-import ProjectEdit, { projectLoader } from "../View/Components/Dashboard/ProjectEdit";
+import ProjectEdit, { projectLoader } from "../View/Components/Dashboard/Edit/ProjectEdit";
 
 const RouterPage = () => {
     const router = createBrowserRouter(

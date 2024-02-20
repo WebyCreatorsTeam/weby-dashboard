@@ -21,7 +21,7 @@ exports.registerAdmin = async (req, res) => {
         const newAdmin = new Admin({ userName, email, password: hashpass, role: "admin" })
         await newAdmin.save()
 
-        return res.status(httpCodes.OK).send({ continue: true, message: "משתמש חדש נרשם" })
+        return res.status(httpCodes.OK).send({ continueWork: true, message: "משתמש חדש נרשם" })
     } catch (error) {
         console.log(`user/admin cont error registerAdmin`)
         console.error(error);
@@ -72,7 +72,7 @@ exports.adminLogout = async (req, res) => {
     try {
         res.clearCookie('admin');
         console.log(`out`);
-        return res.status(httpCodes.OK).send({ continueWork: false, isLogin: false });
+        return res.status(httpCodes.OK).send({ continueWork: true });
     } catch (error) {
         console.log(`user/admin cont error adminLogout`)
         console.error(error);

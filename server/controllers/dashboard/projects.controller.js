@@ -21,7 +21,7 @@ exports.saveNewProject = async (req, res) => {
 
         const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite })
         await newProject.save()
-        return res.status(httpCodes.OK).send({ continue: true })
+        return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {
         console.log(`projects cont error saveNewProject`)
         console.error(error);
@@ -46,7 +46,7 @@ exports.deleteProject = async (req, res) => {
         const publicId = getPublicId(url)
         await cloudinary.uploader.destroy(`weby/${publicId}`);
         await Projects.findByIdAndDelete(id)
-        return res.status(httpCodes.OK).send({ continue: true })
+        return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {
         console.log(`projects cont error deleteProject`)
         console.error(error);

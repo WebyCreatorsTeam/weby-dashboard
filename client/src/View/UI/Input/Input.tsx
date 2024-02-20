@@ -1,22 +1,51 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { IInput } from './inputIntarface'
+import { Input } from '@mui/material';
+import { FormControl } from '@mui/material';
+import { InputLabel } from '@mui/material';
+import { InputAdornment } from '@mui/material';
+import { IconButton } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { TextField } from '@mui/material';
 
-const Input: FC<IInput> = ({ type, name, placeholder, changeInput }) => {
-    const [showPass, setShowPass] = useState<string>(type)
+const InputField: FC<IInput> = ({ type, name, placeholder, changeInput }) => {
+    const [showPass, setShowPass] = useState<boolean>(false)
 
-    const changeShowPass = () => showPass === "text" ? setShowPass("password") : setShowPass("text")
+    const changeShowPass = () => setShowPass(!showPass)
 
     return (
-        <>
-            <input
-                type={showPass}
-                name={name}
-                placeholder={placeholder}
-                onChange={changeInput}
-                required />
-            {type === "password" && <button type="button" onClick={changeShowPass}>Show</button>}
-        </>
+        <div className='input-form'>
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+                {type === "password" ? <>
+                    <InputLabel htmlFor="standard-adornment-password">{placeholder}</InputLabel>
+                    <Input
+                        name={name}
+                        onChange={changeInput}
+                        id="standard-adornment-password"
+                        type={showPass ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={changeShowPass}
+                                >
+                                    {showPass ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                    />
+                </> : <TextField
+                    sx={{ textAlign: "center" }}
+                    name={name}
+                    id="standard-multiline-flexible"
+                    label={placeholder}
+                    onChange={changeInput}
+                    variant="standard"
+                />}
+            </FormControl>
+        </div>
     )
 }
 
-export default Input
+export default InputField

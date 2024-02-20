@@ -1,0 +1,18 @@
+.auth__window {
+    background-color: rgb(245, 209, 255);
+    padding: 5%;
+    text-align: center;
+    border-radius: 1rem;
+}
+
+.auth-page {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+
+    &__image-logo-login {
+        margin-bottom: 3%;
+    }
+}

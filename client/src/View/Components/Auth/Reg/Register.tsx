@@ -12,13 +12,6 @@ const Register = () => {
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
         let target = ev.target as HTMLInputElement;
-
-        // const { message, continueWork } = validateValues({ [target.name]: target.value });
-
-        // setMessage(message);
-        // setGreen(continueWork);
-        // setInputsError({ ...inputsError, [target.name]: message });
-
         return setUserRegData({ ...userRegData, [target.name]: target.value });
     };
 
@@ -27,7 +20,9 @@ const Register = () => {
             setLoading(true)
             ev.preventDefault()
             const { data } = await axios.post("/auth/reg-admin", { userRegData })
-            if (data.continue) return setMessage(data.message);
+            const { continueWork, message } = data
+            if (continueWork) return setMessage(data.message);
+            if (!continueWork) return alert(message)
         } catch (error) {
             alert(error)
         } finally {
@@ -36,18 +31,20 @@ const Register = () => {
     }
 
     return (
-        <div>
-            <h2>הרשמה</h2>
-            {message}
-            <Form submit={hendleRegister} btnText="הרשם" loading={loading}>
-            {registerInputs.map((inp, index) => (
-                    <Input
-                        key={index}
-                        {...inp}
-                        changeInput={handleChangeInput}
-                    />
-                ))}
-            </Form>
+        <div dir="ltr" className='auth-page'>
+            <div className='auth__window' >
+                <h2>הרשמה</h2>
+                {message}
+                <Form submit={hendleRegister} btnText="הרשם" loading={loading}>
+                    {registerInputs.map((inp, index) => (
+                        <Input
+                            key={index}
+                            {...inp}
+                            changeInput={handleChangeInput}
+                        />
+                    ))}
+                </Form>
+            </div>
         </div>
     )
 }

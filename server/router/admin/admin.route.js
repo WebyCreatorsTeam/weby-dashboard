@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const { registerAdmin, loginAdmin } = require("../../controllers/users/users.controller");
+const { registerAdmin, loginAdmin, adminLogout } = require("../../controllers/users/users.controller");
 
 router
     .post("/reg-admin", registerAdmin)
     .post("/login-admin", loginAdmin)
-
+    .get("/logout-admin", adminLogout)
 
 module.exports = router;

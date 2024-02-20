@@ -1,24 +1,10 @@
-import { Link, Outlet, useLocation } from 'react-router-dom'
-import Logo from '../images/logo.png'
-// import LogoBig from '../images/logo-big.png'
+import { Outlet } from 'react-router-dom'
+import DashboardNav from './Components/Dashboard/NavBar/DashboardNav'
 
 const Layout = () => {
-  let location = useLocation();
-
   return (
     <div dir="rtl">
-      <nav className='dashboard_nav'>
-        <div className='dashboard_nav__links'>
-          {location.pathname !== "/dashboard" && <Link to="/dashboard">עמוד ראשי</Link>}
-          <Link to="/dashboard/projects">פרויקטים שלנו</Link>
-          <Link to="/dashboard/reg">רישום משתמש חדש</Link>
-        </div>
-        <div>
-          <Link to="/dashboard">
-            <img src={Logo} alt="weby logo" />
-          </Link>
-        </div>
-      </nav>
+      <DashboardNav/>
       <main>
         <Outlet />
       </main>
