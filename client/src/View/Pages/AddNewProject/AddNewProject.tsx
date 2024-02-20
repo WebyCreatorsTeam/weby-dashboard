@@ -1,46 +1,50 @@
-import React, { useState } from 'react'
-import Form from '../../UI/AuthForm/Form'
+import React, { FC, useState } from 'react'
 import { IProjectDetails } from './addNewInterface'
-import { addNewInputs } from './addNewInputsList'
-import Input from '../../UI/Input/Input'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import UploadFile from '../../Components/UploadFile/UploadFile'
+import AddNewProjectFrom from '../../Components/Dashboard/AddNewProject/AddNewProjectFrom'
 
-const AddNewProject = () => {
+const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "" })
     const [file, setFile] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+    const [prevFileShow, setPrevFileShow] = useState<string>("")
     const navigate = useNavigate();
-
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
         let target = ev.target as HTMLInputElement;
-
-        // const { message, continueWork } = validateValues({ [target.name]: target.value });
-
-        // setMessage(message);
-        // setGreen(continueWork);
-        // setInputsError({ ...inputsError, [target.name]: message });
-
         return setProjectDetails({ ...projectDetails, [target.name]: target.value });
     };
 
-    const handleSelectFile = (e: any) => setFile(e.target.files[0]);
+    const handleSelectFile = (ev: React.SyntheticEvent) => {
+        let target = ev.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+            setFile(target.files[0])
+            setPrevFileShow(URL.createObjectURL(target.files[0]));
+        }
+    };
 
     const handleUpload = async (ev: React.SyntheticEvent) => {
-        ev.preventDefault()
         try {
+            ev.preventDefault()
             setLoading(true);
+
+            if (!file) {
+                alert("חייב להוסיף תמונה")
+                return setLoading(false);
+            }
+
             const data = new FormData()
             data.append("my_file", file!)
 
             const res = await axios.post(`/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}`, data, {
-                headers: {
-                    'content-type': "mulpipart/form-data"
-                }
+                headers: { 'content-type': "mulpipart/form-data" }
             })
 
-            if (res.data.continue) return navigate("/dashboard/projects", { replace: true })
+            const { data: { continueWork, message } } = res
+            if (continueWork) return navigate("/dashboard/projects", { replace: true })
+            if (!continueWork) return alert(message)
         } catch (error) {
             alert(error);
         } finally {
@@ -49,27 +53,24 @@ const AddNewProject = () => {
     };
 
     return (
-        <div>
+        <div dir='ltr' >
             <h2 className='big_header'>הוספת פרויקט חדש</h2>
-            <Form submit={handleUpload} btnText={"הוספה"} loading={loading}>
-                {addNewInputs.map((inp, index) => (
-                    <Input
-                        key={index}
-                        {...inp}
-                        changeInput={handleChangeInput}
-                    />
-                ))}
-                <label htmlFor="file" className="btn-grey">
-                    נא לבחור קובץ
-                </label>
-                {file && <center> {file.name}</center>}
-                <input
-                    id="file"
-                    type="file"
-                    onChange={handleSelectFile}
-                    multiple={false}
-                />
-            </Form>
+            <div className='add-project-page'>
+                <div>
+                    <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
+                    <AddNewProjectFrom handleUpload={handleUpload} loading={loading} handleChangeInput={handleChangeInput} />
+                </div>
+                <div>
+                    {prevFileShow.length > 0 && (
+                        <div className='edit_project__header-image'>
+                            <img className='edit_project__image' src={prevFileShow} alt="previus show" />
+                            <div className='edit_project__crop-image'>
+                                <img className='edit_project__image2' src={prevFileShow} alt="previus show" />
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     )
 }

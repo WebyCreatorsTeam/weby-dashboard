@@ -36,7 +36,7 @@ const InputField: FC<IInput> = ({ type, name, placeholder, changeInput }) => {
                         }
                     />
                 </> : <TextField
-                    sx={{ textAlign: "center" }}
+                    sx={{ textAlign: "center", width: '25ch' }}
                     name={name}
                     id="standard-multiline-flexible"
                     label={placeholder}
