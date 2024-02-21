@@ -13,12 +13,11 @@ export interface IProjectProps {
     projects: Array<IProject>
 }
 
-const ProjectItem: FC<IProjectProps> = ({ project,  setGetProjects, projects}) => {
+const ProjectItem: FC<IProjectProps> = ({ project, setGetProjects, projects }) => {
     const hendleDeleteProject = async (id: string, url: string) => {
         const { data } = await axios.delete("/dashboard/projects/delete-project", { data: { id, url } })
-        console.log(data)
-        const {continueWork} = data
-        if(continueWork) return setGetProjects([...projects].filter(pro=> pro._id !== id))
+        const { continueWork } = data
+        if (continueWork) return setGetProjects(projects.filter(pro => (pro._id !== id)))
     }
 
     return (

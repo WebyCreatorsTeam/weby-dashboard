@@ -1,7 +1,5 @@
 require('dotenv').config()
 const express = require("express");
-// const cloudinary = require("cloudinary").v2;
-// const Multer = require("multer");
 const { dbconnect } = require("./dbconnect");
 const app = express();
 const PORT = process.env.PORT || 9090;
@@ -11,14 +9,12 @@ const adminRole = require('./middleware/admin.role')
 const path = require('node:path');
 const cloudinary = require("cloudinary").v2;
 
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('../client/build'))
 app.use(adminLogin)
 
 dbconnect()
-
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,

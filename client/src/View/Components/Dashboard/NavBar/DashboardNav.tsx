@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Logo from '../../../../images/logo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const DashboardNav = () => {
     let location = useLocation();
@@ -19,7 +20,9 @@ const DashboardNav = () => {
                 <Link to="/dashboard/reg">רישום משתמש חדש</Link>
             </div>
             <div className='dashboard_nav__links--lefts-ide'>
-                <button onClick={hendleLogout}>יציאה</button>
+            <Button color="secondary" variant="outlined" onClick={hendleLogout}>יציאה</Button>
+
+                {/* <button onClick={hendleLogout}>יציאה</button> */}
                 <Link to="/dashboard">
                     <img src={Logo} alt="weby logo" />
                 </Link>

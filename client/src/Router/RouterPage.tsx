@@ -4,10 +4,10 @@ import Layout from "../View/Layout";
 import Register from "../View/Components/Auth/Reg/Register";
 import Login from "../View/Components/Auth/Login/Login";
 import DashMain from "../View/Pages/Dashboard/DashMain";
-import Projects from "../View/Pages/Projects/Projects";
+import Projects from "../View/Pages/Dashboard/Projects/Projects";
 import AddNewProject from "../View/Pages/Dashboard/AddNewProject/AddNewProject";
 import ProjectEdit from "../View/Pages/Dashboard/EditProject/ProjectEdit";
-import { projectsLoader } from "../View/Pages/Projects/projectsLoader";
+import { projectsLoader } from "../View/Pages/Dashboard/Projects/projectsLoader";
 import { projectLoader } from "../View/Components/Dashboard/Edit/projectLoader";
 
 const RouterPage = () => {

@@ -18,11 +18,11 @@ const InputField: FC<IInput> = ({ type, name, placeholder, changeInput }) => {
         <div className='input-form'>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
                 {type === "password" ? <>
-                    <InputLabel htmlFor="standard-adornment-password">{placeholder}</InputLabel>
+                    <InputLabel htmlFor={`standard-adornment-password-${name}`}>{placeholder}</InputLabel>
                     <Input
                         name={name}
                         onChange={changeInput}
-                        id="standard-adornment-password"
+                        id={`standard-adornment-password-${name}`}
                         type={showPass ? 'text' : 'password'}
                         endAdornment={
                             <InputAdornment position="end">
@@ -38,7 +38,7 @@ const InputField: FC<IInput> = ({ type, name, placeholder, changeInput }) => {
                 </> : <TextField
                     sx={{ textAlign: "center", width: '25ch' }}
                     name={name}
-                    id="standard-multiline-flexible"
+                    id={`standard-multiline-flexible-${name}`}
                     label={placeholder}
                     onChange={changeInput}
                     variant="standard"

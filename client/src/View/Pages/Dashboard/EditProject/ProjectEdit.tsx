@@ -3,6 +3,7 @@ import { useLoaderData, Await } from 'react-router-dom'
 import { IProject } from '../dashboardInterface'
 import ImageEdit from '../../../Components/Dashboard/Edit/ImageEdit/ImageEdit'
 import TextEdit from '../../../Components/Dashboard/Edit/TextEdit/TextEdit'
+import { Button } from '@mui/material'
 
 export interface TextProject {
   name: string
@@ -35,20 +36,30 @@ const ProjectEdit: FC = () => {
           />
           }
           <div className='edit_project__header-image'>
-            <button
-              className='edit_project__btn-chenge-image'
+          <div className="edit_btn">
+            <Button className="edit_btn" color="secondary" variant="contained" onClick={() => setEditImagePop(!editImagePop)}>עידכון תמונה</Button>
+          </div>
+            {/* <button
+              className='edit_project__btn-chenge-image edit_btn'
               onClick={() => setEditImagePop(!editImagePop)}
-            >עדכן תמונה</button>
+            >עדכן תמונה</button> */}
             <img className='edit_project__image' src={urlProject} alt={project.name} />
             <div className='edit_project__crop-image'>
               <img className='edit_project__image2' src={urlProject} alt={project.name} />
             </div>
           </div>
-          <button onClick={() => setEditTextPop(!editTextPop)}>עדכן טקסט</button>
-          <div className='edit_project__texts'>
-            <h2 className='big_header'>{textProject.name}</h2>
-            <p>{textProject.description}</p>
-            <p>{textProject.urlSite}</p>
+          <div>
+            <div className="edit_btn">
+              <Button color="secondary" variant="contained" onClick={() => setEditTextPop(!editTextPop)}>עידכון טקסט</Button>
+            </div>
+            {/* <button 
+            onClick={() => setEditTextPop(!editTextPop)}
+            className='edit_btn'>עדכן טקסט</button> */}
+            <div className='edit_project__texts'>
+              <h2 className='big_header'>{textProject.name}</h2>
+              <p>{textProject.description}</p>
+              <p>{textProject.urlSite}</p>
+            </div>
           </div>
         </div>
       </Await>

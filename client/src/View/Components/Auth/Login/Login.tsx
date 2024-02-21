@@ -38,15 +38,12 @@ const Login = () => {
         <div className='auth-page'>
                 <CardMedia
                     component="img"
-                    // height="194"
-                    // width={15}
                     sx={{ maxWidth: 300 }}
                     className='auth-page__image-logo-login'
                     image={Logo}
                     alt="Paella dish"
                 />
             <div className='auth__window'>
-                {/* <img src={Logo} alt="weby logo" /> */}
                 <h2>כניסה</h2>
                 <Form
                     submit={hendleLogin}

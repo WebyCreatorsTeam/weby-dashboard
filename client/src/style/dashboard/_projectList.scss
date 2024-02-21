@@ -1,23 +1,27 @@
 .project_main {
-    &__projectList{
-        // background-color: aqua;
+    @media screen and (max-width: 800px) {
+        overflow-x: scroll;
+    }
+    &__projectList {
         position: relative;
         height: 60vh;
+        min-width: 1100px;
 
-        &--headers, &--list__onePro {
+        &--headers,
+        &--list__onePro {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             align-items: center;
         }
 
-        &--headers, &--list {
+        &--headers,
+        &--list {
             position: absolute;
         }
 
         &--headers {
             top: 0;
             width: 99%;
-            // background-color: aquamarine;
         }
 
         &--list {
@@ -27,9 +31,9 @@
 
             &__onePro {
                 width: 100%;
-                
+
                 margin: 1% auto;
-                border-bottom: 1px solid rgb(144, 59, 255) ;
+                border-bottom: 1px solid rgb(144, 59, 255);
                 border-top: 1px solid rgb(221, 162, 255);
                 padding: 1% 0%;
                 border-radius: 0.5rem;
@@ -47,6 +51,7 @@
                     justify-content: center;
                     width: 50%;
                 }
+
                 &--url {
                     display: flex;
                     flex-direction: row;
