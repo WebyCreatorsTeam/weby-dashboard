@@ -2,8 +2,10 @@ import React, { FC, useState } from 'react'
 import { IProjectDetails } from './addNewInterface'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import UploadFile from '../../Components/UploadFile/UploadFile'
-import AddNewProjectFrom from '../../Components/Dashboard/AddNewProject/AddNewProjectFrom'
+import UploadFile from '../../../Components/UploadFile/UploadFile'
+import Form from '../../../UI/AuthForm/Form'
+import AddEditForm from '../../../UI/AddEditForm/AddEditForm'
+import { addNewInputs } from './addNewInputsList'
 
 const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "" })
@@ -58,7 +60,9 @@ const AddNewProject: FC = () => {
             <div className='add-project-page'>
                 <div>
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
-                    <AddNewProjectFrom handleUpload={handleUpload} loading={loading} handleChangeInput={handleChangeInput} />
+                    <Form submit={handleUpload} btnText={"הוספה פרויקט חדש"} loading={loading}>
+                        <AddEditForm inputs={addNewInputs} handleChangeInput={handleChangeInput}/>
+                    </Form>
                 </div>
                 <div>
                     {prevFileShow.length > 0 && (

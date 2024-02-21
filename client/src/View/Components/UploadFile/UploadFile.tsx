@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { deepPurple } from '@mui/material/colors';
+
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -28,7 +30,7 @@ const UploadFile: FC<UploadFileProps> = ({ handleSelectFile, prevFileShow }) => 
             variant="contained"
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
-            sx={{ marginBottom: "1%" }}
+            sx={{ marginBottom: "1%" , backgroundColor: deepPurple[900]}}
         >
             {prevFileShow.length > 0 ? "החלף תמונה" : "נא לבחור קובץ"}
             < VisuallyHiddenInput type="file" id="file" onChange={handleSelectFile} multiple={false} />

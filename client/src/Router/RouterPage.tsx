@@ -5,8 +5,10 @@ import Register from "../View/Components/Auth/Reg/Register";
 import Login from "../View/Components/Auth/Login/Login";
 import DashMain from "../View/Pages/Dashboard/DashMain";
 import Projects from "../View/Pages/Projects/Projects";
-import AddNewProject from "../View/Pages/AddNewProject/AddNewProject";
-import ProjectEdit, { projectLoader } from "../View/Components/Dashboard/Edit/ProjectEdit";
+import AddNewProject from "../View/Pages/Dashboard/AddNewProject/AddNewProject";
+import ProjectEdit from "../View/Pages/Dashboard/EditProject/ProjectEdit";
+import { projectsLoader } from "../View/Pages/Projects/projectsLoader";
+import { projectLoader } from "../View/Components/Dashboard/Edit/projectLoader";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -16,7 +18,7 @@ const RouterPage = () => {
                 <Route path="dashboard" element={<Layout />} >
                     <Route index element={< DashMain/>}/>
                     <Route path="reg" element={<Register/>}/>
-                    <Route path="projects" element={< Projects/>}/>
+                    <Route path="projects" element={< Projects/>} loader={projectsLoader}/>
                     <Route path="projects/add-new-roject" element={< AddNewProject/>}/>
                     <Route path="projects/project/:id" element={< ProjectEdit/>} loader={projectLoader}/>
                 </Route>

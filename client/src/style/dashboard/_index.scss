@@ -3,6 +3,7 @@
 @import './projectItem';
 @import './editProject';
 @import './addProject';
+@import './projectList';
 
 .big_header {
     text-align: center;
@@ -17,13 +18,13 @@
     }
 }
 
-.project_main {
-    &__projectList {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        align-items: center;
-    }
-}
+// .project_main {
+//     &__projectList {
+//         display: grid;
+//         grid-template-columns: repeat(6, 1fr);
+//         align-items: center;
+//     }
+// }
 
 .no_data_text {
     display: flex;
