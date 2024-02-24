@@ -3,6 +3,7 @@ const jwt = require("jwt-simple");
 const { adminRegValidation, adminLogValidation } = require("../../utils/validation/adminValidation/authValidation");
 const { Admin } = require("../../model/admin.model");
 const { httpCodes } = require("../../utils/httpCodes");
+const { Login } = require("../../model/login.model");
 
 // ---- Register Admin ---- //
 exports.registerAdmin = async (req, res) => {
@@ -51,13 +52,15 @@ exports.loginAdmin = async (req, res) => {
 
         const comparePass = await bcrypt.compare(password, existAdmin.password);
 
-        // if(password !== existAdmin.password) return console.log(`users.controller Password not correc`);
-
         if (!comparePass) {
             console.log(`users.controller Password not correc`);
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })
         }
 
+        const newLogin = new Login({userName: existAdmin.userName, userId: existAdmin._id})
+        await newLogin.save()
+
+        await existAdmin.addEnterence(newLogin)
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
         res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
