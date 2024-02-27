@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { registerAdmin, loginAdmin, adminLogout, getAllAdmins } = require("../../controllers/users/users.controller");
+// const adminRole = require("../../middleware/admin.role")
 const adminRole = require("../../middleware/admin.role")
 
 router

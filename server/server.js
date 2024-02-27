@@ -5,7 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 9090;
 const cookieParser = require('cookie-parser');
 const adminLogin = require('./middleware/admin.login')
-// const adminRole = require('./middleware/admin.role')
 const path = require('node:path');
 const cloudinary = require("cloudinary").v2;
 
