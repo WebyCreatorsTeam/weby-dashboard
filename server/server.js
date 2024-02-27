@@ -23,7 +23,7 @@ cloudinary.config({
 });
 
 app.use('/auth', require("./router/admin/admin.route"))
-app.use('/dashboard', adminRole, require("./router/dashboard/index.router"))
+app.use('/dashboard', require("./router/dashboard/index.router"))
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));

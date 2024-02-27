@@ -20,7 +20,35 @@ const AdminSchema = new Schema({
         type: String,
         require: [true],
         default: "admin"
-    }
+    },
+    enternces: [{
+        enternceId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Login',
+            require: true
+        }}
+    ]
 })
+
+
+
+AdminSchema.methods.addEnterence = function (enter) {
+    const enters = [...this.enternces]
+    // const idx = items.findIndex(c => {
+    //     return c.remembrId
+    // })
+
+    try {
+        enters.push({
+            enternceId: enter._id
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+    this.enternces = enters 
+
+    return this.save();
+}
 
 exports.Admin = model("Admin", AdminSchema)

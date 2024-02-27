@@ -51,8 +51,6 @@ exports.loginAdmin = async (req, res) => {
 
         const comparePass = await bcrypt.compare(password, existAdmin.password);
 
-        // if(password !== existAdmin.password) return console.log(`users.controller Password not correc`);
-
         if (!comparePass) {
             console.log(`users.controller Password not correc`);
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })

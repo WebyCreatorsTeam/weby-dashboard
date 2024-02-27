@@ -8,7 +8,9 @@ module.exports = (req, res, next) => {
 
         const { role } = req.user
 
-        if (role !== "admin") {                                       //if the user is not role = admin (his role = user), return false
+        console.log(role)
+
+        if (role !== "admin" ) {                                       //if the user is not role = admin (his role = user), return false
             return res.status(httpCodes.BAD_REQUEST).send({ continueWork: false, message: "שגיא" });
         }
 
