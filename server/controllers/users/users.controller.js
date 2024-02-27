@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jwt-simple");
 const { adminRegValidation, adminLogValidation } = require("../../utils/validation/adminValidation/authValidation");
 const { Admin } = require("../../model/admin.model");
+const {Login} = require("../../model/login.model")
 const { httpCodes } = require("../../utils/httpCodes");
 
 // ---- Register Admin ---- //
@@ -56,13 +57,10 @@ exports.loginAdmin = async (req, res) => {
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })
         }
 
-<<<<<<< Updated upstream
-=======
         const newLogin = new Login({ userName: existAdmin.userName, userId: existAdmin._id })
         await newLogin.save()
 
         await existAdmin.addEnterence(newLogin)
->>>>>>> Stashed changes
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
         res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
