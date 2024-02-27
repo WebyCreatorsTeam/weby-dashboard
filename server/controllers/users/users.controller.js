@@ -58,6 +58,13 @@ exports.loginAdmin = async (req, res) => {
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })
         }
 
+<<<<<<< Updated upstream
+=======
+        const newLogin = new Login({ userName: existAdmin.userName, userId: existAdmin._id })
+        await newLogin.save()
+
+        await existAdmin.addEnterence(newLogin)
+>>>>>>> Stashed changes
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
         res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
@@ -73,10 +80,20 @@ exports.loginAdmin = async (req, res) => {
 exports.adminLogout = async (req, res) => {
     try {
         res.clearCookie('admin');
-        console.log(`out`);
         return res.status(httpCodes.OK).send({ continueWork: true });
     } catch (error) {
         console.log(`user/admin cont error adminLogout`)
+        console.error(error);
+        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+    }
+}
+
+exports.getAllAdmins = async (req, res) => {
+    try {
+        const AllAdmins = await Admin.find({})
+        return res.status(httpCodes.OK).send({ continueWork: true, AllAdmins })
+    } catch (error) {
+        console.log(`user/admin cont error getAllAdmins`)
         console.error(error);
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
