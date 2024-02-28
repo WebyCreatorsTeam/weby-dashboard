@@ -48,8 +48,12 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const deleteUser = async (userId: string) => {
-        const { data: { continueWork } } = await axios.delete("/dashboard/users/delete-user", { data: { userId } })
-        if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
+        if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?") === true) {
+            if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
+                const { data: { continueWork } } = await axios.delete("/dashboard/users/delete-user", { data: { userId } })
+                if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
+            }
+        }
     }
 
     return (
