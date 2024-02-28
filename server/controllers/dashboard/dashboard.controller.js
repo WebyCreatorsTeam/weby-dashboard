@@ -4,7 +4,6 @@ const { User } = require('../../model/user.model');
 exports.getAllUsersDetails = async (req, res) => {
     try {
         const usersCalls = await User.find({})
-
         return res.status(httpCodes.OK).send({ continueWork: true, usersCalls })
     } catch (error) {
         console.log(`dashboard cont error getAllUsersDetails`)
@@ -15,10 +14,9 @@ exports.getAllUsersDetails = async (req, res) => {
 
 exports.arhiveUser = async (req, res) => {
     try {
-        const { userId } = req.body
-
-        await User.findByIdAndUpdate(userId, { $set: { archive: true, favorite: false } })
-        return res.status(httpCodes.OK).send({ continueWork: true })
+        const { userId, archive, favorite } = req.body
+        await User.findByIdAndUpdate(userId, { $set: { archive, favorite } })
+        return res.status(httpCodes.OK).send({ continueWork: true, archiveUser:archive, favoriteUser:favorite })
     } catch (error) {
         console.log(`dashboard cont error arhiveUser`)
         console.error(error);
@@ -28,10 +26,9 @@ exports.arhiveUser = async (req, res) => {
 
 exports.favoriteUser = async (req, res) => {
     try {
-        const { userId } = req.body
-
-        await User.findByIdAndUpdate(userId, { $set: { archive: false, favorite: true } })
-        return res.status(httpCodes.OK).send({ continueWork: true })
+        const { userId, favorite, archive } = req.body
+        await User.findByIdAndUpdate(userId, { $set: { archive, favorite } })
+        return res.status(httpCodes.OK).send({ continueWork: true, favoriteUser: favorite, archiveUser: archive })
     } catch (error) {
         console.log(`dashboard cont error arhiveUser`)
         console.error(error);
@@ -42,7 +39,6 @@ exports.favoriteUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
         const { userId } = req.body
-
         await User.findByIdAndDelete(userId)
         return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {

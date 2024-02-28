@@ -1,5 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
-import axios from 'axios'
+import { Suspense, useState } from 'react'
 import { ICallUser } from './dashboardInterface'
 import { headerUsersCall } from './headersUsersCall'
 import UserCall from '../../Components/Dashboard/UserCall'
