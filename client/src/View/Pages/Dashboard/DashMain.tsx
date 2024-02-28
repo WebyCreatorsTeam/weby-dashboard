@@ -22,21 +22,21 @@ const DashMain = () => {
               setShowFavorite(false)
               setActiveFilter("שיחות נכנסות")
             }}
-              style={{ color: activeFilter == "שיחות נכנסות" ? "blue" : "black" }}
+              style={{ color: activeFilter === "שיחות נכנסות" ? "blue" : "black" }}
               > שיחות נכנסות</div>
             <div onClick={() => {
               setShowArchive(false)
               setShowFavorite(true)
               setActiveFilter("מועדפים")
             }}
-            style={{ color: activeFilter == "מועדפים" ? "blue" : "black" }}
+            style={{ color: activeFilter === "מועדפים" ? "blue" : "black" }}
             >מועדפים</div>
             <div onClick={() => {
               setShowArchive(true)
               setShowFavorite(false)
               setActiveFilter("ערכיון")
             }}
-            style={{ color: activeFilter == "ערכיון" ? "blue" : "black" }}
+            style={{ color: activeFilter === "ערכיון" ? "blue" : "black" }}
             >ערכיון</div>
           </div>
           <div className='dashboard_main__callList'>
