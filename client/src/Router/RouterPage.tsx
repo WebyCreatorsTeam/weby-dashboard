@@ -8,7 +8,8 @@ import Projects from "../View/Pages/Dashboard/Projects/Projects";
 import AddNewProject from "../View/Pages/Dashboard/AddNewProject/AddNewProject";
 import ProjectEdit from "../View/Pages/Dashboard/EditProject/ProjectEdit";
 import { projectsLoader } from "../View/Pages/Dashboard/Projects/projectsLoader";
-import { projectLoader } from "../View/Components/Dashboard/Edit/projectLoader";
+import { projectLoader } from "../View/Pages/Dashboard/EditProject/projectLoader";
+import { usersCallsLoader } from "../View/Pages/Dashboard/UsersCalls/usersCallsLoader";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -16,7 +17,7 @@ const RouterPage = () => {
             <Route path="/" element={<App />}>
                 <Route index element={<Login />} />
                 <Route path="dashboard" element={<Layout />} >
-                    <Route index element={< DashMain/>}/>
+                    <Route index element={< DashMain/>} loader={usersCallsLoader}/>
                     <Route path="reg" element={<Register/>}/>
                     <Route path="projects" element={< Projects/>} loader={projectsLoader}/>
                     <Route path="projects/add-new-roject" element={< AddNewProject/>}/>
