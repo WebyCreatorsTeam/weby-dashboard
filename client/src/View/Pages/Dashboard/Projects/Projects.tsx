@@ -26,10 +26,14 @@ const Projects = () => {
             {getProjects.length > 0 ?
               <div className='project_main__projectList--list'>
                 {getProjects.map(pro => (
-                  <ProjectItem key={pro._id}
-                    project={pro}
-                    setGetProjects={setGetProjects}
-                    projects={getProjects} />))}
+                  <div key={pro._id}>
+                  <div>{pro.draft ? <h4 style={{color: "red"}}>שמור בטיוטה</h4> : <h4 style={{color: "green"}}>מוצג באתר</h4>}</div>
+                    <ProjectItem 
+                      project={pro}
+                      setGetProjects={setGetProjects}
+                      projects={getProjects} />
+                  </div>
+                ))}
               </div> : <h3 className='no_data_text'>אין פרויקטים</h3>}
           </div>
         </Await>

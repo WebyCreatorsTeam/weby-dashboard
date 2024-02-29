@@ -16,4 +16,5 @@ export interface IProject {
   urlSite: string
   __v?: string
   _id: string
+  draft: boolean
 }

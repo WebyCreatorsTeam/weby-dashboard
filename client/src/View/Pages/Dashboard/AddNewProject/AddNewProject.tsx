@@ -6,6 +6,8 @@ import UploadFile from '../../../Components/UploadFile/UploadFile'
 import Form from '../../../UI/AuthForm/Form'
 import AddEditForm from '../../../UI/AddEditForm/AddEditForm'
 import { addNewInputs } from './addNewInputsList'
+import ProjectsForm from '../../../UI/ProjectsForm/ProjectsForm'
+import FormBtn from '../../../UI/FormBtn/FormBtn'
 
 const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "" })
@@ -27,7 +29,7 @@ const AddNewProject: FC = () => {
         }
     };
 
-    const handleUpload = async (ev: React.SyntheticEvent) => {
+    const handleUpload = async (ev: React.SyntheticEvent, draft: boolean) => {
         try {
             ev.preventDefault()
             setLoading(true);
@@ -40,7 +42,7 @@ const AddNewProject: FC = () => {
             const data = new FormData()
             data.append("my_file", file!)
 
-            const res = await axios.post(`/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}`, data, {
+            const res = await axios.post(`/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 
@@ -60,9 +62,11 @@ const AddNewProject: FC = () => {
             <div className='add-project-page'>
                 <div>
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
-                    <Form submit={handleUpload} btnText={"הוספה פרויקט חדש"} loading={loading}>
-                        <AddEditForm inputs={addNewInputs} handleChangeInput={handleChangeInput}/>
-                    </Form>
+                    <ProjectsForm loading={loading}>
+                        <AddEditForm inputs={addNewInputs} handleChangeInput={handleChangeInput} />
+                        <FormBtn btnText={"הוספה פרויקט חדש"} loading={loading} submitFunction={(ev: React.SyntheticEvent)=>handleUpload(ev, false)}/>
+                        <FormBtn btnText={"שמור פרויקט כטיוטה"} loading={loading} submitFunction={(ev: React.SyntheticEvent)=>handleUpload(ev, true)}/>
+                    </ProjectsForm>
                 </div>
                 <div>
                     {prevFileShow.length > 0 && (

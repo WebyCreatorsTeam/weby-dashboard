@@ -15,9 +15,9 @@ const ProjectSchema = new Schema({
     urlSite: {
         type: String
     },
-    show: {
+    draft: {
         type: Boolean,
-        default: false
+        default: true
     }
 })
 

@@ -7,7 +7,7 @@ const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
 
 exports.saveNewProject = async (req, res) => {
     try {
-        const { name, description, urlSite } = req.query
+        const { name, description, urlSite, draft } = req.query
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -18,7 +18,7 @@ exports.saveNewProject = async (req, res) => {
             return res.status(httpCodes.BAD_REQUEST).send({ continueWork: false, message: "שגיא" });
         }
 
-        const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite })
+        const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite, draft })
         await newProject.save()
         return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {
@@ -98,7 +98,19 @@ exports.editProductTexts = async (req, res) => {
     try {
         const { textUpdate: { name, description, urlSite }, id } = req.body
         await Projects.findByIdAndUpdate(id, { name, description, urlSite })
-        return res.status(httpCodes.OK).send({ continueWork: true, texts:{ name, description, urlSite } })
+        return res.status(httpCodes.OK).send({ continueWork: true, texts: { name, description, urlSite } })
+    } catch (error) {
+        console.log(`projects cont error editProductTexts`)
+        console.error(error);
+        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+    }
+}
+
+exports.saveAsDraftorNotToBe = async (req, res) => {
+    try {
+        const {draft, id} = req.body
+        await Projects.findByIdAndUpdate(id, {draft})
+        return res.status(httpCodes.OK).send({ continueWork: true,message:"הפרויקט עודכן" })
     } catch (error) {
         console.log(`projects cont error editProductTexts`)
         console.error(error);
