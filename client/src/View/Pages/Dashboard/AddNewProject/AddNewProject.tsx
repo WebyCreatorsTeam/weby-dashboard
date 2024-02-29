@@ -3,7 +3,7 @@ import { IProjectDetails } from './addNewInterface'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
-import Form from '../../../UI/AuthForm/Form'
+// import Form from '../../../UI/AuthForm/Form'
 import AddEditForm from '../../../UI/AddEditForm/AddEditForm'
 import { addNewInputs } from './addNewInputsList'
 import ProjectsForm from '../../../UI/ProjectsForm/ProjectsForm'
@@ -64,8 +64,8 @@ const AddNewProject: FC = () => {
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
                     <ProjectsForm loading={loading}>
                         <AddEditForm inputs={addNewInputs} handleChangeInput={handleChangeInput} />
-                        <FormBtn btnText={"הוספה פרויקט חדש"} loading={loading} submitFunction={(ev: React.SyntheticEvent)=>handleUpload(ev, false)}/>
-                        <FormBtn btnText={"שמור פרויקט כטיוטה"} loading={loading} submitFunction={(ev: React.SyntheticEvent)=>handleUpload(ev, true)}/>
+                        <FormBtn btnText={"הוספה פרויקט חדש"} loading={loading} submitFunction={(ev: React.SyntheticEvent) => handleUpload(ev, false)} />
+                        <FormBtn btnText={"שמור פרויקט כטיוטה"} loading={loading} submitFunction={(ev: React.SyntheticEvent) => handleUpload(ev, true)} />
                     </ProjectsForm>
                 </div>
                 <div>

@@ -3,11 +3,12 @@ import { IFrom } from './formIntarface'
 import FormBtn from '../FormBtn/FormBtn';
 
 const Form: FC<IFrom> = ({ submit, children, btnText, loading }) => {
+  console.log(submit)
   return (
     <>
       <form onSubmit={submit} className='auth-form'>
         {children}
-        <FormBtn btnText={btnText!} loading={loading}/>
+        <FormBtn btnText={btnText!} loading={loading} />
       </form>
     </>
   )
