@@ -20,16 +20,16 @@ const Login = () => {
     };
 
 
-
+    console.log(API_ENDPOINT)
     const hendleLogin = async (ev: React.SyntheticEvent) => {
         try {
             setLoading(true)
             ev.preventDefault()
 
             const { data } = await axios.post(`${API_ENDPOINT}/auth/login-admin`, { userLoginData })
-            const {continueWork, message} = data
+            const { continueWork, message } = data
             if (continueWork) return navigate("/dashboard", { replace: true });
-            if(!continueWork) return alert(message)
+            if (!continueWork) return alert(message)
         } catch (error) {
             alert(error)
         } finally {
@@ -39,13 +39,13 @@ const Login = () => {
 
     return (
         <div className='auth-page'>
-                <CardMedia
-                    component="img"
-                    sx={{ maxWidth: 300 }}
-                    className='auth-page__image-logo-login'
-                    image={Logo}
-                    alt="Paella dish"
-                />
+            <CardMedia
+                component="img"
+                sx={{ maxWidth: 300 }}
+                className='auth-page__image-logo-login'
+                image={Logo}
+                alt="Paella dish"
+            />
             <div className='auth__window'>
                 <h2>כניסה</h2>
                 <Form
