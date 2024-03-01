@@ -18,7 +18,7 @@ const Login = () => {
         return setUserLoginData({ ...userLoginData, [target.name]: target.value });
     };
 
-    axios.defaults.withCredentials = true
+    // axios.defaults.withCredentials = true
 
     const hendleLogin = async (ev: React.SyntheticEvent) => {
         try {

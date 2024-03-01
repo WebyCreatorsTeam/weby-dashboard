@@ -28,7 +28,7 @@ app.use(cors(
     {
         origin: whitelist, 
         methods: ["POST", "GET", "DELETE", "PATCH"],
-        credentials: true
+        // credentials: true
     }
 ))
 // cors(corsOptions)
