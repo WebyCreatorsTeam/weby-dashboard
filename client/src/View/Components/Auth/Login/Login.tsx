@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../../../../images/logo-big.png'
 import { CardMedia } from '@mui/material'
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 const Login = () => {
     const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
@@ -18,7 +19,7 @@ const Login = () => {
         return setUserLoginData({ ...userLoginData, [target.name]: target.value });
     };
 
-    const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT
+
 
     const hendleLogin = async (ev: React.SyntheticEvent) => {
         try {

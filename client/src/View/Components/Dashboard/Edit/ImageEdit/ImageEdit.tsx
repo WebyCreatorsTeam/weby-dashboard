@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ImageEditProps } from './ImageEditInterface';
 import CloseIcon from '@mui/icons-material/Close';
+import { API_ENDPOINT } from '../../../../../utils/api-connect';
 
 const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProject }) => {
     const [file, setFile] = useState<any>(null);
@@ -25,7 +26,7 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
             const data = new FormData()
             data.append("my_file", file!)
 
-            const res = await axios.post(`https://weby-dashboard-api.vercel.app/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
                 headers: {
                     'content-type': "mulpipart/form-data"
                 }

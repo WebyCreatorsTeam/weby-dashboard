@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "https://weby-dashboard-client.vercel.app", //process.env. 
+    origin: process.env.NODE_ENV === 'development' ? "https://weby-dashboard-client.vercel.app" : "http://localhost:3000", //process.env. 
+    // origin: "https://weby-dashboard-client.vercel.app", //process.env. 
     methods: ["POST", "GET", "DELETE", "PATCH"],
 }))
 
