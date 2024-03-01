@@ -5,7 +5,7 @@ const { Admin } = require('../model/admin.model');
 module.exports = async (req, res, next) => {
     try {
         const { admin } = req.cookies
-
+console.log(admin)
         if (!admin) return next()
 
         const { userID } = await jwt.decode(admin, process.env.SECRET)
