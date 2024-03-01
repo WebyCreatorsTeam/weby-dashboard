@@ -12,7 +12,7 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cookieParser());
 
-const whitelist = [""]
+const whitelist = [process.env.CORS]
 const corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1 || !origin) {
