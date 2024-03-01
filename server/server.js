@@ -7,19 +7,41 @@ const cookieParser = require('cookie-parser');
 const adminLogin = require('./middleware/admin.login')
 const path = require('node:path');
 const cloudinary = require("cloudinary").v2;
+const cors = require('cors')
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('../client/build'))
-app.use(adminLogin)
 
+const whitelist = [""]
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    optionsSuccessStatus: 200
+}
+
+cors(corsOptions)
 dbconnect()
+app.use(adminLogin)
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_KEY,
     api_secret: process.env.CLOUD_SECRET
 });
+
+app.get("/", (req, res) => {
+    try {
+        return res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.json({ "error": error })
+    }
+})
 
 app.use('/auth', require("./router/admin/admin.route"))
 app.use('/dashboard', require("./router/dashboard/index.router"))
