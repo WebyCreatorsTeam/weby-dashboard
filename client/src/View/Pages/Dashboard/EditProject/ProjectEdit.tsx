@@ -7,6 +7,7 @@ import { Button } from '@mui/material'
 // import FormBtn from '../../../UI/FormBtn/FormBtn'
 import axios from 'axios'
 import SendIcon from '@mui/icons-material/Send';
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 export interface TextProject {
   name: string
@@ -26,7 +27,7 @@ const ProjectEdit: FC = () => {
   const hendleSaveAsDraftorNotToBe = async (draft: boolean, id: string) => {
     try {
       setLoading(true)
-      const { data: { continueWork, message } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/projects/draft-project", { id, draft })
+      const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project`, { id, draft })
       if (continueWork) {
         alert(message)
         setEditDraft(draft)

@@ -1,8 +1,9 @@
 import axios from "axios"
 import { defer } from "react-router-dom"
+import { API_ENDPOINT } from "../../../../utils/api-connect"
 
 const hendleGetProjects = async () => {
-    const { data } = await axios.get("https://weby-dashboard-api.vercel.app/dashboard/projects/get-all-data-projects")
+    const { data } = await axios.get(`${API_ENDPOINT}/dashboard/projects/get-all-data-projects`)
     return data
   }
   

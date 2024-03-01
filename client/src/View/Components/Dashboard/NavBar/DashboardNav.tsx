@@ -2,13 +2,14 @@ import axios from 'axios';
 import Logo from '../../../../images/logo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { API_ENDPOINT } from '../../../../utils/api-connect';
 
 const DashboardNav = () => {
     let location = useLocation();
     const navigation = useNavigate()
 
     const hendleLogout = async () => {
-        const { data } = await axios.get("https://weby-dashboard-api.vercel.app/auth/logout-admin")
+        const { data } = await axios.get(`${API_ENDPOINT}/auth/logout-admin`)
         if (data.continueWork) return navigation("/")
     }
 
@@ -21,8 +22,6 @@ const DashboardNav = () => {
             </div>
             <div className='dashboard_nav__links--lefts-ide'>
             <Button color="secondary" variant="outlined" onClick={hendleLogout}>יציאה</Button>
-
-                {/* <button onClick={hendleLogout}>יציאה</button> */}
                 <Link to="/dashboard">
                     <img src={Logo} alt="weby logo" />
                 </Link>

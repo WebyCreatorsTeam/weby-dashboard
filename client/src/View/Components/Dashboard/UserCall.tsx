@@ -7,6 +7,7 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { red, yellow, blue } from '@mui/material/colors';
+import { API_ENDPOINT } from '../../../utils/api-connect';
 
 export interface IUserCall {
     user: ICallUser
@@ -23,7 +24,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const [favorite, setFavorite] = useState<boolean>(user.favorite!)
 
     const hendleArchive = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/users/archive-user", {
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/archive-user`, {
             userId, archive: !archive, favorite: false
         })
         if (continueWork) {
@@ -34,7 +35,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const hendleFavorite = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/users/favorite-user", {
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/favorite-user`, {
             userId, archive: false, favorite: !favorite
             // userId, favorite: !favorite, archive: archive === true ? true : false
         })
@@ -49,7 +50,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const deleteUser = async (userId: string) => {
         if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?") === true) {
             if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
-                const { data: { continueWork } } = await axios.delete("https://weby-dashboard-api.vercel.app/dashboard/users/delete-user", { data: { userId } })
+                const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/users/delete-user`, { data: { userId } })
                 if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
             }
         }

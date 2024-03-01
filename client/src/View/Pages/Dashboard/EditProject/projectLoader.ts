@@ -1,8 +1,9 @@
 import axios from "axios"
 import { defer } from "react-router-dom"
+import { API_ENDPOINT } from "../../../../utils/api-connect"
 
 const getProject = async (id: string) => {
-    const { data } = await axios.post("https://weby-dashboard-api.vercel.app/dashboard/projects/show-project", { id })
+    const { data } = await axios.post(`${API_ENDPOINT}/dashboard/projects/show-project`, { id })
     return data
   }
   

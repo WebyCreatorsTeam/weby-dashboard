@@ -8,6 +8,7 @@ import AddEditForm from '../../../UI/AddEditForm/AddEditForm'
 import { addNewInputs } from './addNewInputsList'
 import ProjectsForm from '../../../UI/ProjectsForm/ProjectsForm'
 import FormBtn from '../../../UI/FormBtn/FormBtn'
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "" })
@@ -42,7 +43,7 @@ const AddNewProject: FC = () => {
             const data = new FormData()
             data.append("my_file", file!)
 
-            const res = await axios.post(`https://weby-dashboard-api.vercel.app/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 

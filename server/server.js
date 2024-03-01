@@ -11,10 +11,8 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cookieParser());
 
-console.log(process.env.NODE_ENV)
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' ? "https://weby-dashboard-client.vercel.app" : "http://localhost:3000", //process.env. 
-    // origin: "https://weby-dashboard-client.vercel.app", //process.env. 
     methods: ["POST", "GET", "DELETE", "PATCH"],
 }))
 
