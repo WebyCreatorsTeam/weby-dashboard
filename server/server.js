@@ -5,7 +5,6 @@ const app = express();
 const PORT = process.env.PORT || 9090;
 const cookieParser = require('cookie-parser');
 const adminLogin = require('./middleware/admin.login')
-// const path = require('node:path');
 const cloudinary = require("cloudinary").v2;
 const cors = require('cors')
 
@@ -13,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "https://weby-dashboard-client.vercel.app",
+    origin: "https://weby-dashboard-client.vercel.app", //process.env. 
     methods: ["POST", "GET", "DELETE", "PATCH"],
 }))
 
