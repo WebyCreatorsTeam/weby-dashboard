@@ -42,7 +42,7 @@ const AddNewProject: FC = () => {
             const data = new FormData()
             data.append("my_file", file!)
 
-            const res = await axios.post(`/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
+            const res = await axios.post(`https://weby-dashboard-api.vercel.app/dashboard/projects/save-new-project?name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 

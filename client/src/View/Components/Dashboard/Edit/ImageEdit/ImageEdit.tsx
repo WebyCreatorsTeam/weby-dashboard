@@ -25,7 +25,7 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
             const data = new FormData()
             data.append("my_file", file!)
 
-            const res = await axios.post(`/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
+            const res = await axios.post(`https://weby-dashboard-api.vercel.app/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
                 headers: {
                     'content-type': "mulpipart/form-data"
                 }

@@ -19,7 +19,7 @@ const Register = () => {
         try {
             setLoading(true)
             ev.preventDefault()
-            const { data } = await axios.post("/auth/reg-admin", { userRegData })
+            const { data } = await axios.post("https://weby-dashboard-api.vercel.app/auth/reg-admin", { userRegData })
             const { continueWork, message } = data
             if (continueWork) return setMessage(data.message);
             if (!continueWork) return alert(message)

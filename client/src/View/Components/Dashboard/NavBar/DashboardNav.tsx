@@ -8,7 +8,7 @@ const DashboardNav = () => {
     const navigation = useNavigate()
 
     const hendleLogout = async () => {
-        const { data } = await axios.get("/auth/logout-admin")
+        const { data } = await axios.get("https://weby-dashboard-api.vercel.app/auth/logout-admin")
         if (data.continueWork) return navigation("/")
     }
 

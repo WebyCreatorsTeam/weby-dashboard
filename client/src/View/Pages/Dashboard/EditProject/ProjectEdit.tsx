@@ -26,7 +26,7 @@ const ProjectEdit: FC = () => {
   const hendleSaveAsDraftorNotToBe = async (draft: boolean, id: string) => {
     try {
       setLoading(true)
-      const { data: { continueWork, message } } = await axios.patch("/dashboard/projects/draft-project", { id, draft })
+      const { data: { continueWork, message } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/projects/draft-project", { id, draft })
       if (continueWork) {
         alert(message)
         setEditDraft(draft)

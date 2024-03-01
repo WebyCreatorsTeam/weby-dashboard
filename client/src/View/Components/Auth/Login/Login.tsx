@@ -23,7 +23,7 @@ const Login = () => {
             setLoading(true)
             ev.preventDefault()
 
-            const { data } = await axios.post("/auth/login-admin", { userLoginData })
+            const { data } = await axios.post("https://weby-dashboard-api.vercel.app/auth/login-admin", { userLoginData })
             const {continueWork, message} = data
             if (continueWork) return navigate("/dashboard", { replace: true });
             if(!continueWork) return alert(message)

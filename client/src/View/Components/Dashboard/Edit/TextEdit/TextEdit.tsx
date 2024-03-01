@@ -18,7 +18,7 @@ const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setText
         try {
             setLoading(true);
             ev.preventDefault()
-            const { data } = await axios.post("/dashboard/projects/edit-texts-project", { textUpdate, id })
+            const { data } = await axios.post("https://weby-dashboard-api.vercel.app/dashboard/projects/edit-texts-project", { textUpdate, id })
             const { continueWork, texts, message } = data
             if (continueWork) return setTextProject(texts)
             if (!continueWork) return alert(message)
