@@ -15,7 +15,7 @@ export interface IProjectProps {
 
 const ProjectItem: FC<IProjectProps> = ({ project, setGetProjects, projects }) => {
     const hendleDeleteProject = async (id: string, url: string) => {
-        const { data } = await axios.delete("/dashboard/projects/delete-project", { data: { id, url } })
+        const { data } = await axios.delete("https://weby-dashboard-api.vercel.app/dashboard/projects/delete-project", { data: { id, url } })
         const { continueWork } = data
         if (continueWork) return setGetProjects(projects.filter(pro => (pro._id !== id)))
     }

@@ -23,9 +23,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const [favorite, setFavorite] = useState<boolean>(user.favorite!)
 
     const hendleArchive = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("/dashboard/users/archive-user", {
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/users/archive-user", {
             userId, archive: !archive, favorite: false
-            // userId, archive: !archive, favorite: favorite === true ? true : false
         })
         if (continueWork) {
             setArcive(archiveUser)
@@ -35,7 +34,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const hendleFavorite = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("/dashboard/users/favorite-user", {
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("https://weby-dashboard-api.vercel.app/dashboard/users/favorite-user", {
             userId, archive: false, favorite: !favorite
             // userId, favorite: !favorite, archive: archive === true ? true : false
         })
@@ -50,7 +49,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const deleteUser = async (userId: string) => {
         if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?") === true) {
             if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
-                const { data: { continueWork } } = await axios.delete("/dashboard/users/delete-user", { data: { userId } })
+                const { data: { continueWork } } = await axios.delete("https://weby-dashboard-api.vercel.app/dashboard/users/delete-user", { data: { userId } })
                 if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
             }
         }
