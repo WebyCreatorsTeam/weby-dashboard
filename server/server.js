@@ -12,7 +12,7 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cookieParser());
 
-const whitelist = ["https://weby-dashboard-client.vercel.app/"]
+// const whitelist = ["https://weby-dashboard-client.vercel.app/"]
 // const corsOptions = {
 //     origin: function (origin, callback) {
 //         if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -26,7 +26,7 @@ const whitelist = ["https://weby-dashboard-client.vercel.app/"]
 
 app.use(cors(
     {
-        origin: whitelist, 
+        origin: "https://weby-dashboard-client.vercel.app/", 
         methods: ["POST", "GET", "DELETE", "PATCH"],
         // credentials: true
     }
