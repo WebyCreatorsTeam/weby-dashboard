@@ -16,6 +16,6 @@ router
     .post('/show-project', showProjectToUpdate)
     .post('/replace-image-project', upload.single("my_file"), hendleReplace)
     .post('/edit-texts-project', editProductTexts)
-    .patch('/draft-project', saveAsDraftorNotToBe)
+    .patch('/draft-project', saveAsDraftorNotToBe);
 
 module.exports = router;
