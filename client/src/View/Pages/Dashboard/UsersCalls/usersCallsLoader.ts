@@ -3,7 +3,7 @@ import { defer } from "react-router-dom"
 
 const hendleGetCalls = async () => {
     try {
-        const { data: { continueWork, usersCalls } } = await axios.get("/dashboard/users/get-all-data-users")
+        const { data: { continueWork, usersCalls } } = await axios.get("https://weby-dashboard-api.vercel.app/dashboard/users/get-all-data-users")
             if (continueWork) return usersCalls
     } catch (error) {
         alert(error)

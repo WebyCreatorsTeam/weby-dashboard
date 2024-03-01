@@ -2,7 +2,7 @@ import axios from "axios"
 import { defer } from "react-router-dom"
 
 const hendleGetProjects = async () => {
-    const { data } = await axios.get("/dashboard/projects/get-all-data-projects")
+    const { data } = await axios.get("https://weby-dashboard-api.vercel.app/dashboard/projects/get-all-data-projects")
     return data
   }
   
