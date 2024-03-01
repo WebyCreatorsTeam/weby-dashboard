@@ -4,7 +4,6 @@ import SendIcon from '@mui/icons-material/Send';
 import { IFormBtn } from './FormBtnInterface';
 
 const FormBtn: FC<IFormBtn> = ({ btnText, loading, submitFunction }) => {
-    console.log(btnText)
     return (
         <Button
             sx={btnText === "הוספה פרויקט חדש" || "שמור פרויקט כטיוטה" ? { marginTop: "3%", marginBottom: "2%" } : { marginTop: "7%" }}
