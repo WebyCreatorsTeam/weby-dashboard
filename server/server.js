@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(cors(
     {
-        origin: "https://weby-dashboard-client.vercel.app/", 
+        origin: "https://weby-dashboard-client.vercel.app", 
         methods: ["POST", "GET", "DELETE", "PATCH"],
         // credentials: true
     }
