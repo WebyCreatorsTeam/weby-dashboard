@@ -13,18 +13,25 @@ app.use(express.json());
 app.use(cookieParser());
 
 const whitelist = ["https://weby-dashboard-client.vercel.app/"]
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1 || !origin) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
-    },
-    optionsSuccessStatus: 200
-}
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.indexOf(origin) !== -1 || !origin) {
+//             callback(null, true)
+//         } else {
+//             callback(new Error('Not allowed by CORS'))
+//         }
+//     },
+//     optionsSuccessStatus: 200
+// }
 
-cors(corsOptions)
+app.use(cors(
+    {
+        origin: whitelist, 
+        methods: ["POST", "GET", "DELETE", "PATCH"],
+        credentials: true
+    }
+))
+// cors(corsOptions)
 dbconnect()
 app.use(adminLogin)
 
