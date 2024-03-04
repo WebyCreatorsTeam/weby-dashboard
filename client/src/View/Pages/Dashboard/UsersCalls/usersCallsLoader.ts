@@ -1,11 +1,13 @@
 import axios from "axios"
 import { defer } from "react-router-dom"
 import { API_ENDPOINT } from "../../../../utils/api-connect"
+import { token } from "../../../../utils/token-get"
 
 const hendleGetCalls = async () => {
     try {
-        const { data: { continueWork, usersCalls } } = await axios.get(`${API_ENDPOINT}/dashboard/users/get-all-data-users`)
-            if (continueWork) return usersCalls
+        // const token=sessionStorage.getItem('token')
+        const { data: { continueWork, usersCalls } } = await axios.get(`${API_ENDPOINT}/dashboard/users/get-all-data-users?token=${token}`)
+        if (continueWork) return usersCalls
     } catch (error) {
         alert(error)
     }
@@ -13,6 +15,6 @@ const hendleGetCalls = async () => {
 
 export const usersCallsLoader = async () => {
     return defer({
-      usersCalls: await hendleGetCalls()
+        usersCalls: await hendleGetCalls()
     })
-  }
+}

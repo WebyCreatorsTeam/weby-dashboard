@@ -9,8 +9,8 @@ const DashboardNav = () => {
     const navigation = useNavigate()
 
     const hendleLogout = async () => {
-        const { data } = await axios.get(`${API_ENDPOINT}/auth/logout-admin`)
-        if (data.continueWork) return navigation("/")
+        await sessionStorage.removeItem('token')
+        return navigation("/")
     }
 
     return (

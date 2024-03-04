@@ -1,6 +1,6 @@
 import { FC, Suspense, useState } from 'react'
 import { useLoaderData, Await } from 'react-router-dom'
-import { IProject } from '../dashboardInterface'
+import { IProject } from '../UsersCalls/dashboardInterface'
 import ImageEdit from '../../../Components/Dashboard/Edit/ImageEdit/ImageEdit'
 import TextEdit from '../../../Components/Dashboard/Edit/TextEdit/TextEdit'
 import { Button } from '@mui/material'

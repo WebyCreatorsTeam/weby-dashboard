@@ -63,9 +63,9 @@ exports.loginAdmin = async (req, res) => {
         await existAdmin.addEnterence(newLogin)
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
-        res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
+        // res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
 
-        return res.status(httpCodes.OK).send({ continueWork: true })
+        return res.status(httpCodes.OK).send({ continueWork: true, token })
     } catch (error) {
         console.log(`user/admin cont error loginAdmin`)
         console.error(error);

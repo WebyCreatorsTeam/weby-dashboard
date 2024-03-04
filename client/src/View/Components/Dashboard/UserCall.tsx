@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { ICallUser } from '../../Pages/Dashboard/dashboardInterface'
+import { ICallUser } from '../../Pages/Dashboard/UsersCalls/dashboardInterface'
 import axios from 'axios'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';

@@ -4,7 +4,8 @@ const { dbconnect } = require("./dbconnect");
 const app = express();
 const PORT = process.env.PORT || 9090;
 const cookieParser = require('cookie-parser');
-const adminLogin = require('./middleware/admin.login')
+const adminUser = require('./middleware/admin.user')
+const adminLogin =require('./middleware/admin.login')
 const cloudinary = require("cloudinary").v2;
 const cors = require('cors')
 
@@ -17,7 +18,7 @@ app.use(cors({
 }))
 
 dbconnect()
-app.use(adminLogin)
+app.use(adminUser)
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -35,7 +36,7 @@ app.get("/", (req, res) => {
 })
 
 app.use('/auth', require("./router/admin/admin.route"))
-app.use('/dashboard', require("./router/dashboard/index.router"))
+app.use('/dashboard', adminLogin, require("./router/dashboard/index.router"))
 
 app.listen(PORT, () => {
     console.log(`listen on http://localhost:${PORT}`);

@@ -5,7 +5,7 @@ import { red } from '@mui/material/colors';
 import LaunchIcon from '@mui/icons-material/Launch';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { IProject } from '../../Pages/Dashboard/dashboardInterface'
+import { IProject } from '../../Pages/Dashboard/UsersCalls/dashboardInterface'
 import { API_ENDPOINT } from '../../../utils/api-connect';
 
 export interface IProjectProps {
