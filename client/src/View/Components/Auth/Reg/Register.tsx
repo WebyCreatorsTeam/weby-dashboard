@@ -20,7 +20,8 @@ const Register = () => {
         try {
             setLoading(true)
             ev.preventDefault()
-            const { data } = await axios.post(`${API_ENDPOINT}/auth/reg-admin`, { userRegData })
+            const token=sessionStorage.getItem('token')
+            const { data } = await axios.post(`${API_ENDPOINT}/auth/reg-admin?token=${token}`, { userRegData })
             const { continueWork, message } = data
             if (continueWork) return setMessage(data.message);
             if (!continueWork) return alert(message)

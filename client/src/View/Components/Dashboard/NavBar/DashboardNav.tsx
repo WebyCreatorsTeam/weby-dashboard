@@ -1,8 +1,6 @@
-import axios from 'axios';
 import Logo from '../../../../images/logo.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { API_ENDPOINT } from '../../../../utils/api-connect';
 
 const DashboardNav = () => {
     let location = useLocation();

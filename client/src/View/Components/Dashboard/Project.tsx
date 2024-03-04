@@ -16,7 +16,8 @@ export interface IProjectProps {
 
 const ProjectItem: FC<IProjectProps> = ({ project, setGetProjects, projects }) => {
     const hendleDeleteProject = async (id: string, url: string) => {
-        const { data } = await axios.delete(`${API_ENDPOINT}/dashboard/projects/delete-project`, { data: { id, url } })
+        const token=sessionStorage.getItem('token')
+        const { data } = await axios.delete(`${API_ENDPOINT}/dashboard/projects/delete-project?token=${token}`, { data: { id, url } })
         const { continueWork } = data
         if (continueWork) return setGetProjects(projects.filter(pro => (pro._id !== id)))
     }

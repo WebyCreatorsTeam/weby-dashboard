@@ -19,7 +19,9 @@ const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setText
         try {
             setLoading(true);
             ev.preventDefault()
-            const { data } = await axios.post(`${API_ENDPOINT}/dashboard/projects/edit-texts-project`, { textUpdate, id })
+            const token = sessionStorage.getItem('token')
+
+            const { data } = await axios.post(`${API_ENDPOINT}/dashboard/projects/edit-texts-project?token=${token}`, { textUpdate, id })
             const { continueWork, texts, message } = data
             if (continueWork) return setTextProject(texts)
             if (!continueWork) return alert(message)

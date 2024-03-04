@@ -27,7 +27,9 @@ const ProjectEdit: FC = () => {
   const hendleSaveAsDraftorNotToBe = async (draft: boolean, id: string) => {
     try {
       setLoading(true)
-      const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project`, { id, draft })
+      const token = sessionStorage.getItem('token')
+
+      const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project?token=${token}`, { id, draft })
       if (continueWork) {
         alert(message)
         setEditDraft(draft)

@@ -24,7 +24,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const [favorite, setFavorite] = useState<boolean>(user.favorite!)
 
     const hendleArchive = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/archive-user`, {
+        const token=sessionStorage.getItem('token')
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/archive-user?token=${token}`, {
             userId, archive: !archive, favorite: false
         })
         if (continueWork) {
@@ -35,7 +36,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const hendleFavorite = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/favorite-user`, {
+        const token=sessionStorage.getItem('token')
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/favorite-user?token=${token}`, {
             userId, archive: false, favorite: !favorite
             // userId, favorite: !favorite, archive: archive === true ? true : false
         })
@@ -50,7 +52,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const deleteUser = async (userId: string) => {
         if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?") === true) {
             if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
-                const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/users/delete-user`, { data: { userId } })
+                const token=sessionStorage.getItem('token')
+                const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/users/delete-user?token=${token}`, { data: { userId } })
                 if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
             }
         }

@@ -25,14 +25,15 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
             setLoading(true);
             const data = new FormData()
             data.append("my_file", file!)
+            const token = sessionStorage.getItem('token')
 
-            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/replace-image-project?token=${token}&id=${id}&oldURL=${oldUrl}`, data, {
                 headers: {
                     'content-type': "mulpipart/form-data"
                 }
             })
             const { continueWork, secure_url, message } = res.data
-            if (continueWork)  {
+            if (continueWork) {
                 alert("תמונה עודכנה בהצלחה")
                 return setUrlProject(secure_url)
             }
@@ -47,7 +48,7 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
     return (
         <div className='image-edit-pop' dir='ltr'>
             <div className='image-edit-pop__edit-window'>
-                <CloseIcon onClick={() => setEditImagePop(false)}/>
+                <CloseIcon onClick={() => setEditImagePop(false)} />
                 <div className='update_project__form-image'>
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
                     <Button
