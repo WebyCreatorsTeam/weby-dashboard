@@ -25,7 +25,6 @@ const Login = () => {
             ev.preventDefault()
 
             const { data: { continueWork, message, token } } = await axios.post(`${API_ENDPOINT}/auth/login-admin`, { userLoginData })
-            // const { continueWork, message, token } = data
             await sessionStorage.setItem('token', token)
             if (continueWork) return navigate("/dashboard", { replace: true });
             if (!continueWork) return alert(message)

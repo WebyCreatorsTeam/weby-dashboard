@@ -34,9 +34,6 @@ const AdminSchema = new Schema({
 
 AdminSchema.methods.addEnterence = function (enter) {
     const enters = [...this.enternces]
-    // const idx = items.findIndex(c => {
-    //     return c.remembrId
-    // })
 
     try {
         enters.push({

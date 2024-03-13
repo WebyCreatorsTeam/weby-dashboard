@@ -18,7 +18,20 @@ const ProjectSchema = new Schema({
     draft: {
         type: Boolean,
         default: true
+    },
+    customerFeedback: {
+        type: Schema.Types.ObjectId,
+        ref: "Feedback"
     }
 })
+
+ProjectSchema.methods.addFeedback = function (cfb) {
+    try {
+        this.customerFeedback = cfb._id
+        return this.save();
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 exports.Projects = model("Projects", ProjectSchema)
