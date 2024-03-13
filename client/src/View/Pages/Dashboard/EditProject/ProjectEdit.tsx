@@ -1,12 +1,13 @@
 import { FC, Suspense, useState } from 'react'
 import { useLoaderData, Await } from 'react-router-dom'
-import { IProject } from '../dashboardInterface'
+import { IProject } from '../UsersCalls/dashboardInterface'
 import ImageEdit from '../../../Components/Dashboard/Edit/ImageEdit/ImageEdit'
 import TextEdit from '../../../Components/Dashboard/Edit/TextEdit/TextEdit'
 import { Button } from '@mui/material'
 // import FormBtn from '../../../UI/FormBtn/FormBtn'
 import axios from 'axios'
 import SendIcon from '@mui/icons-material/Send';
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 export interface TextProject {
   name: string
@@ -26,7 +27,9 @@ const ProjectEdit: FC = () => {
   const hendleSaveAsDraftorNotToBe = async (draft: boolean, id: string) => {
     try {
       setLoading(true)
-      const { data: { continueWork, message } } = await axios.patch("/dashboard/projects/draft-project", { id, draft })
+      const token = sessionStorage.getItem('token')
+
+      const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project?token=${token}`, { id, draft })
       if (continueWork) {
         alert(message)
         setEditDraft(draft)

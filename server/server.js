@@ -4,16 +4,21 @@ const { dbconnect } = require("./dbconnect");
 const app = express();
 const PORT = process.env.PORT || 9090;
 const cookieParser = require('cookie-parser');
-const adminLogin = require('./middleware/admin.login')
-const path = require('node:path');
+const adminUser = require('./middleware/admin.user')
+const adminLogin =require('./middleware/admin.login')
 const cloudinary = require("cloudinary").v2;
+const cors = require('cors')
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('../client/build'))
-app.use(adminLogin)
+
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' ? "https://weby-dashboard-client.vercel.app" : "http://localhost:3000", //process.env. 
+    methods: ["POST", "GET", "DELETE", "PATCH"],
+}))
 
 dbconnect()
+app.use(adminUser)
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -21,12 +26,17 @@ cloudinary.config({
     api_secret: process.env.CLOUD_SECRET
 });
 
-app.use('/auth', require("./router/admin/admin.route"))
-app.use('/dashboard', require("./router/dashboard/index.router"))
+app.get("/", (req, res) => {
+    try {
+        return res.json({ ok: true })
+    } catch (error) {
+        console.log(error)
+        return res.json({ "error": error })
+    }
+})
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+app.use('/auth', require("./router/admin/admin.route"))
+app.use('/dashboard', adminLogin, require("./router/dashboard/index.router"))
 
 app.listen(PORT, () => {
     console.log(`listen on http://localhost:${PORT}`);

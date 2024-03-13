@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { TextsEditProps } from './textEditIntarface';
 import { FormControl, Input, InputLabel, TextField } from '@mui/material'
 import Form from '../../../../UI/AuthForm/Form';
+import { API_ENDPOINT } from '../../../../../utils/api-connect';
 
 const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setTextProject }) => {
     const [textUpdate, setTextUpdate] = useState(textProject)
@@ -18,7 +19,9 @@ const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setText
         try {
             setLoading(true);
             ev.preventDefault()
-            const { data } = await axios.post("/dashboard/projects/edit-texts-project", { textUpdate, id })
+            const token = sessionStorage.getItem('token')
+
+            const { data } = await axios.post(`${API_ENDPOINT}/dashboard/projects/edit-texts-project?token=${token}`, { textUpdate, id })
             const { continueWork, texts, message } = data
             if (continueWork) return setTextProject(texts)
             if (!continueWork) return alert(message)

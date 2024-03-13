@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../../../../images/logo-big.png'
 import { CardMedia } from '@mui/material'
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 const Login = () => {
     const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
@@ -23,10 +24,10 @@ const Login = () => {
             setLoading(true)
             ev.preventDefault()
 
-            const { data } = await axios.post("/auth/login-admin", { userLoginData })
-            const {continueWork, message} = data
+            const { data: { continueWork, message, token } } = await axios.post(`${API_ENDPOINT}/auth/login-admin`, { userLoginData })
+            await sessionStorage.setItem('token', token)
             if (continueWork) return navigate("/dashboard", { replace: true });
-            if(!continueWork) return alert(message)
+            if (!continueWork) return alert(message)
         } catch (error) {
             alert(error)
         } finally {
@@ -36,13 +37,13 @@ const Login = () => {
 
     return (
         <div className='auth-page'>
-                <CardMedia
-                    component="img"
-                    sx={{ maxWidth: 300 }}
-                    className='auth-page__image-logo-login'
-                    image={Logo}
-                    alt="Paella dish"
-                />
+            <CardMedia
+                component="img"
+                sx={{ maxWidth: 300 }}
+                className='auth-page__image-logo-login'
+                image={Logo}
+                alt="Paella dish"
+            />
             <div className='auth__window'>
                 <h2>כניסה</h2>
                 <Form

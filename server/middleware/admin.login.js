@@ -1,21 +1,15 @@
-const jwt = require('jwt-simple');
-const { httpCodes } = require('../utils/httpCodes');
-const { Admin } = require('../model/admin.model');
+const { httpCodes } = require("../utils/httpCodes");
 
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
     try {
-        const { admin } = req.cookies
+        if(!req.user) {
+            console.log(`message: "נא להיכנס למשתמש"`)
+            return res.status(httpCodes.NOT_FOUND).send({ continueWork: false, message: "נא להיכנס למשתמש" });   //if the user is not loggin, return false
+        }
 
-        if (!admin) return next()
-
-        const { userID } = await jwt.decode(admin, process.env.SECRET)
-        const existAdmin = await Admin.findOne({ _id: userID })
-
-        req.user = existAdmin
-
-        return next()
+        return next() //if the user logged continue
     } catch (error) {
-        console.log(`admin.login.js error userLoginMiddlware`)
+        console.log(`user.role.js error userRoleMiddlware`)
         console.error(error);
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }

@@ -4,6 +4,7 @@ import { IUserRegData } from '../inputsIntarface'
 import axios from 'axios'
 import { registerInputs } from '../inputsList'
 import Input from '../../../UI/Input/Input'
+import { API_ENDPOINT } from '../../../../utils/api-connect'
 
 const Register = () => {
     const [userRegData, setUserRegData] = useState<IUserRegData>({ userName: "", email: "", password: "", repeatPassword: "" })
@@ -19,7 +20,8 @@ const Register = () => {
         try {
             setLoading(true)
             ev.preventDefault()
-            const { data } = await axios.post("/auth/reg-admin", { userRegData })
+            const token=sessionStorage.getItem('token')
+            const { data } = await axios.post(`${API_ENDPOINT}/auth/reg-admin?token=${token}`, { userRegData })
             const { continueWork, message } = data
             if (continueWork) return setMessage(data.message);
             if (!continueWork) return alert(message)

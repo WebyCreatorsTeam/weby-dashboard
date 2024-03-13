@@ -5,6 +5,7 @@ import { Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { ImageEditProps } from './ImageEditInterface';
 import CloseIcon from '@mui/icons-material/Close';
+import { API_ENDPOINT } from '../../../../../utils/api-connect';
 
 const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProject }) => {
     const [file, setFile] = useState<any>(null);
@@ -24,14 +25,15 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
             setLoading(true);
             const data = new FormData()
             data.append("my_file", file!)
+            const token = sessionStorage.getItem('token')
 
-            const res = await axios.post(`/dashboard/projects/replace-image-project?id=${id}&oldURL=${oldUrl}`, data, {
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/replace-image-project?token=${token}&id=${id}&oldURL=${oldUrl}`, data, {
                 headers: {
                     'content-type': "mulpipart/form-data"
                 }
             })
             const { continueWork, secure_url, message } = res.data
-            if (continueWork)  {
+            if (continueWork) {
                 alert("תמונה עודכנה בהצלחה")
                 return setUrlProject(secure_url)
             }
@@ -46,7 +48,7 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
     return (
         <div className='image-edit-pop' dir='ltr'>
             <div className='image-edit-pop__edit-window'>
-                <CloseIcon onClick={() => setEditImagePop(false)}/>
+                <CloseIcon onClick={() => setEditImagePop(false)} />
                 <div className='update_project__form-image'>
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
                     <Button

@@ -1,5 +1,5 @@
 import { Suspense, useState } from 'react'
-import { IProject } from '../dashboardInterface'
+import { IProject } from '../UsersCalls/dashboardInterface'
 import ProjectItem from '../../../Components/Dashboard/Project'
 import { headersProjects } from './headersProjects'
 import { Await, Link, useLoaderData } from 'react-router-dom'

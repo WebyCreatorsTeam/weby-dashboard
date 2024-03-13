@@ -19,7 +19,7 @@ exports.registerAdmin = async (req, res) => {
 
         const hashpass = await bcrypt.hash(password, 10);
 
-        const newAdmin = new Admin({ userName, email, password: hashpass, role: "admin" })
+        const newAdmin = new Admin({ userName, email, password: hashpass})
         await newAdmin.save()
 
         return res.status(httpCodes.OK).send({ continueWork: true, message: "משתמש חדש נרשם" })
@@ -29,7 +29,6 @@ exports.registerAdmin = async (req, res) => {
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 }
-
 
 // ---- Login Admin ---- //
 exports.loginAdmin = async (req, res) => {
@@ -63,9 +62,9 @@ exports.loginAdmin = async (req, res) => {
         await existAdmin.addEnterence(newLogin)
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
-        res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
+        // res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
 
-        return res.status(httpCodes.OK).send({ continueWork: true })
+        return res.status(httpCodes.OK).send({ continueWork: true, token })
     } catch (error) {
         console.log(`user/admin cont error loginAdmin`)
         console.error(error);

@@ -19,7 +19,7 @@ const AdminSchema = new Schema({
     role: {
         type: String,
         require: [true],
-        default: "admin"
+        default: "user"
     },
     enternces: [{
         enternceId: {
@@ -34,9 +34,6 @@ const AdminSchema = new Schema({
 
 AdminSchema.methods.addEnterence = function (enter) {
     const enters = [...this.enternces]
-    // const idx = items.findIndex(c => {
-    //     return c.remembrId
-    // })
 
     try {
         enters.push({

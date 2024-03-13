@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const uri = process.env.MONGO_DB
+const uri = process.env.MONGODB_URI
 
 exports.dbconnect = () => {
     try {

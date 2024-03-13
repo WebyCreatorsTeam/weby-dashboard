@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { ICallUser } from '../../Pages/Dashboard/dashboardInterface'
+import { ICallUser } from '../../Pages/Dashboard/UsersCalls/dashboardInterface'
 import axios from 'axios'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';
@@ -7,6 +7,7 @@ import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { red, yellow, blue } from '@mui/material/colors';
+import { API_ENDPOINT } from '../../../utils/api-connect';
 
 export interface IUserCall {
     user: ICallUser
@@ -23,9 +24,9 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const [favorite, setFavorite] = useState<boolean>(user.favorite!)
 
     const hendleArchive = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("/dashboard/users/archive-user", {
+        const token=sessionStorage.getItem('token')
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/archive-user?token=${token}`, {
             userId, archive: !archive, favorite: false
-            // userId, archive: !archive, favorite: favorite === true ? true : false
         })
         if (continueWork) {
             setArcive(archiveUser)
@@ -35,7 +36,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const hendleFavorite = async (userId: string) => {
-        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch("/dashboard/users/favorite-user", {
+        const token=sessionStorage.getItem('token')
+        const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/favorite-user?token=${token}`, {
             userId, archive: false, favorite: !favorite
             // userId, favorite: !favorite, archive: archive === true ? true : false
         })
@@ -50,7 +52,8 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const deleteUser = async (userId: string) => {
         if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?") === true) {
             if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
-                const { data: { continueWork } } = await axios.delete("/dashboard/users/delete-user", { data: { userId } })
+                const token=sessionStorage.getItem('token')
+                const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/users/delete-user?token=${token}`, { data: { userId } })
                 if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
             }
         }
