@@ -1,4 +1,5 @@
 const cloudinary = require("cloudinary").v2;
+const { Feedback } = require("../../model/feedback.model");
 const { Projects } = require("../../model/project.model");
 const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
 const { httpCodes } = require("../../utils/httpCodes/index")
@@ -7,7 +8,8 @@ const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
 
 exports.saveNewProject = async (req, res) => {
     try {
-        const { name, description, urlSite, draft } = req.query
+        const { name, description, urlSite, draft, customerName, customerFeedback } = req.query
+        // console.log(req.query)
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -19,7 +21,13 @@ exports.saveNewProject = async (req, res) => {
         }
 
         const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite, draft })
+
         await newProject.save()
+        const feedback = new Feedback({ projectId: newProject._id, customerName, webSiteName: name, customerFeedback })
+        await feedback.save()
+        await feedback.addProjectID(newProject)
+        await newProject.addFeedback(feedback)
+
         return res.status(httpCodes.OK).send({ continueWork: true })
     } catch (error) {
         console.log(`projects cont error saveNewProject`)
@@ -56,7 +64,13 @@ exports.deleteProject = async (req, res) => {
 exports.showProjectToUpdate = async (req, res) => {
     try {
         const { id } = req.body
-        const project = await Projects.findById(id)
+        const projectOne = await Projects.findById(id)
+
+        console.log(projectOne)
+        const project = await projectOne
+            .populate('customerFeedback')
+        console.log(project)
+
         return res.status(httpCodes.OK).send(project)
     } catch (error) {
         console.log(`projects cont error showProductToUpdate`)
@@ -108,9 +122,9 @@ exports.editProductTexts = async (req, res) => {
 
 exports.saveAsDraftorNotToBe = async (req, res) => {
     try {
-        const {draft, id} = req.body
-        await Projects.findByIdAndUpdate(id, {draft})
-        return res.status(httpCodes.OK).send({ continueWork: true,message:"הפרויקט עודכן" })
+        const { draft, id } = req.body
+        await Projects.findByIdAndUpdate(id, { draft })
+        return res.status(httpCodes.OK).send({ continueWork: true, message: "הפרויקט עודכן" })
     } catch (error) {
         console.log(`projects cont error editProductTexts`)
         console.error(error);

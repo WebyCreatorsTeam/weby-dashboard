@@ -10,7 +10,7 @@ import FormBtn from '../../../UI/FormBtn/FormBtn'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
 
 const AddNewProject: FC = () => {
-    const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "" })
+    const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "", customerFeedback: "", customerName: "" })
     const [file, setFile] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [prevFileShow, setPrevFileShow] = useState<string>("")
@@ -41,8 +41,8 @@ const AddNewProject: FC = () => {
 
             const data = new FormData()
             data.append("my_file", file!)
-            const token=sessionStorage.getItem('token')
-            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}`, data, {
+            const token = sessionStorage.getItem('token')
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 

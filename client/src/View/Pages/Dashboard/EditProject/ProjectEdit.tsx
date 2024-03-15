@@ -13,14 +13,19 @@ export interface TextProject {
   name: string
   description: string
   urlSite: string
+  customerName?: string
+  customerFeedback?: string
+  // customerFeedback: {
+  // }
 }
 
 const ProjectEdit: FC = () => {
   const { project } = useLoaderData() as { project: IProject }
   const [urlProject, setUrlProject] = useState<string>(project.urlImage)
-  const [textProject, setTextProject] = useState<TextProject>({ name: project.name, description: project.description, urlSite: project.urlSite })
+  const [textProject, setTextProject] = useState<TextProject>({ name: project.name, description: project.description, urlSite: project.urlSite, customerFeedback: project.customerFeedback.customerFeedback, customerName: project.customerFeedback.customerName })
   const [editImagePop, setEditImagePop] = useState<boolean>(false)
   const [editTextPop, setEditTextPop] = useState<boolean>(false)
+  const [editFeedbackPop, setEditFeedbackPop] = useState<boolean>(false)
   const [editDraft, setEditDraft] = useState<boolean>(project.draft)
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -56,8 +61,13 @@ const ProjectEdit: FC = () => {
             textProject={textProject}
             id={project._id}
             setTextProject={setTextProject}
-          />
-          }
+          />}
+          {editFeedbackPop && <TextEdit
+            setEditTextPop={setEditFeedbackPop}
+            textProject={textProject}
+            id={project._id}
+            setTextProject={setTextProject}
+          />}
           <div className='edit_project__header-image'>
             <div className="edit_btn">
               <Button className="edit_btn" color="secondary" variant="contained" onClick={() => setEditImagePop(!editImagePop)}>עידכון תמונה</Button>
@@ -86,9 +96,27 @@ const ProjectEdit: FC = () => {
               </Button>
             </div>
             <div className='edit_project__texts'>
-              <h2 className='big_header'>{textProject.name}</h2>
-              <p>{textProject.description}</p>
-              <p>{textProject.urlSite}</p>
+              <div className='big_header'>
+                <p>שם הפרויקט: </p>
+                <h2 >{textProject.name}</h2>
+              </div>
+              <div>
+                <p>תיאור הפרויקט: </p>
+                <h3>{textProject.description}</h3>
+              </div>
+              <div>
+                <p>קישור לאתר</p>
+                <a href={textProject.urlSite}><h3>{textProject.urlSite}</h3></a>
+              </div>
+              <div className="edit_btn">
+                <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>עידכון פידבק</Button>
+              </div>
+              <div>
+                <p>פידבק</p>
+                <h3>{textProject.customerFeedback}</h3>
+                <h3>{textProject.customerName}</h3>
+              </div>
+
             </div>
           </div>
         </div>

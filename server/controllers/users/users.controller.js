@@ -56,10 +56,14 @@ exports.loginAdmin = async (req, res) => {
             return res.status(httpCodes.UNAUTHORIZED).send({ continueWork: false, message: "הסיסמא לא נכונה" })
         }
 
-        const newLogin = new Login({ userName: existAdmin.userName, userId: existAdmin._id })
-        await newLogin.save()
+        /* add cheking of env (dev or production) */
+        if(process.env.NODE_ENV === 'production') {
+            const newLogin = new Login({ userName: existAdmin.userName, userId: existAdmin._id })
+            await newLogin.save()
+            await existAdmin.addEnterence(newLogin)
+        }
+        /* */
 
-        await existAdmin.addEnterence(newLogin)
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
         // res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
