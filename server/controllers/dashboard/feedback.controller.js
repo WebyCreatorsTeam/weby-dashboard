@@ -18,3 +18,15 @@ exports.saveNewFeedback = async (req, res) => {
         return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }
 }
+
+exports.updateFeedback = async (req, res) => {
+    try {
+        const { feedbackUpdate: { customerFeedback, customerName, feedbackID } } = req.body
+        await Feedback.findByIdAndUpdate(feedbackID, {customerFeedback, customerName})
+        return res.status(httpCodes.OK).send({ continueWork: true, customerFeedback, customerName, feedbackID, message:"פידבק עודכן" })
+    } catch (error) {
+        console.log(`feedback cont error saveNewFeedback`)
+        console.error(error);
+        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+    }
+}

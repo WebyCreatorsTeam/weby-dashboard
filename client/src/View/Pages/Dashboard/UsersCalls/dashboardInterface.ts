@@ -18,6 +18,7 @@ export interface IProject {
   _id: string
   draft: boolean
   customerFeedback: {
+    _id: string
     customerFeedback?:string
     customerName?: string
   }

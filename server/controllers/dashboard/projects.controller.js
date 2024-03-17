@@ -66,10 +66,10 @@ exports.showProjectToUpdate = async (req, res) => {
         const { id } = req.body
         const projectOne = await Projects.findById(id)
 
-        console.log(projectOne)
+        // console.log(projectOne)
         const project = await projectOne
             .populate('customerFeedback')
-        console.log(project)
+        // console.log(project)
 
         return res.status(httpCodes.OK).send(project)
     } catch (error) {

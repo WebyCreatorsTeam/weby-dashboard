@@ -8,6 +8,7 @@ import { Button } from '@mui/material'
 import axios from 'axios'
 import SendIcon from '@mui/icons-material/Send';
 import { API_ENDPOINT } from '../../../../utils/api-connect'
+import FeedbackEdit from '../../../Components/Dashboard/Edit/FeedbackEdit/FeedbackEdit'
 
 export interface TextProject {
   name: string
@@ -15,6 +16,7 @@ export interface TextProject {
   urlSite: string
   customerName?: string
   customerFeedback?: string
+  // projectID: string
   // customerFeedback: {
   // }
 }
@@ -62,11 +64,14 @@ const ProjectEdit: FC = () => {
             id={project._id}
             setTextProject={setTextProject}
           />}
-          {editFeedbackPop && <TextEdit
-            setEditTextPop={setEditFeedbackPop}
-            textProject={textProject}
-            id={project._id}
+          {editFeedbackPop && <FeedbackEdit
+            // projectID={project._id}
+            customerName={textProject.customerName!}
+            customerFeedback={textProject.customerFeedback!}
+            feedbackID={project.customerFeedback._id}
+            setEditFeedbackPop={setEditFeedbackPop}
             setTextProject={setTextProject}
+            textProject={textProject}
           />}
           <div className='edit_project__header-image'>
             <div className="edit_btn">
