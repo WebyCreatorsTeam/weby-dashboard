@@ -4,7 +4,6 @@ import { IProject } from '../UsersCalls/dashboardInterface'
 import ImageEdit from '../../../Components/Dashboard/Edit/ImageEdit/ImageEdit'
 import TextEdit from '../../../Components/Dashboard/Edit/TextEdit/TextEdit'
 import { Button } from '@mui/material'
-// import FormBtn from '../../../UI/FormBtn/FormBtn'
 import axios from 'axios'
 import SendIcon from '@mui/icons-material/Send';
 import { API_ENDPOINT } from '../../../../utils/api-connect'
@@ -16,9 +15,6 @@ export interface TextProject {
   urlSite: string
   customerName?: string
   customerFeedback?: string
-  // projectID: string
-  // customerFeedback: {
-  // }
 }
 
 const ProjectEdit: FC = () => {
@@ -65,13 +61,11 @@ const ProjectEdit: FC = () => {
             setTextProject={setTextProject}
           />}
           {editFeedbackPop && <FeedbackEdit
-            // projectID={project._id}
             customerName={textProject.customerName!}
             customerFeedback={textProject.customerFeedback!}
             feedbackID={project.customerFeedback._id}
             setEditFeedbackPop={setEditFeedbackPop}
             setTextProject={setTextProject}
-            textProject={textProject}
           />}
           <div className='edit_project__header-image'>
             <div className="edit_btn">
@@ -121,7 +115,6 @@ const ProjectEdit: FC = () => {
                 <h3>{textProject.customerFeedback}</h3>
                 <h3>{textProject.customerName}</h3>
               </div>
-
             </div>
           </div>
         </div>
