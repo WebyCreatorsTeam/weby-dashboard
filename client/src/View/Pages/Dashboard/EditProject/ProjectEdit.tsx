@@ -31,7 +31,6 @@ const ProjectEdit: FC = () => {
     try {
       setLoading(true)
       const token = sessionStorage.getItem('token')
-
       const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project?token=${token}`, { id, draft })
       if (continueWork) {
         alert(message)
@@ -41,6 +40,18 @@ const ProjectEdit: FC = () => {
       alert(error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const hendleDeleteFeedback = async (feedbackID: string) => {
+    try {
+      if (window.confirm("האם למחוק את הפידבק?")) {
+        const token = sessionStorage.getItem('token')
+        const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/feedbacks/delete-feedback?token=${token}`, { feedbackID })
+        if (continueWork) return setTextProject(text => { return { ...text, customerFeedback: '' } })
+      }
+    } catch (error) {
+      alert(error)
     }
   }
 
@@ -107,14 +118,26 @@ const ProjectEdit: FC = () => {
                 <p>קישור לאתר</p>
                 <a href={textProject.urlSite}><h3>{textProject.urlSite}</h3></a>
               </div>
-              <div className="edit_btn">
-                <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>עידכון פידבק</Button>
-              </div>
-              <div>
-                <p>פידבק</p>
-                <h3>{textProject.customerFeedback}</h3>
-                <h3>{textProject.customerName}</h3>
-              </div>
+              {
+                project.customerFeedback && <>
+                  <div className="edit_btn">
+                    {
+                      !textProject.customerFeedback && !textProject.customerName ?
+                        <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>הוסף  פידבק</Button>
+                        :
+                        <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>עידכון פידבק</Button>
+                    }
+                    {textProject.customerFeedback && textProject.customerName &&
+                      <Button color="error" variant="contained" onClick={() => hendleDeleteFeedback(project.customerFeedback._id)}>הסר פידבק</Button>
+                    }
+                  </div>
+                  <div>
+                    <p>פידבק</p>
+                    <h3>{textProject.customerFeedback}</h3>
+                    <h3>{textProject.customerName}</h3>
+                  </div>
+                </>
+              }
             </div>
           </div>
         </div>

@@ -10,7 +10,9 @@ import ProjectEdit from "../View/Pages/Dashboard/EditProject/ProjectEdit";
 import { projectsLoader } from "../View/Pages/Dashboard/Projects/projectsLoader";
 import { projectLoader } from "../View/Pages/Dashboard/EditProject/projectLoader";
 import { usersCallsLoader } from "../View/Pages/Dashboard/UsersCalls/usersCallsLoader";
+import { feedbackLoader } from "../View/Pages/Dashboard/Feedbacks/feedbacksLoader";
 import ProtectedAuth from "./ProtectedRouts/ProtecterAuth/ProtectedAuth";
+import FeedbacksPage from "../View/Pages/Dashboard/Feedbacks/FeedbacksPage";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -26,6 +28,7 @@ const RouterPage = () => {
                     <Route path="projects" element={< Projects />} loader={projectsLoader} />
                     <Route path="projects/add-new-roject" element={< AddNewProject />} />
                     <Route path="projects/project/:id" element={< ProjectEdit />} loader={projectLoader} />
+                    <Route path="feedbacks" element={< FeedbacksPage />} loader={feedbackLoader} />
                 </Route>
             </Route>
         )

@@ -19,18 +19,18 @@ const AddEditForm: FC<IAddEditProps> = ({ inputs, handleChangeInput }) => {
                             variant="standard"
                             onChange={handleChangeInput}
                             label={inp.placeholder}
-                            required
+                        // required
                         />
                     </FormControl>
                     :
                     <FormControl key={idx} variant="standard">
-                        <InputLabel htmlFor="standard-adornment-password" required>{inp.placeholder}</InputLabel>
+                        <InputLabel htmlFor="standard-adornment-password" >{inp.placeholder}</InputLabel>
                         <Input
                             id="standard-adornment-password"
                             name={inp.name}
                             onChange={handleChangeInput}
                             type={inp.type}
-                            required
+                        // required
                         />
                     </FormControl>
             )}
