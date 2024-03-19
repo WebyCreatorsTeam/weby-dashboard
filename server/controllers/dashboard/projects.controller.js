@@ -9,7 +9,6 @@ const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
 exports.saveNewProject = async (req, res) => {
     try {
         const { name, description, urlSite, draft, customerName, customerFeedback } = req.query
-        // console.log(req.query)
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -52,6 +51,7 @@ exports.deleteProject = async (req, res) => {
         const { id, url } = req.body
         const publicId = getPublicId(url)
         await cloudinary.uploader.destroy(`weby/${publicId}`);
+        await Feedback.deleteOne({ projectId: id })
         await Projects.findByIdAndDelete(id)
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
