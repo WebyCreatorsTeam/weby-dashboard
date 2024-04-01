@@ -8,19 +8,13 @@ import axios from 'axios'
 import SendIcon from '@mui/icons-material/Send';
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import FeedbackEdit from '../../../Components/Dashboard/Edit/FeedbackEdit/FeedbackEdit'
-
-export interface TextProject {
-  name: string
-  description: string
-  urlSite: string
-  customerName?: string
-  customerFeedback?: string
-}
+import { TextProject } from './ProjectEditIntarface'
 
 const ProjectEdit: FC = () => {
   const { project } = useLoaderData() as { project: IProject }
+  console.log(project)
   const [urlProject, setUrlProject] = useState<string>(project.urlImage)
-  const [textProject, setTextProject] = useState<TextProject>({ name: project.name, description: project.description, urlSite: project.urlSite, customerFeedback: project.customerFeedback.customerFeedback, customerName: project.customerFeedback.customerName })
+  const [textProject, setTextProject] = useState<TextProject>({ name: project.name, description: project.description, urlSite: project.urlSite, customerFeedback: project.customerFeedback.customerFeedback, customerName: project.customerFeedback.customerName, projectType: project.projectType })
   const [editImagePop, setEditImagePop] = useState<boolean>(false)
   const [editTextPop, setEditTextPop] = useState<boolean>(false)
   const [editFeedbackPop, setEditFeedbackPop] = useState<boolean>(false)
@@ -115,29 +109,31 @@ const ProjectEdit: FC = () => {
                 <h3>{textProject.description}</h3>
               </div>
               <div>
+                <p>סוג הפרויקט: </p>
+                <h3>{textProject.projectType}</h3>
+              </div>
+              <div>
                 <p>קישור לאתר</p>
                 <a href={textProject.urlSite}><h3>{textProject.urlSite}</h3></a>
               </div>
-              {
-                project.customerFeedback && <>
-                  <div className="edit_btn">
-                    {
-                      !textProject.customerFeedback && !textProject.customerName ?
-                        <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>הוסף  פידבק</Button>
-                        :
-                        <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>עידכון פידבק</Button>
-                    }
-                    {textProject.customerFeedback && textProject.customerName &&
-                      <Button color="error" variant="contained" onClick={() => hendleDeleteFeedback(project.customerFeedback._id)}>הסר פידבק</Button>
-                    }
-                  </div>
-                  <div>
-                    <p>פידבק</p>
-                    <h3>{textProject.customerFeedback}</h3>
-                    <h3>{textProject.customerName}</h3>
-                  </div>
-                </>
-              }
+              {project.customerFeedback && <>
+                <div className="edit_btn">
+                  {
+                    !textProject.customerFeedback && !textProject.customerName ?
+                      <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>הוסף  פידבק</Button>
+                      :
+                      <Button color="secondary" variant="contained" onClick={() => setEditFeedbackPop(!editFeedbackPop)}>עידכון פידבק</Button>
+                  }
+                  {textProject.customerFeedback && textProject.customerName &&
+                    <Button color="error" variant="contained" onClick={() => hendleDeleteFeedback(project.customerFeedback._id)}>הסר פידבק</Button>
+                  }
+                </div>
+                <div>
+                  <p>פידבק</p>
+                  <h3>{textProject.customerFeedback}</h3>
+                  <h3>{textProject.customerName}</h3>
+                </div>
+              </>}
             </div>
           </div>
         </div>

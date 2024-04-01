@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { SelectChangeEvent } from '@mui/material/Select';
 import { IProjectDetails } from './addNewInterface'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import { addNewInputs } from './addNewInputsList'
@@ -10,7 +11,7 @@ import FormBtn from '../../../UI/FormBtn/FormBtn'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
 
 const AddNewProject: FC = () => {
-    const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "", customerFeedback: "", customerName: "" })
+    const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "", customerFeedback: "", customerName: "", projectType: "" })
     const [file, setFile] = useState<any>(null);
     const [loading, setLoading] = useState(false);
     const [prevFileShow, setPrevFileShow] = useState<string>("")
@@ -29,6 +30,11 @@ const AddNewProject: FC = () => {
         }
     };
 
+    const handleChange = (ev: SelectChangeEvent) => {
+        let target = ev.target as HTMLInputElement;
+        return setProjectDetails({ ...projectDetails, [target.name]: target.value });
+    };
+
     const handleUpload = async (ev: React.SyntheticEvent, draft: boolean) => {
         try {
             ev.preventDefault()
@@ -42,7 +48,7 @@ const AddNewProject: FC = () => {
             const data = new FormData()
             data.append("my_file", file!)
             const token = sessionStorage.getItem('token')
-            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}`, data, {
+            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}&projectType=${projectDetails.projectType}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 
@@ -63,7 +69,7 @@ const AddNewProject: FC = () => {
                 <div>
                     <UploadFile handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
                     <ProjectsForm loading={loading}>
-                        <AddEditForm inputs={addNewInputs} handleChangeInput={handleChangeInput} />
+                        <AddEditForm projectDetails={projectDetails} inputs={addNewInputs} handleChangeInput={handleChangeInput} handleChange={handleChange} />
                         <FormBtn btnText={"הוספה פרויקט חדש"} loading={loading} submitFunction={(ev: React.SyntheticEvent) => handleUpload(ev, false)} />
                         <FormBtn btnText={"שמור פרויקט כטיוטה"} loading={loading} submitFunction={(ev: React.SyntheticEvent) => handleUpload(ev, true)} />
                     </ProjectsForm>

@@ -1,4 +1,4 @@
-import { TextProject } from "../../../../Pages/Dashboard/EditProject/ProjectEdit"
+import { TextProject } from "../../../../Pages/Dashboard/EditProject/ProjectEditIntarface"
 
 export interface TextsEditProps {
     setEditTextPop: Function

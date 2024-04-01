@@ -11,15 +11,16 @@ export interface ICallUser {
 
 export interface IProject {
   description: string
-  name:string
-  urlImage:string
+  name: string
+  urlImage: string
   urlSite: string
   __v?: string
   _id: string
   draft: boolean
   customerFeedback: {
     _id: string
-    customerFeedback?:string
+    customerFeedback?: string
     customerName?: string
-  }
+  },
+  projectType: string
 }

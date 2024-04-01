@@ -2,15 +2,22 @@ import React, { FC, useState } from 'react'
 import axios from 'axios'
 import CloseIcon from '@mui/icons-material/Close';
 import { TextsEditProps } from './textEditIntarface';
-import { FormControl, Input, InputLabel, TextField } from '@mui/material'
+import { FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
 import Form from '../../../../UI/AuthForm/Form';
 import { API_ENDPOINT } from '../../../../../utils/api-connect';
+import { selectValues } from '../../../../Pages/Dashboard/AddNewProject/addNewInputsList';
 
 const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setTextProject }) => {
     const [textUpdate, setTextUpdate] = useState(textProject)
     const [loading, setLoading] = useState(false);
 
+    console.log(textUpdate)
     const handleChangeInput = (ev: React.SyntheticEvent) => {
+        let target = ev.target as HTMLInputElement;
+        return setTextUpdate({ ...textUpdate, [target.name]: target.value });
+    };
+
+    const handleChange = (ev: SelectChangeEvent) => {
         let target = ev.target as HTMLInputElement;
         return setTextUpdate({ ...textUpdate, [target.name]: target.value });
     };
@@ -62,6 +69,20 @@ const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setText
                                     defaultValue={textUpdate.urlSite}
                                     onChange={handleChangeInput}
                                 />
+                            </FormControl>
+                            <FormControl fullWidth>
+                                <InputLabel id="select-simple-select-label">סוג פרויקט</InputLabel>
+                                <Select
+                                    labelId="select-simple-select-label"
+                                    value={textUpdate.projectType}
+                                    label="סוג פרויקט"
+                                    name="projectType"
+                                    onChange={handleChange}
+                                >
+                                    {selectValues.map((selv, index) => (
+                                        <MenuItem key={index} value={selv.value}>{selv.text}</MenuItem>
+                                    ))}
+                                </Select>
                             </FormControl>
                             <FormControl className='add-project-page__inputs-grid--description'>
                                 <TextField

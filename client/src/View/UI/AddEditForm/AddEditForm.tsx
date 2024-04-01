@@ -1,13 +1,9 @@
 import { FC } from 'react'
-import { FormControl, Input, InputLabel, TextField } from '@mui/material'
-import { IInputsList } from '../../Components/Auth/inputsIntarface'
+import { FormControl, Input, InputLabel, TextField, MenuItem, Select } from '@mui/material'
+import { selectValues } from '../../Pages/Dashboard/AddNewProject/addNewInputsList';
+import { IAddEditProps } from './AddEditFormInterface';
 
-interface IAddEditProps {
-    inputs: Array<IInputsList>
-    handleChangeInput: (ev: React.SyntheticEvent) => void
-}
-
-const AddEditForm: FC<IAddEditProps> = ({ inputs, handleChangeInput }) => {
+const AddEditForm: FC<IAddEditProps> = ({ projectDetails, inputs, handleChangeInput, handleChange }) => {
     return (
         <div className='add-project-page__inputs-grid' dir='rtl'>
             {inputs.map((inp, idx) =>
@@ -34,6 +30,20 @@ const AddEditForm: FC<IAddEditProps> = ({ inputs, handleChangeInput }) => {
                         />
                     </FormControl>
             )}
+            <FormControl fullWidth>
+                <InputLabel id="select-simple-select-label">סוג פרויקט</InputLabel>
+                <Select
+                    labelId="select-simple-select-label"
+                    value={projectDetails.projectType}
+                    label="סוג פרויקט"
+                    name="projectType"
+                    onChange={handleChange}
+                >
+                    {selectValues.map((selv, index) => (
+                        <MenuItem key={index} value={selv.value}>{selv.text}</MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
         </div>
     )
 }

@@ -8,7 +8,8 @@ const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
 
 exports.saveNewProject = async (req, res) => {
     try {
-        const { name, description, urlSite, draft, customerName, customerFeedback } = req.query
+        const { name, description, urlSite, draft, customerName, customerFeedback, projectType } = req.query
+        console.log(name, description, urlSite, draft, customerName, customerFeedback, projectType)
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -19,7 +20,7 @@ exports.saveNewProject = async (req, res) => {
             return res.status(httpCodes.BAD_REQUEST).json({ continueWork: false, message: "שגיא" });
         }
 
-        const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite, draft })
+        const newProject = new Projects({ urlImage: cldRes.secure_url, name, description, urlSite, draft, projectType })
 
         await newProject.save()
         const feedback = new Feedback({ projectId: newProject._id, customerName, webSiteName: name, customerFeedback })
@@ -66,10 +67,8 @@ exports.showProjectToUpdate = async (req, res) => {
         const { id } = req.body
         const projectOne = await Projects.findById(id)
 
-        // console.log(projectOne)
         const project = await projectOne
             .populate('customerFeedback')
-        // console.log(project)
 
         return res.status(httpCodes.OK).json(project)
     } catch (error) {
@@ -110,9 +109,10 @@ exports.hendleReplace = async (req, res) => {
 
 exports.editProductTexts = async (req, res) => {
     try {
-        const { textUpdate: { name, description, urlSite }, id } = req.body
-        await Projects.findByIdAndUpdate(id, { name, description, urlSite })
-        return res.status(httpCodes.OK).json({ continueWork: true, texts: { name, description, urlSite } })
+        const { textUpdate: { name, description, urlSite, projectType }, id } = req.body
+        console.log(projectType)
+        await Projects.findByIdAndUpdate(id, { name, description, urlSite, projectType })
+        return res.status(httpCodes.OK).json({ continueWork: true, texts: { name, description, urlSite, projectType } })
     } catch (error) {
         console.log(`projects cont error editProductTexts`)
         console.error(error);

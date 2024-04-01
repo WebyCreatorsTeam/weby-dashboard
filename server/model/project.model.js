@@ -22,6 +22,10 @@ const ProjectSchema = new Schema({
     customerFeedback: {
         type: Schema.Types.ObjectId,
         ref: "Feedback"
+    },
+    projectType: {
+        type: String,
+        require: [true, "צריך לבחוק סוג הפרויקט"]
     }
 })
 

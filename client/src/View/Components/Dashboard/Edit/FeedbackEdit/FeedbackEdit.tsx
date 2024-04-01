@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Form from '../../../../UI/AuthForm/Form';
 import { API_ENDPOINT } from '../../../../../utils/api-connect';
 import axios from 'axios';
-import { TextProject } from '../../../../Pages/Dashboard/EditProject/ProjectEdit';
+import { TextProject } from '../../../../Pages/Dashboard/EditProject/ProjectEditIntarface';
 
 export interface IFeedbackEdit extends IFeedbackUpdate {
     setEditFeedbackPop: Function
