@@ -78,10 +78,18 @@ const RichTextEdit: FC<IRichTextEdit> = ({ blogContext, setBlogContext }) => {
             <button type="button" onClick={hendleAddUnderline}>UNDERLINE</button>
             <button type="button" onClick={hendleAddCode}>CODE</button>
             <button type="button" onClick={hendleAddDel}>STRIKE (DEL)</button>
-
-            <textarea onClick={selectedTextFunc} onChange={inputsHandler} defaultValue={blogContext.body.value} placeholder='היו היה...' name="postText" ref={areaTextRef} rows={10} cols={50}>
-            </textarea>
-            <div dangerouslySetInnerHTML={{ __html: blogContext.body.value }}></div>
+            <div>
+                <textarea onClick={selectedTextFunc} onChange={inputsHandler} defaultValue={blogContext.body.value} placeholder='היו היה...' name="postText" ref={areaTextRef} rows={10} cols={50}>
+                </textarea>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: blogContext.body.value }} contentEditable={true}></div>
+            {/* 
+            <div
+                // dangerouslySetInnerHTML={{ __html: blogContext.body.value }}
+                contentEditable={true}>
+                היו היה...
+            </div>
+             */}
         </div>
     )
 }
