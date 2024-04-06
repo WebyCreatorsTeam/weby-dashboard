@@ -15,8 +15,9 @@ const DashboardNav = () => {
         <nav className='dashboard_nav'>
             <div className='dashboard_nav__links'>
                 {location.pathname !== "/dashboard" && <Link to="/dashboard">עמוד ראשי</Link>}
-                <Link to="/dashboard/projects">פרויקטים שלנו</Link>
-                <Link to="/dashboard/feedbacks">פידבקים שלנו</Link>
+                <Link to="/dashboard/projects">פרויקטים</Link>
+                <Link to="/dashboard/feedbacks">פידבקים</Link>
+                <Link to="/dashboard/blog">בלוג</Link>
                 <Link to="/dashboard/reg">רישום משתמש חדש</Link>
             </div>
             <div className='dashboard_nav__links--lefts-ide'>
