@@ -1,0 +1,34 @@
+.tiptop_edit {
+    border: 1px solid rgb(103, 103, 103);
+    // width: 60%;
+    // margin: 3% auto;
+    // border-radius: 10px;
+}
+
+.main_btns_edit {
+    border-bottom: 1px solid rgb(157, 157, 157);
+
+    & button {
+        display: flex;
+        font-size: 16px;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.flex_elements {
+    display: flex;
+    margin: 0.5%;
+}
+
+.edit_display {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tiptap {
+    height: 25vh;
+    overflow-x: auto;
+    box-sizing: border-box;
+    padding: 0% 1%;
+}

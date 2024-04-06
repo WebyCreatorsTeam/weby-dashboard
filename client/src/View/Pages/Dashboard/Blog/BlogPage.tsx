@@ -9,7 +9,7 @@ const BlogPage: FC = () => {
         const post = { title, content }
         console.log(post)
     }
-    console.log(content)
+    // console.log(content)
     return (
         <div>
             <input type="text" placeholder='כותרת...' onChange={(ev: any) => setTitle(ev.target.value)} />
