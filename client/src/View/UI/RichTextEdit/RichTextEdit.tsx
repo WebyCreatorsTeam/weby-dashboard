@@ -71,13 +71,16 @@ const RichTextEdit: FC<IRichTextEdit> = ({ blogContext, setBlogContext }) => {
         areaTextRef.current.value = newDelText
         setBlogContext((blog: any) => { return { ...blog, body: { value: newDelText } } })
     }
+
     return (
         <div>
-            <button type="button" onClick={hendleAddBold}>BOLD</button>
-            <button type="button" onClick={hendleAddItalic}>ITALIC</button>
-            <button type="button" onClick={hendleAddUnderline}>UNDERLINE</button>
-            <button type="button" onClick={hendleAddCode}>CODE</button>
-            <button type="button" onClick={hendleAddDel}>STRIKE (DEL)</button>
+            <div>
+                <button type="button" onClick={hendleAddBold}>BOLD</button>
+                <button type="button" onClick={hendleAddItalic}>ITALIC</button>
+                <button type="button" onClick={hendleAddUnderline}>UNDERLINE</button>
+                <button type="button" onClick={hendleAddCode}>CODE</button>
+                <button type="button" onClick={hendleAddDel}>STRIKE (DEL)</button>
+            </div>
             <div>
                 <textarea onClick={selectedTextFunc} onChange={inputsHandler} defaultValue={blogContext.body.value} placeholder='היו היה...' name="postText" ref={areaTextRef} rows={10} cols={50}>
                 </textarea>
