@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
 import Tiptap from '../../../Components/Tiptap/Tiptap'
+import Tinymce from '../../../Components/Tinymce/Tinymce'
 
 const BlogPage: FC = () => {
     const [title, setTitle] = useState<string>("")
@@ -12,13 +13,14 @@ const BlogPage: FC = () => {
     console.log(content)
     return (
         <div>
-            <input type="text" placeholder='כותרת...' onChange={(ev: any) => setTitle(ev.target.value)} />
+            <Tinymce />
+            {/* <input type="text" placeholder='כותרת...' onChange={(ev: any) => setTitle(ev.target.value)} />
             <Tiptap setContent={setContent} />
             <div>
                 <h2>תצוגה מקדימה</h2> <h4>על מנת לשמור את השינויים חשוב לשמור את העריכה</h4>
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
-            <button type="button" onClick={hendleSavePost}>שמור</button>
+            <button type="button" onClick={hendleSavePost}>שמור</button> */}
         </div>
     )
 }
