@@ -1,17 +1,25 @@
 import './style.scss'
-
+import { FC } from 'react'
+import { EditorProvider } from '@tiptap/react'
 import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import TextAlign from '@tiptap/extension-text-align'
 import Link from '@tiptap/extension-link'
-import { EditorProvider } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
+import Table from '@tiptap/extension-table'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import TableRow from '@tiptap/extension-table-row'
+import Document from '@tiptap/extension-document'
+import Gapcursor from '@tiptap/extension-gapcursor'
 import StarterKit from '@tiptap/starter-kit'
+import Highlight from '@tiptap/extension-highlight'
 import MenuBar from './MenuBar'
-import { FC } from 'react'
 
 const extensions = [
+    Document,
+    Gapcursor,
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
     TextStyle,
     // .configure({ types: [ListItem.name] }),
@@ -35,6 +43,13 @@ const extensions = [
         openOnClick: true,
         autolink: true,
     }),
+    Highlight.configure({ multicolor: true }),
+    Table.configure({
+        resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
 ]
 
 const content = `
