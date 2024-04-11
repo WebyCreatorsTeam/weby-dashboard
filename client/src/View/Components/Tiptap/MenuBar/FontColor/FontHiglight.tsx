@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { useCurrentEditor } from '@tiptap/react';
 
@@ -6,11 +6,26 @@ export interface IFontHiglight {
     openLightColor: boolean
     setOpenLightColor: Function
     setOpenFontColor: Function
+    setOpenTable: Function
 }
 
-const FontHiglight: FC<IFontHiglight> = ({ openLightColor, setOpenLightColor, setOpenFontColor }) => {
-    // const [openLightColor, setOpenLightColor] = useState(false)
+const FontHiglight: FC<IFontHiglight> = ({ openLightColor, setOpenLightColor, setOpenFontColor, setOpenTable }) => {
     const { editor } = useCurrentEditor()
+
+    useEffect(() => {
+        const checkMouse = (event: any) => {
+            if (event.target!.offsetParent) {
+                // console.log(event.target!.offsetParent.classList[0] === "font_color__palet--elements")
+                if (event.target!.offsetParent.classList[0] !== "font_color__palet--elements") {
+                    setOpenLightColor(false)
+                }
+            }
+            //  else {
+            //     console.log("no parrent")
+            // }
+        }
+        document.addEventListener("mousedown", (ev) => checkMouse(ev))
+    }, [setOpenLightColor])
 
     if (!editor) {
         return null
@@ -34,7 +49,8 @@ const FontHiglight: FC<IFontHiglight> = ({ openLightColor, setOpenLightColor, se
         <div className="flex_elements font_color__palet">
             <button onClick={() => {
                 setOpenLightColor(!openLightColor)
-                setOpenFontColor((open: boolean) => { if (open === false) { return !open } })
+                setOpenFontColor((open: boolean) => { if (open === true) { return !open } })
+                setOpenTable((open: boolean) => { if (open === true) return !open })
             }}>
                 <BorderColorIcon />
             </button>

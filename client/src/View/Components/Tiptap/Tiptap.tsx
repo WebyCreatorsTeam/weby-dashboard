@@ -15,6 +15,8 @@ import Document from '@tiptap/extension-document'
 import Gapcursor from '@tiptap/extension-gapcursor'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
+import Typography from '@tiptap/extension-typography'
+
 import MenuBar from './MenuBar'
 
 const extensions = [
@@ -50,6 +52,7 @@ const extensions = [
     TableRow,
     TableHeader,
     TableCell,
+    Typography
 ]
 
 const content = `

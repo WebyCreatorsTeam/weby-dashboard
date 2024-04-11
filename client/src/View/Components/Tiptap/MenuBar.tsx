@@ -1,6 +1,6 @@
 import { useCurrentEditor } from "@tiptap/react"
 import { ITiptap } from "./Tiptap"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import './style.scss'
 import EditText from "./MenuBar/EditText";
 import EditAlign from "./MenuBar/EditAlign";
@@ -19,11 +19,22 @@ import EditTable from "./MenuBar/Table/EditTable";
 const MenuBar: FC<ITiptap> = ({ setContent }) => {
     const [openFontColor, setOpenFontColor] = useState(false)
     const [openLightColor, setOpenLightColor] = useState(false)
+    const [openTable, setOpenTable] = useState(false)
     const { editor } = useCurrentEditor()
 
     if (!editor) {
         return null
     }
+
+    // useEffect(() => {
+    //     document.addEventListener("mousedown", () => {
+
+    //     })
+    //     // document.addEventListener("mousedown", handleOutsideClick);
+    //     // return () => {
+    //     //     document.removeEventListener("mousedown", handleOutsideClick);
+    //     // };
+    // }, []);
 
     return (
         <div className="main_btns_edit">
@@ -41,9 +52,10 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
                 <EditHorzRole />
                 <EditClear />
                 <EditUndoRedo />
-                <FontColor openFontColor={openFontColor} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} />
-                <FontHiglight openLightColor={openLightColor} setOpenLightColor={setOpenLightColor} setOpenFontColor={setOpenFontColor} />
-                <EditTable />
+                <FontColor openFontColor={openFontColor} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} setOpenTable={setOpenTable} />
+                <FontHiglight openLightColor={openLightColor} setOpenLightColor={setOpenLightColor} setOpenFontColor={setOpenFontColor} setOpenTable={setOpenTable} />
+                <EditTable openTable={openTable} setOpenTable={setOpenTable} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} />
+                <a href="https://tiptap.dev/docs/editor/api/extensions/typography">Typography Rules</a>
             </div>
 
             <button className="flex_elements" onClick={() => setContent(editor.getHTML())}>שמור לתצוגה</button>

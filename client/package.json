@@ -24,6 +24,7 @@
     "@tiptap/extension-table-row": "^2.2.6",
     "@tiptap/extension-text-align": "^2.2.6",
     "@tiptap/extension-text-style": "^2.2.6",
+    "@tiptap/extension-typography": "^2.3.0",
     "@tiptap/pm": "^2.2.5",
     "@tiptap/react": "^2.2.5",
     "@tiptap/starter-kit": "^2.2.5",
