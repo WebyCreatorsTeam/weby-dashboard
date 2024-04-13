@@ -5,6 +5,6 @@ router
     .use('/users', require('./dashboard.router'))
     .use('/projects', require('./project.router'))
     .use('/feedbacks', require('./feedback.router'))
-// .use('/admin-page', adminRole, require(""))
+    .use("/blog", require('./blog.router'))
 
 module.exports = router;

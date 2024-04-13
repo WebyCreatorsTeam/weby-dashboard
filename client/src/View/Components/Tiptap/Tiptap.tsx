@@ -11,8 +11,6 @@ import Table from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
-import Document from '@tiptap/extension-document'
-import Gapcursor from '@tiptap/extension-gapcursor'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
@@ -20,11 +18,8 @@ import Typography from '@tiptap/extension-typography'
 import MenuBar from './MenuBar'
 
 const extensions = [
-    Document,
-    Gapcursor,
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
     TextStyle,
-    // .configure({ types: [ListItem.name] }),
     StarterKit.configure({
         bulletList: {
             keepMarks: true,

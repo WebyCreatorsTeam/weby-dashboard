@@ -9,7 +9,7 @@ const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
 exports.saveNewProject = async (req, res) => {
     try {
         const { name, description, urlSite, draft, customerName, customerFeedback, projectType } = req.query
-        console.log(name, description, urlSite, draft, customerName, customerFeedback, projectType)
+        // console.log(name, description, urlSite, draft, customerName, customerFeedback, projectType)
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -110,7 +110,7 @@ exports.hendleReplace = async (req, res) => {
 exports.editProductTexts = async (req, res) => {
     try {
         const { textUpdate: { name, description, urlSite, projectType }, id } = req.body
-        console.log(projectType)
+        // console.log(projectType)
         await Projects.findByIdAndUpdate(id, { name, description, urlSite, projectType })
         return res.status(httpCodes.OK).json({ continueWork: true, texts: { name, description, urlSite, projectType } })
     } catch (error) {

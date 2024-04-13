@@ -26,16 +26,6 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
         return null
     }
 
-    // useEffect(() => {
-    //     document.addEventListener("mousedown", () => {
-
-    //     })
-    //     // document.addEventListener("mousedown", handleOutsideClick);
-    //     // return () => {
-    //     //     document.removeEventListener("mousedown", handleOutsideClick);
-    //     // };
-    // }, []);
-
     return (
         <div className="main_btns_edit">
             <div className="main_btns_edit__top_edit edit_display">
@@ -55,7 +45,7 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
                 <FontColor openFontColor={openFontColor} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} setOpenTable={setOpenTable} />
                 <FontHiglight openLightColor={openLightColor} setOpenLightColor={setOpenLightColor} setOpenFontColor={setOpenFontColor} setOpenTable={setOpenTable} />
                 <EditTable openTable={openTable} setOpenTable={setOpenTable} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} />
-                <a href="https://tiptap.dev/docs/editor/api/extensions/typography">Typography Rules</a>
+                <a href="https://tiptap.dev/docs/editor/api/extensions/typography" target="_blank" rel="noreferrer">Typography Rules</a>
             </div>
 
             <button className="flex_elements" onClick={() => setContent(editor.getHTML())}>שמור לתצוגה</button>
