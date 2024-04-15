@@ -21,10 +21,14 @@ const BlogPage: FC = () => {
                     {blog.length > 0 ?
                         blog.map(bl => (
                             <div key={bl._id}>
+                                <p>{bl.draft ? "שמור כטיוטה" : "פורסם באתר"}</p>
                                 <Link to={`/dashboard/blog/post/${bl._id}`}>
-                                    <p>{bl.draft ? "שמור כטיוטה" : "פורסם באתר"}</p>
+                                    {/* קרא עוד {'>'} */}
                                     <h2>{bl.title}</h2>
-                                    <div >{bl.content}...</div>
+                                </Link>
+                                <div >{bl.content}...</div>
+                                <Link to={`/dashboard/blog/post/${bl._id}`}>
+                                    קרא עוד {'>'}
                                 </Link>
                             </div>
                         ))
