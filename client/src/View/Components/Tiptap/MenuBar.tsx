@@ -1,6 +1,6 @@
 import { useCurrentEditor } from "@tiptap/react"
 import { ITiptap } from "./Tiptap"
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import './style.scss'
 import EditText from "./MenuBar/EditText";
 import EditAlign from "./MenuBar/EditAlign";
@@ -15,6 +15,7 @@ import EditHorzRole from "./MenuBar/EditHorzRole";
 import FontColor from "./MenuBar/FontColor/FontColor";
 import FontHiglight from "./MenuBar/FontColor/FontHiglight";
 import EditTable from "./MenuBar/Table/EditTable";
+import EditYouTube from "./MenuBar/EditYouTube";
 
 const MenuBar: FC<ITiptap> = ({ setContent }) => {
     const [openFontColor, setOpenFontColor] = useState(false)
@@ -45,6 +46,7 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
                 <FontColor openFontColor={openFontColor} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} setOpenTable={setOpenTable} />
                 <FontHiglight openLightColor={openLightColor} setOpenLightColor={setOpenLightColor} setOpenFontColor={setOpenFontColor} setOpenTable={setOpenTable} />
                 <EditTable openTable={openTable} setOpenTable={setOpenTable} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} />
+                <EditYouTube />
                 <a href="https://tiptap.dev/docs/editor/api/extensions/typography" target="_blank" rel="noreferrer">Typography Rules</a>
             </div>
 

@@ -14,6 +14,8 @@ import TableRow from '@tiptap/extension-table-row'
 import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
+import Underline from '@tiptap/extension-underline'
+import Youtube from '@tiptap/extension-youtube'
 
 import MenuBar from './MenuBar'
 
@@ -47,7 +49,11 @@ const extensions = [
     TableRow,
     TableHeader,
     TableCell,
-    Typography
+    Typography,
+    Underline,
+    Youtube.configure({
+        controls: false,
+    }),
 ]
 
 const content = `
