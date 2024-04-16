@@ -9,6 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import FeedbackEdit from '../../../Components/Dashboard/Edit/FeedbackEdit/FeedbackEdit'
 import { TextProject } from './ProjectEditIntarface'
+import SEO from '../../../Components/SEO/SEO'
 
 const ProjectEdit: FC = () => {
   const { project } = useLoaderData() as { project: IProject }
@@ -52,6 +53,7 @@ const ProjectEdit: FC = () => {
   return (
     <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
       <Await resolve={project}>
+        <SEO title={"עריכת פרויקט"} />
         <div className='edit_project'>
           {editImagePop && <ImageEdit
             setEditImagePop={setEditImagePop}

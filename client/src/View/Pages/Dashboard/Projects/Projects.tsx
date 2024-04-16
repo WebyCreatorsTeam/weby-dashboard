@@ -4,6 +4,7 @@ import ProjectItem from '../../../Components/Dashboard/Project'
 import { headersProjects } from './headersProjects'
 import { Await, Link, useLoaderData } from 'react-router-dom'
 import { Button } from '@mui/material'
+import SEO from '../../../Components/SEO/SEO'
 
 const Projects = () => {
   const { projects } = useLoaderData() as { projects: Array<IProject> }
@@ -11,6 +12,7 @@ const Projects = () => {
 
   return (
     <div className='project_main'>
+      <SEO title={"פרויקטים"} />
       <h2 className='big_header'>הפרויקטים שלנו</h2>
       <Link
         to="/dashboard/projects/add-new-roject">

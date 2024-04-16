@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Await, Link, useLoaderData } from 'react-router-dom'
 import { headerFeedbacks } from './feedbackHeaderList'
 import { IFeedbacks } from './InterfaceFeedback'
+import SEO from '../../../Components/SEO/SEO'
 
 
 
@@ -12,6 +13,7 @@ const FeedbacksPage = () => {
         <div
         // className='project_main'
         >
+            <SEO title={"פידבקים"} />
             <h2 className='big_header'>הפידבקים שלנו</h2>
             <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
                 <Await resolve={feedbacks}>

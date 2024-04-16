@@ -2,6 +2,7 @@ import axios from 'axios'
 import { FC, Suspense } from 'react'
 import { Await, Link, defer, useLoaderData } from 'react-router-dom'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
+import SEO from '../../../Components/SEO/SEO'
 
 export interface IBlog {
     title: string
@@ -15,6 +16,7 @@ const BlogPage: FC = () => {
 
     return (
         <div>
+            <SEO title={"בלוג"} />
             <Link to="/dashboard/blog/add-new-blog">הוספת פוסט חדש</Link>
             <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
                 <Await resolve={blog}>
@@ -28,7 +30,7 @@ const BlogPage: FC = () => {
                                 </Link>
                                 <div >{bl.content}...</div>
                                 <Link to={`/dashboard/blog/post/${bl._id}`}>
-                                    קרא עוד {'>'}
+                                    המשך קריאה {'>'}
                                 </Link>
                             </div>
                         ))

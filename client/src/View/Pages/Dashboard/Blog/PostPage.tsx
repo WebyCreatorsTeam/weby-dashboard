@@ -1,16 +1,20 @@
 import React, { Suspense } from 'react'
 import { Await, useLoaderData } from 'react-router-dom'
 import { IBlog } from './BlogPage'
+import SEO from '../../../Components/SEO/SEO'
 
 const PostPage = () => {
     const { post } = useLoaderData() as { post: IBlog }
-    console.log(post)
 
     return (
         <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
             <Await resolve={post}>
-                <div>Post</div>
-                <div>PostPage</div>
+                <SEO title={post.title} />
+                <div>
+                    <p>{post.draft ? "שמור כטיוטה" : "מוצג באתר"}</p>
+                    <h1>{post.title}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                </div>
             </Await>
         </Suspense>
     )

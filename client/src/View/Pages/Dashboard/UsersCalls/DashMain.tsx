@@ -3,6 +3,7 @@ import { ICallUser } from './dashboardInterface'
 import { headerUsersCall } from './headersUsersCall'
 import UserCall from '../../../Components/Dashboard/UserCall'
 import { Await, useLoaderData } from 'react-router-dom'
+import SEO from '../../../Components/SEO/SEO'
 
 const DashMain = () => {
   const { usersCalls } = useLoaderData() as { usersCalls: ICallUser[] }
@@ -13,6 +14,7 @@ const DashMain = () => {
 
   return (
     <div className='dashboard_main'>
+      <SEO title={"עמוד ראשי"} />
       <h2 className='big_header'>ניהול עמוד WEBY</h2>
       <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
         <Await resolve={usersCalls}>

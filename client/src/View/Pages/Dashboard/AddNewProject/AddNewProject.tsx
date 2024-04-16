@@ -9,6 +9,7 @@ import AddEditForm from '../../../UI/AddEditForm/AddEditForm'
 import ProjectsForm from '../../../UI/ProjectsForm/ProjectsForm'
 import FormBtn from '../../../UI/FormBtn/FormBtn'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
+import SEO from '../../../Components/SEO/SEO';
 
 const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "", customerFeedback: "", customerName: "", projectType: "" })
@@ -64,6 +65,7 @@ const AddNewProject: FC = () => {
 
     return (
         <div dir='ltr' >
+            <SEO title={"הוסף פרויקט חדש"} />
             <h2 className='big_header'>הוספת פרויקט חדש</h2>
             <div className='add-project-page'>
                 <div>

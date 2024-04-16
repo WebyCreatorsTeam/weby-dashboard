@@ -3,6 +3,7 @@ import Tiptap from '../../../Components/Tiptap/Tiptap'
 import axios from 'axios'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import { useNavigate } from 'react-router-dom'
+import SEO from '../../../Components/SEO/SEO'
 
 const AddNewBlog: FC = () => {
     const [title, setTitle] = useState<string>("")
@@ -26,6 +27,7 @@ const AddNewBlog: FC = () => {
 
     return (
         <div>
+            <SEO title={"הוספת פוסט"} />
             <input type="text" placeholder='כותרת...' onChange={(ev: any) => setTitle(ev.target.value)} />
             <Tiptap setContent={setContent} />
             <div>
