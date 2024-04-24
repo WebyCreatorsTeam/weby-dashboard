@@ -16,6 +16,7 @@ import FontColor from "./MenuBar/FontColor/FontColor";
 import FontHiglight from "./MenuBar/FontColor/FontHiglight";
 import EditTable from "./MenuBar/Table/EditTable";
 import EditYouTube from "./MenuBar/EditYouTube";
+import EditImage from "./MenuBar/EditImage";
 
 const MenuBar: FC<ITiptap> = ({ setContent }) => {
     const [openFontColor, setOpenFontColor] = useState(false)
@@ -35,9 +36,9 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
                 <EditHeaders />
                 <EditList />
                 <EditLinks />
-            </div>
+            {/* </div> */}
 
-            <div className="main_btns_edit__bottom_edit edit_display">
+            {/* <div className="main_btns_edit__bottom_edit edit_display"> */}
                 <EditQuote />
                 <EditWrap />
                 <EditHorzRole />
@@ -47,6 +48,7 @@ const MenuBar: FC<ITiptap> = ({ setContent }) => {
                 <FontHiglight openLightColor={openLightColor} setOpenLightColor={setOpenLightColor} setOpenFontColor={setOpenFontColor} setOpenTable={setOpenTable} />
                 <EditTable openTable={openTable} setOpenTable={setOpenTable} setOpenFontColor={setOpenFontColor} setOpenLightColor={setOpenLightColor} />
                 <EditYouTube />
+                <EditImage/>
                 <a href="https://tiptap.dev/docs/editor/api/extensions/typography" target="_blank" rel="noreferrer">Typography Rules</a>
             </div>
 

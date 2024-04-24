@@ -15,8 +15,8 @@ exports.getBlog = async (req, res) => {
 
 exports.addNewPost = async (req, res) => {
     try {
-        const { title, content, draft, tldr } = req.body;
-        const newPost = new Post({ title, content, draft, tldr })
+        const { title, content, draft, summerry } = req.body;
+        const newPost = new Post({ title, content, draft, tldr: summerry })
         await newPost.save()
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {

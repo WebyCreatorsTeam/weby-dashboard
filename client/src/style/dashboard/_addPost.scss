@@ -1,0 +1,26 @@
+.add-post {
+    // background-color: aqua;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    &__editing,  &__preview { 
+        padding: 2%;
+        box-sizing: border-box;
+    }
+
+    &__editing {
+        background-color: rgb(211, 211, 211);
+        display: flex;
+        flex-direction: column;
+        
+        input, textarea {
+            margin: 1% 0%;
+            padding: 1%;
+            font-size: 1rem;
+        }
+    }
+    
+    &__preview {
+        // background-color: burlywood;
+    }
+}

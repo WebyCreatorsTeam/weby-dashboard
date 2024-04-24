@@ -1,5 +1,6 @@
 .tiptop_edit {
     border: 1px solid rgb(103, 103, 103);
+    background-color: white;
     // width: 60%;
     // margin: 3% auto;
     // border-radius: 10px;
@@ -7,6 +8,7 @@
 
 .main_btns_edit {
     border-bottom: 1px solid rgb(157, 157, 157);
+    background-color: rgb(245, 245, 245);
 
     & button {
         display: flex;
