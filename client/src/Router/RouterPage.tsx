@@ -17,6 +17,7 @@ import BlogPage, { blogLoader } from "../View/Pages/Dashboard/Blog/BlogPage";
 import AddNewBlog from "../View/Pages/Dashboard/Blog/AddNewBlog";
 import PostPage from "../View/Pages/Dashboard/Blog/PostPage";
 import { postLoader } from "../View/Pages/Dashboard/Blog/postLoader";
+import EditPost from "../View/Pages/Dashboard/Blog/EditPost";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
@@ -36,6 +37,7 @@ const RouterPage = () => {
                     <Route path="blog" element={< BlogPage />} loader={blogLoader} />
                     <Route path="blog/add-new-blog" element={< AddNewBlog />} />
                     <Route path="blog/post/:id" element={< PostPage />} loader={postLoader} />
+                    <Route path="blog/post/edit/:id" element={< EditPost />} loader={postLoader} />
                 </Route>
             </Route>
         )

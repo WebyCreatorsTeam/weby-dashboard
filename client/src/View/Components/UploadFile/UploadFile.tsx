@@ -20,19 +20,21 @@ const VisuallyHiddenInput = styled('input')({
 interface UploadFileProps {
     handleSelectFile: (e: any) => void
     prevFileShow: string
+    loader?: boolean
 }
 
-const UploadFile: FC<UploadFileProps> = ({ handleSelectFile, prevFileShow }) => {
+const UploadFile: FC<UploadFileProps> = ({ loader, handleSelectFile, prevFileShow }) => {
     return (
         <Button
+            disabled={loader}
             component="label"
             role={undefined}
             variant="contained"
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
-            sx={{ marginBottom: "1%" , backgroundColor: deepPurple[900]}}
+            sx={{ marginBottom: "1%", backgroundColor: deepPurple[900] }}
         >
-            {prevFileShow.length > 0 ? "החלף תמונה" : "נא לבחור קובץ"}
+            {loader ? "מעלה" : prevFileShow.length > 0 ? "החלף תמונה" : "נא לבחור קובץ"}
             < VisuallyHiddenInput type="file" id="file" onChange={handleSelectFile} multiple={false} />
         </Button >
     );

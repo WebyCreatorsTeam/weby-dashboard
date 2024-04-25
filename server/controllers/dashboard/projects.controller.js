@@ -2,14 +2,12 @@ const cloudinary = require("cloudinary").v2;
 const { Feedback } = require("../../model/feedback.model");
 const { Projects } = require("../../model/project.model");
 const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
-const { httpCodes } = require("../../utils/httpCodes/index")
-
-const getPublicId = (imageURL) => imageURL.split("/").pop().split(".")[0];
+const { httpCodes } = require("../../utils/httpCodes/index");
+const { getPublicId, imageUpdater } = require("./utils/file");
 
 exports.saveNewProject = async (req, res) => {
     try {
         const { name, description, urlSite, draft, customerName, customerFeedback, projectType } = req.query
-        // console.log(name, description, urlSite, draft, customerName, customerFeedback, projectType)
 
         const b64 = Buffer.from(req.file.buffer).toString("base64");
         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -75,18 +73,6 @@ exports.showProjectToUpdate = async (req, res) => {
         console.log(`projects cont error showProductToUpdate`)
         console.error(error);
         return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
-    }
-}
-
-const imageUpdater = async (imagePublicId, imagePath) => {
-    try {
-        const result = await cloudinary.uploader.upload(imagePath, {
-            public_id: `weby/${imagePublicId}`
-        })
-        return result
-    } catch (error) {
-        console.log(error)
-        return error
     }
 }
 

@@ -58,18 +58,19 @@ const extensions = [
     Image,
 ]
 
-const content = `
-היו היה...
-`
+// const content = `
+// היו היה...
+// `
 
 export interface ITiptap {
     setContent: Function
+    content: string
 }
 
-const Tiptap: FC<ITiptap> = ({ setContent }) => {
+const Tiptap: FC<ITiptap> = ({ setContent, content }) => {
     return (
         <div className='tiptop_edit'>
-            <EditorProvider slotBefore={<MenuBar setContent={setContent} />} content={content} extensions={extensions} children={undefined}></EditorProvider>
+            <EditorProvider slotBefore={<MenuBar setContent={setContent} content={content} />} content={content} extensions={extensions} children={undefined}></EditorProvider>
         </div>
     )
 }

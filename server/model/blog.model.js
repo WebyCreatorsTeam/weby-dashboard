@@ -16,6 +16,10 @@ const PostSchema = new Schema({
     draft: {
         type: Boolean,
         require
+    },
+    img: {
+        type: String,
+        require
     }
 }, { timestamps: true })
 

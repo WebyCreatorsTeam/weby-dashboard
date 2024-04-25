@@ -3,7 +3,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 
-    &__editing,  &__preview { 
+    &__editing,
+    &__preview {
         padding: 2%;
         box-sizing: border-box;
     }
@@ -12,15 +13,34 @@
         background-color: rgb(211, 211, 211);
         display: flex;
         flex-direction: column;
-        
-        input, textarea {
+
+        input,
+        textarea {
             margin: 1% 0%;
             padding: 1%;
             font-size: 1rem;
         }
     }
-    
+
     &__preview {
-        // background-color: burlywood;
+        &>div:nth-child(1) {
+            background-color: rgb(246, 222, 190);
+            padding: 2%;
+        }
+
+        &>div:nth-child(2) {
+            // background-color: rgb(246, 222, 190);
+            padding: 2%;
+            border: 1px dashed grey;
+
+            .summery {
+                background-color: rgb(227, 227, 227);
+            }
+
+            // p:nth-child(1) {
+            //     background-color: azure;
+            // }
+
+        }
     }
 }

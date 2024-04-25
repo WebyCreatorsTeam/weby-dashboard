@@ -12,6 +12,11 @@ const PostPage = () => {
                 <SEO title={post.title} />
                 <div>
                     <p>{post.draft ? "שמור כטיוטה" : "מוצג באתר"}</p>
+                    <img src={post.img} alt="post" />
+                    <div>
+                        <h4>tl:dr</h4>
+                        <p>{post.tldr}</p>
+                    </div>
                     <h1>{post.title}</h1>
                     <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
                 </div>

@@ -49,11 +49,10 @@ const AddNewProject: FC = () => {
             const data = new FormData()
             data.append("my_file", file!)
             const token = sessionStorage.getItem('token')
-            const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}&projectType=${projectDetails.projectType}`, data, {
+            const { data: { continueWork, message } } = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}&projectType=${projectDetails.projectType}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })
 
-            const { data: { continueWork, message } } = res
             if (continueWork) return navigate("/dashboard/projects", { replace: true })
             if (!continueWork) return alert(message)
         } catch (error) {

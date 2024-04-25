@@ -9,6 +9,8 @@ export interface IBlog {
     content: string
     draft: boolean
     _id: string
+    tldr?: string
+    img: string
 }
 
 const BlogPage: FC = () => {
@@ -24,6 +26,7 @@ const BlogPage: FC = () => {
                         blog.map(bl => (
                             <div key={bl._id}>
                                 <p>{bl.draft ? "שמור כטיוטה" : "פורסם באתר"}</p>
+                                <img src={bl.img} alt="post" />
                                 <Link to={`/dashboard/blog/post/${bl._id}`}>
                                     {/* קרא עוד {'>'} */}
                                     <h2>{bl.title}</h2>
@@ -32,6 +35,7 @@ const BlogPage: FC = () => {
                                 <Link to={`/dashboard/blog/post/${bl._id}`}>
                                     המשך קריאה {'>'}
                                 </Link>
+                                <Link to={`/dashboard/blog/post/edit/${bl._id}`}>עריכת פוסט</Link>
                             </div>
                         ))
                         : <>אין כתבות...</>}
