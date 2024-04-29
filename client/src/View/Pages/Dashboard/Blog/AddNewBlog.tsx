@@ -16,7 +16,7 @@ const AddNewBlog: FC = () => {
     const [postImg, setPostImg] = useState<string>('')
     const [prevFileShow, setPrevFileShow] = useState<string>("")
 
-    console.log(postImg)
+    // console.log(postImg)
     const hendleSavePost = async (draft: boolean) => {
         try {
             setLoader(true)
