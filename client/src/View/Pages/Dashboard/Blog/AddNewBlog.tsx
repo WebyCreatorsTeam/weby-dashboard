@@ -13,17 +13,19 @@ const AddNewBlog: FC = () => {
     const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const [content, setContent] = useState<string>('לחצ/י על "שמור לתצוגה" על מנת לראות תצוגה מקדימה')
-    const [postImg, setPostImg] = useState<string>('')
-    const [prevFileShow, setPrevFileShow] = useState<string>("")
+    const [postBigImg, setPostBigImg] = useState<string>('')
+    const [postSmallImg, setPostSmallImg] = useState<string>('')
+    // const [prevFileShow, setPrevFileShow] = useState<string>("")
 
-    // console.log(postImg)
+    console.log(postBigImg)
+    console.log(postSmallImg)
     const hendleSavePost = async (draft: boolean) => {
         try {
             setLoader(true)
             if (content === 'לחצ/י על "שמור לתצוגה" על מנת לראות תצוגה מקדימה' || content.length === 0) return alert('נא ללחוץ על "שמור לתצוגה" לפני השמירה')
             // if (!postImg) return alert("נא לבחור תמונה")
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-new-post?token=${token}`, { title, content, draft, summerry, postImg })
+            const { data: { continueWork } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-new-post?token=${token}`, { title, content, draft, summerry, postBigImg, postSmallImg })
             if (continueWork) return navigate("/dashboard/blog", { replace: true });
         } catch (error) {
             alert(error)
@@ -32,7 +34,7 @@ const AddNewBlog: FC = () => {
         }
     }
 
-    const handleSelectFile = async (ev: React.SyntheticEvent) => {
+    const handleSelectBigImage = async (ev: React.SyntheticEvent) => {
         try {
             setLoader(true)
             let target = ev.target as HTMLInputElement;
@@ -40,10 +42,30 @@ const AddNewBlog: FC = () => {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
                 const token = sessionStorage.getItem('token')
-                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
-                    setPostImg(url)
-                    return setPrevFileShow(url);
+                    return setPostBigImg(url)
+                    // return setPrevFileShow(url);
+                }
+            }
+        } catch (error) {
+            alert(error)
+        } finally {
+            setLoader(false)
+        }
+    };
+    const handleSelectSmallImage = async (ev: React.SyntheticEvent) => {
+        try {
+            setLoader(true)
+            let target = ev.target as HTMLInputElement;
+            if (target.files && target.files[0]) {
+                const imgData = new FormData()
+                imgData.append("my_file", target.files[0])
+                const token = sessionStorage.getItem('token')
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                if (continueWork) {
+                    return setPostSmallImg(url)
+                    // return setPrevFileShow(url);
                 }
             }
         } catch (error) {
@@ -53,11 +75,29 @@ const AddNewBlog: FC = () => {
         }
     };
 
+    const hendleDeletePostImage = async (img: string) => {
+        try {
+            setLoader(true)
+            const token = sessionStorage.getItem('token')
+            const { data: { continueWork, url } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
+            if (continueWork) return alert("תמונה נמחקה")
+            // setPostImg(url)
+            // delete-image-post
+        } catch (error) {
+            alert(error)
+        } finally {
+            setLoader(false)
+        }
+    }
+
     return (
         <div className='add-post'>
             <SEO title={"הוספת פוסט"} />
             <div className='add-post__editing'>
-                <UploadFile loader={loader} handleSelectFile={handleSelectFile} prevFileShow={prevFileShow} />
+                <h2>הוספת תמונה גדולה (לפוסט עצמו)</h2>
+                <UploadFile loader={loader} handleSelectFile={handleSelectBigImage} prevFileShow={postBigImg} />
+                <h2> הוספת תמונה קטנה (לרשימת פוסטים)</h2>
+                <UploadFile loader={loader} handleSelectFile={handleSelectSmallImage} prevFileShow={postSmallImg} />
                 <input type="text" placeholder='כותרת...' onChange={(ev: any) => setTitle(ev.target.value)} />
                 <textarea placeholder='סיכום של הפוסט' onChange={(ev: any) => setSummery(ev.target.value)}></textarea>
                 <Tiptap setContent={setContent} content={content} />
@@ -68,9 +108,20 @@ const AddNewBlog: FC = () => {
                     <h4>על מנת לשמור את השינויים חשוב ללחוץ על "שמור לתצוגה"</h4>
                 </div>
                 <div>
-                    {prevFileShow.length > 0 && (
-                        <img src={prevFileShow} alt="project header" width={600} />
-                    )}
+                    <div>
+                        <p>תמונה קטנה</p>
+                        {postSmallImg.length > 0 && (
+                            <img src={postSmallImg} alt="project small header" width={600} />
+                        )}
+                        <button onClick={()=>hendleDeletePostImage(postSmallImg)}>מחק תממונה קטנה</button>
+                    </div>
+                    <div>
+                        <p>תמונה גדולה</p>
+                        {postBigImg.length > 0 && (
+                            <img src={postBigImg} alt="project big header" width={600} />
+                        )}
+                        <button onClick={()=>hendleDeletePostImage(postBigImg)}>מחק תממונה גדולה</button>
+                    </div>
                     <h2>{title}</h2>
                     {summerry && (
                         <div className='summery'>

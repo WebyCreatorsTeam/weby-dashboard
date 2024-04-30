@@ -17,10 +17,15 @@ const PostSchema = new Schema({
         type: Boolean,
         require
     },
-    img: {
+    coverImg: {
         type: String,
         require
-    }
+    }, 
+    smallImg: {
+        type: String,
+        require
+    }, 
+
 }, { timestamps: true })
 
 exports.Post = model("Post", PostSchema)

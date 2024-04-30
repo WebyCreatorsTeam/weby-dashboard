@@ -10,7 +10,8 @@ export interface IBlog {
     draft: boolean
     _id: string
     tldr?: string
-    img: string
+    coverImg: string
+    smallImg: string
 }
 
 const BlogPage: FC = () => {
@@ -26,7 +27,7 @@ const BlogPage: FC = () => {
                         blog.map(bl => (
                             <div key={bl._id}>
                                 <p>{bl.draft ? "שמור כטיוטה" : "פורסם באתר"}</p>
-                                <img src={bl.img} alt="post" />
+                                <img src={bl.smallImg} alt={`איור פוסט ${bl.title} `}/>
                                 <Link to={`/dashboard/blog/post/${bl._id}`}>
                                     {/* קרא עוד {'>'} */}
                                     <h2>{bl.title}</h2>
