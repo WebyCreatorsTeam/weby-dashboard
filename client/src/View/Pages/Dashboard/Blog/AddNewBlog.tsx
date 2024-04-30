@@ -79,7 +79,8 @@ const AddNewBlog: FC = () => {
         try {
             setLoader(true)
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork, url } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
+            const { data: { continueWork} } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
+                // , url
             if (continueWork) return alert("תמונה נמחקה")
             // setPostImg(url)
             // delete-image-post

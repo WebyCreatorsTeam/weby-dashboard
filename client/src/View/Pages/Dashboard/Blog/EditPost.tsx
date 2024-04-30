@@ -11,13 +11,11 @@ const EditPost = () => {
     const { post } = useLoaderData() as { post: IBlog }
     const [title, setTitle] = useState<string>(post.title)
     const [summerry, setSummery] = useState<string | undefined>(post.tldr)
-    // const [postImg, setPostImg] = useState<string>(post.coverImg ? post.coverImg : "")
     const [postBigImg, setPostBigImg] = useState<string>(post.coverImg ? post.coverImg : "")
     const [postSmallImg, setPostSmallImg] = useState<string>(post.smallImg ? post.coverImg : "")
     const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const [content, setContent] = useState<string>(post.content)
-    // const [prevFileShow, setPrevFileShow] = useState<string>("")
 
     const hendleUpdatePost = async (draft: boolean) => {
         try {
@@ -50,29 +48,6 @@ const EditPost = () => {
         }
     }
 
-    // const handleSelectFile = async (ev: React.SyntheticEvent) => {
-    //     try {
-    //         setLoader(true)
-    //         let target = ev.target as HTMLInputElement;
-    //         if (target.files && target.files[0]) {
-    //             const imgData = new FormData()
-    //             imgData.append("my_file", target.files[0])
-    //             const token = sessionStorage.getItem('token')
-    //             const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
-    //             if (continueWork) {
-    //                 return setPostImg(url)
-    //                 // console.log(url)
-    //                 // setPostImg(url)
-    //                 // return setPrevFileShow(url);
-    //             }
-    //         }
-    //     } catch (error) {
-    //         alert(error)
-    //     } finally {
-    //         setLoader(false)
-    //     }
-    // };
-
     const handleSelectBigImage = async (ev: React.SyntheticEvent) => {
         try {
             setLoader(true)
@@ -84,7 +59,6 @@ const EditPost = () => {
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostBigImg(url)
-                    // return setPrevFileShow(url);
                 }
             }
         } catch (error) {
@@ -104,7 +78,6 @@ const EditPost = () => {
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostSmallImg(url)
-                    // return setPrevFileShow(url);
                 }
             }
         } catch (error) {
@@ -118,10 +91,9 @@ const EditPost = () => {
         try {
             setLoader(true)
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork, url } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
+            const { data: { continueWork} } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
+            // , url
             if (continueWork) return alert("תמונה נחמקה")
-            // setPostImg(url)
-            // delete-image-post
         } catch (error) {
             alert(error)
         } finally {
