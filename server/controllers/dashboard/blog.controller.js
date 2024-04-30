@@ -19,21 +19,10 @@ exports.getBlog = async (req, res) => {
 
 exports.addNewPost = async (req, res) => {
     try {
-        const { title, content, draft, summerry, postImg } = req.body;
-        // console.log(req.file)
-        // const b64 = Buffer.from(req.file.buffer).toString("base64");
-        // let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-        // const cldRes = await handleUpload(dataURI);
+        const { title, content, draft, summerry, postBigImg, postSmallImg } = req.body;
 
-        // if (!cldRes.secure_url) {
-        //     console.error("project controller validation error of saveNewProject:", error.message)
-        //     return res.status(httpCodes.BAD_REQUEST).json({ continueWork: false, message: "שגיא" });
-        // }
-
-        // console.log(cldRes.secure_url)
-
-        console.log(title, content, draft, summerry, postImg)
-        const newPost = new Post({ title, content, draft, tldr: summerry, img: postImg })
+        // console.log(title, content, draft, summerry, postImg)
+        const newPost = new Post({ title, content, draft, tldr: summerry, coverImg: postBigImg, smallImg: postSmallImg })
         await newPost.save()
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
@@ -57,9 +46,9 @@ exports.getOnePost = async (req, res) => {
 
 exports.editPost = async (req, res) => {
     try {
-        const { title, content, draft, summerry, id, postImg } = req.body;
+        const { title, content, draft, summerry, id, postBigImg, postSmallImg } = req.body;
         console.log(`12312`)
-        await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry, img: postImg })
+        await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry, coverImg: postBigImg, smallImg: postSmallImg })
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
         console.log(`projects cont error editProductTexts`)

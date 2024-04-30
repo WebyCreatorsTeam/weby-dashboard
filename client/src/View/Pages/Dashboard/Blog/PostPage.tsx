@@ -12,7 +12,7 @@ const PostPage = () => {
                 <SEO title={post.title} />
                 <div>
                     <p>{post.draft ? "שמור כטיוטה" : "מוצג באתר"}</p>
-                    <img src={post.img} alt="post" />
+                    <img src={post.coverImg} alt="post" />
                     <div>
                         <h4>tl:dr</h4>
                         <p>{post.tldr}</p>

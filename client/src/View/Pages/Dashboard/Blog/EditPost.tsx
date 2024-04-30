@@ -11,7 +11,9 @@ const EditPost = () => {
     const { post } = useLoaderData() as { post: IBlog }
     const [title, setTitle] = useState<string>(post.title)
     const [summerry, setSummery] = useState<string | undefined>(post.tldr)
-    const [postImg, setPostImg] = useState<string>(post.img ? post.img : "")
+    // const [postImg, setPostImg] = useState<string>(post.coverImg ? post.coverImg : "")
+    const [postBigImg, setPostBigImg] = useState<string>(post.coverImg ? post.coverImg : "")
+    const [postSmallImg, setPostSmallImg] = useState<string>(post.smallImg ? post.coverImg : "")
     const [loader, setLoader] = useState(false)
     const navigate = useNavigate();
     const [content, setContent] = useState<string>(post.content)
@@ -22,7 +24,7 @@ const EditPost = () => {
             setLoader(true)
             if (content.length === 0) return alert('נא ללחוץ על "שמור לתצוגה" לפני השמירה')
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/update-post?token=${token}`, { title, content, draft, summerry, id: post._id, postImg })
+            const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/update-post?token=${token}`, { title, content, draft, summerry, id: post._id, postBigImg, postSmallImg })
             if (continueWork) return navigate("/dashboard/blog", { replace: true });
         } catch (error) {
             alert(error)
@@ -48,7 +50,30 @@ const EditPost = () => {
         }
     }
 
-    const handleSelectFile = async (ev: React.SyntheticEvent) => {
+    // const handleSelectFile = async (ev: React.SyntheticEvent) => {
+    //     try {
+    //         setLoader(true)
+    //         let target = ev.target as HTMLInputElement;
+    //         if (target.files && target.files[0]) {
+    //             const imgData = new FormData()
+    //             imgData.append("my_file", target.files[0])
+    //             const token = sessionStorage.getItem('token')
+    //             const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+    //             if (continueWork) {
+    //                 return setPostImg(url)
+    //                 // console.log(url)
+    //                 // setPostImg(url)
+    //                 // return setPrevFileShow(url);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         alert(error)
+    //     } finally {
+    //         setLoader(false)
+    //     }
+    // };
+
+    const handleSelectBigImage = async (ev: React.SyntheticEvent) => {
         try {
             setLoader(true)
             let target = ev.target as HTMLInputElement;
@@ -56,11 +81,29 @@ const EditPost = () => {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
                 const token = sessionStorage.getItem('token')
-                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
-                    return setPostImg(url)
-                    // console.log(url)
-                    // setPostImg(url)
+                    return setPostBigImg(url)
+                    // return setPrevFileShow(url);
+                }
+            }
+        } catch (error) {
+            alert(error)
+        } finally {
+            setLoader(false)
+        }
+    };
+    const handleSelectSmallImage = async (ev: React.SyntheticEvent) => {
+        try {
+            setLoader(true)
+            let target = ev.target as HTMLInputElement;
+            if (target.files && target.files[0]) {
+                const imgData = new FormData()
+                imgData.append("my_file", target.files[0])
+                const token = sessionStorage.getItem('token')
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                if (continueWork) {
+                    return setPostSmallImg(url)
                     // return setPrevFileShow(url);
                 }
             }
@@ -71,12 +114,13 @@ const EditPost = () => {
         }
     };
 
-    const hendleDeletePostImage = async () => {
+    const hendleDeletePostImage = async (img: string) => {
         try {
             setLoader(true)
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork, url } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg })
-            if (continueWork) return setPostImg(url)
+            const { data: { continueWork, url } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
+            if (continueWork) return alert("תמונה נחמקה")
+            // setPostImg(url)
             // delete-image-post
         } catch (error) {
             alert(error)
@@ -91,7 +135,10 @@ const EditPost = () => {
                     <SEO title={post.title} />
                     <div className='add-post__editing'>
                         <p>{post.draft ? "שמור כטיוטה" : "מוצג באתר"}</p>
-                        <UploadFile loader={loader} handleSelectFile={handleSelectFile} prevFileShow={postImg.length > 0 ? postImg : ""} />
+                        <h2>הוספת תמונה גדולה (לפוסט עצמו) - 960*540</h2>
+                        <UploadFile loader={loader} handleSelectFile={handleSelectBigImage} prevFileShow={postBigImg} />
+                        <h2> הוספת תמונה קטנה (לרשימת פוסטים) - 320*180</h2>
+                        <UploadFile loader={loader} handleSelectFile={handleSelectSmallImage} prevFileShow={postSmallImg} />
                         <input type="text" placeholder='כותרת...' defaultValue={title} onChange={(ev: any) => setTitle(ev.target.value)} />
                         <textarea placeholder='סיכום של הפוסט' defaultValue={summerry} onChange={(ev: any) => setSummery(ev.target.value)}></textarea>
                         <Tiptap setContent={setContent} content={content} />
@@ -102,12 +149,24 @@ const EditPost = () => {
                             <h4>על מנת לשמור את השינויים חשוב ללחוץ על "שמור לתצוגה"</h4>
                         </div>
                         <div>
-                            {postImg.length > 0 &&
-                                <>
-                                    <img src={postImg} alt="project header" width={600} />
-                                    <button onClick={hendleDeletePostImage}>מחק תמונה</button>
-                                </>
-                            }
+                            <div>
+                                <p>תמונה קטנה</p>
+                                {postSmallImg.length > 0 && (
+                                    <>
+                                        <img src={postSmallImg} alt="project small header" width={600} />
+                                        <button onClick={() => hendleDeletePostImage(postSmallImg)}>מחק תממונה קטנה</button>
+                                    </>
+                                )}
+                            </div>
+                            <div>
+                                <p>תמונה גדולה</p>
+                                {postBigImg.length > 0 && (
+                                    <>
+                                        <img src={postBigImg} alt="project big header" width={600} />
+                                        <button onClick={() => hendleDeletePostImage(postBigImg)}>מחק תממונה גדולה</button>
+                                    </>
+                                )}
+                            </div>
                             <h2>{title}</h2>
                             <div className='summery'>
                                 <h4>tl:dr</h4>
