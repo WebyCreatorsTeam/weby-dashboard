@@ -47,7 +47,7 @@ exports.getOnePost = async (req, res) => {
 exports.editPost = async (req, res) => {
     try {
         const { title, content, draft, summerry, id, postBigImg, postSmallImg } = req.body;
-        console.log(`12312`)
+        // console.log(`12312`)
         await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry, coverImg: postBigImg, smallImg: postSmallImg })
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {

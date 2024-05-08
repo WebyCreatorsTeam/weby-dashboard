@@ -56,7 +56,7 @@ const EditPost = () => {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
                 const token = sessionStorage.getItem('token')
-                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postBigImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostBigImg(url)
                 }
@@ -91,7 +91,7 @@ const EditPost = () => {
         try {
             setLoader(true)
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork} } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
+            const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
             // , url
             if (continueWork) return alert("תמונה נחמקה")
         } catch (error) {

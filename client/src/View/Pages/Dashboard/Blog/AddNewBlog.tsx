@@ -42,7 +42,7 @@ const AddNewBlog: FC = () => {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
                 const token = sessionStorage.getItem('token')
-                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
+                const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postBigImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostBigImg(url)
                     // return setPrevFileShow(url);
@@ -79,8 +79,8 @@ const AddNewBlog: FC = () => {
         try {
             setLoader(true)
             const token = sessionStorage.getItem('token')
-            const { data: { continueWork} } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
-                // , url
+            const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
+            // , url
             if (continueWork) return alert("תמונה נמחקה")
             // setPostImg(url)
             // delete-image-post
@@ -114,14 +114,14 @@ const AddNewBlog: FC = () => {
                         {postSmallImg.length > 0 && (
                             <img src={postSmallImg} alt="project small header" width={600} />
                         )}
-                        <button onClick={()=>hendleDeletePostImage(postSmallImg)}>מחק תממונה קטנה</button>
+                        <button onClick={() => hendleDeletePostImage(postSmallImg)}>מחק תממונה קטנה</button>
                     </div>
                     <div>
                         <p>תמונה גדולה</p>
                         {postBigImg.length > 0 && (
                             <img src={postBigImg} alt="project big header" width={600} />
                         )}
-                        <button onClick={()=>hendleDeletePostImage(postBigImg)}>מחק תממונה גדולה</button>
+                        <button onClick={() => hendleDeletePostImage(postBigImg)}>מחק תממונה גדולה</button>
                     </div>
                     <h2>{title}</h2>
                     {summerry && (
