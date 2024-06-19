@@ -8,7 +8,6 @@ const adminUser = require('./middleware/admin.user')
 const adminLogin = require('./middleware/admin.login')
 const cloudinary = require("cloudinary").v2;
 const cors = require('cors');
-const { showAllFeedbacks } = require('./controllers/dashboard/feedback.controller');
 
 app.use(express.json());
 app.use(cookieParser());
