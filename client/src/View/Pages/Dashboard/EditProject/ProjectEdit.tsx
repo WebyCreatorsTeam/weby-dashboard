@@ -13,7 +13,6 @@ import SEO from '../../../Components/SEO/SEO'
 
 const ProjectEdit: FC = () => {
   const { project } = useLoaderData() as { project: IProject }
-  console.log(project)
   const [urlProject, setUrlProject] = useState<string>(project.urlImage)
   const [textProject, setTextProject] = useState<TextProject>({ name: project.name, description: project.description, urlSite: project.urlSite, customerFeedback: project.customerFeedback.customerFeedback, customerName: project.customerFeedback.customerName, projectType: project.projectType })
   const [editImagePop, setEditImagePop] = useState<boolean>(false)
