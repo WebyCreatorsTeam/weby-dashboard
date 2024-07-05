@@ -96,7 +96,6 @@ exports.hendleReplace = async (req, res) => {
 exports.editProductTexts = async (req, res) => {
     try {
         const { textUpdate: { name, description, urlSite, projectType }, id } = req.body
-        // console.log(projectType)
         await Projects.findByIdAndUpdate(id, { name, description, urlSite, projectType })
         return res.status(httpCodes.OK).json({ continueWork: true, texts: { name, description, urlSite, projectType } })
     } catch (error) {
