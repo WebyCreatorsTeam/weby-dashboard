@@ -5,6 +5,9 @@ import { API_ENDPOINT } from '../../../../utils/api-connect'
 import { useNavigate } from 'react-router-dom'
 import SEO from '../../../Components/SEO/SEO'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 // import { UploadFile } from '@mui/icons-material'
 
 const AddNewBlog: FC = () => {
@@ -24,7 +27,7 @@ const AddNewBlog: FC = () => {
             setLoader(true)
             if (content === 'לחצ/י על "שמור לתצוגה" על מנת לראות תצוגה מקדימה' || content.length === 0) return alert('נא ללחוץ על "שמור לתצוגה" לפני השמירה')
             // if (!postImg) return alert("נא לבחור תמונה")
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data: { continueWork } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-new-post?token=${token}`, { title, content, draft, summerry, postBigImg, postSmallImg })
             if (continueWork) return navigate("/dashboard/blog", { replace: true });
         } catch (error) {
@@ -41,7 +44,7 @@ const AddNewBlog: FC = () => {
             if (target.files && target.files[0]) {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
-                const token = sessionStorage.getItem('token')
+                const token = cookies.get('token')
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postBigImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostBigImg(url)
@@ -61,7 +64,7 @@ const AddNewBlog: FC = () => {
             if (target.files && target.files[0]) {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
-                const token = sessionStorage.getItem('token')
+                const token = cookies.get('token')
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostSmallImg(url)
@@ -78,7 +81,7 @@ const AddNewBlog: FC = () => {
     const hendleDeletePostImage = async (img: string) => {
         try {
             setLoader(true)
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { postImg: img })
             // , url
             if (continueWork) return alert("תמונה נמחקה")

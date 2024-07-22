@@ -5,6 +5,9 @@ import Form from '../../../../UI/AuthForm/Form';
 import { API_ENDPOINT } from '../../../../../utils/api-connect';
 import axios from 'axios';
 import { TextProject } from '../../../../Pages/Dashboard/EditProject/ProjectEditIntarface';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export interface IFeedbackEdit extends IFeedbackUpdate {
     setEditFeedbackPop: Function
@@ -30,7 +33,7 @@ const FeedbackEdit: FC<IFeedbackEdit> = ({ setTextProject, customerName, custome
         try {
             ev.preventDefault()
             setLoading(true);
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             console.log(feedbackUpdate)
 
             const { data } = await axios.patch(`${API_ENDPOINT}/dashboard/feedbacks/update-feedback?token=${token}`, { feedbackUpdate })

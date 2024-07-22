@@ -1,17 +1,16 @@
-.project_main {
+.feedback_main {
     @media screen and (max-width: 800px) {
         overflow-x: scroll;
     }
 
-    &__projectList {
+    &__feedbackList {
         position: relative;
         height: 60vh;
         min-width: 1100px;
 
-        &--headers,
-        &--list__onePro {
+        &--headers, &--list-item {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             align-items: center;
         }
 
@@ -30,7 +29,7 @@
             height: 86%;
             bottom: 0;
 
-            &__onePro {
+            &-item {
                 width: 100%;
 
                 margin: 1% auto;

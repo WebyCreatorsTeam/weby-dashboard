@@ -6,6 +6,9 @@ import { FormControl, Input, InputLabel, MenuItem, Select, SelectChangeEvent, Te
 import Form from '../../../../UI/AuthForm/Form';
 import { API_ENDPOINT } from '../../../../../utils/api-connect';
 import { selectValues } from '../../../../Pages/Dashboard/AddNewProject/addNewInputsList';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setTextProject }) => {
     const [textUpdate, setTextUpdate] = useState(textProject)
@@ -26,7 +29,7 @@ const TextEdit: FC<TextsEditProps> = ({ setEditTextPop, textProject, id, setText
         try {
             setLoading(true);
             ev.preventDefault()
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
 
             const { data } = await axios.post(`${API_ENDPOINT}/dashboard/projects/edit-texts-project?token=${token}`, { textUpdate, id })
             const { continueWork, texts, message } = data

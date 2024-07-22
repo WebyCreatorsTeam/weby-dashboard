@@ -5,27 +5,13 @@
 @import './addProject';
 @import './projectList';
 @import './addPost';
+@import './feedback';
+@import './blog';
 
 .big_header {
     text-align: center;
     color: #8902ff;
 }
-
-.dashboard_main {
-    &__callList {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        align-items: center;
-    }
-}
-
-// .project_main {
-//     &__projectList {
-//         display: grid;
-//         grid-template-columns: repeat(6, 1fr);
-//         align-items: center;
-//     }
-// }
 
 .no_data_text {
     display: flex;

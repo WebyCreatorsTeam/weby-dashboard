@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div dir="rtl">
       <DashboardNav/>
-      <main>
+      <main className='container'>
         <Outlet />
       </main>
     </div>

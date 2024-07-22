@@ -10,6 +10,9 @@ import { API_ENDPOINT } from '../../../../utils/api-connect'
 import FeedbackEdit from '../../../Components/Dashboard/Edit/FeedbackEdit/FeedbackEdit'
 import { TextProject } from './ProjectEditIntarface'
 import SEO from '../../../Components/SEO/SEO'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const ProjectEdit: FC = () => {
   const { project } = useLoaderData() as { project: IProject }
@@ -24,7 +27,7 @@ const ProjectEdit: FC = () => {
   const hendleSaveAsDraftorNotToBe = async (draft: boolean, id: string) => {
     try {
       setLoading(true)
-      const token = sessionStorage.getItem('token')
+      const token = cookies.get('token')
       const { data: { continueWork, message } } = await axios.patch(`${API_ENDPOINT}/dashboard/projects/draft-project?token=${token}`, { id, draft })
       if (continueWork) {
         alert(message)
@@ -40,7 +43,7 @@ const ProjectEdit: FC = () => {
   const hendleDeleteFeedback = async (feedbackID: string) => {
     try {
       if (window.confirm("האם למחוק את הפידבק?")) {
-        const token = sessionStorage.getItem('token')
+        const token = cookies.get('token')
         const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/feedbacks/delete-feedback?token=${token}`, { feedbackID })
         if (continueWork) return setTextProject(text => { return { ...text, customerFeedback: '' } })
       }

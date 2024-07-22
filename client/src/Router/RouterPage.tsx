@@ -18,12 +18,17 @@ import AddNewBlog from "../View/Pages/Dashboard/Blog/AddNewBlog";
 import PostPage from "../View/Pages/Dashboard/Blog/PostPage";
 import { postLoader } from "../View/Pages/Dashboard/Blog/postLoader";
 import EditPost from "../View/Pages/Dashboard/Blog/EditPost";
+import LodinProtected from "./ProtectedRouts/ProtecterAuth/LoginProtected/LodinProtected";
 
 const RouterPage = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<App />}>
-                <Route index element={<Login />} />
+                <Route index element={
+                    <LodinProtected>
+                        <Login />
+                    </LodinProtected>
+                } />
                 <Route path="dashboard" element={
                     <ProtectedAuth>
                         <Layout />

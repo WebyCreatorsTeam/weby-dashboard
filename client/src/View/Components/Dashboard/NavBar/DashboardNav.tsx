@@ -1,32 +1,57 @@
-import Logo from '../../../../images/logo.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import { useMediaQuery } from 'react-responsive'
+import { useEffect, useState } from 'react';
+import Logo from '../../../UI/Logo';
+import { Close, Menu } from '@mui/icons-material';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const DashboardNav = () => {
-    let location = useLocation();
     const navigation = useNavigate()
+    const desktop = useMediaQuery({ query: '(min-width: 768px)' })
+    const [toggleMenu, setToggleMenu] = useState(false);
 
     const hendleLogout = async () => {
-        await sessionStorage.removeItem('token')
+        await cookies.remove('token')
         return navigation("/")
     }
 
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            if (desktop) setToggleMenu(false)
+        })
+    }, [desktop])
+
     return (
-        <nav className='dashboard_nav'>
-            <div className='dashboard_nav__links'>
-                {location.pathname !== "/dashboard" && <Link to="/dashboard">עמוד ראשי</Link>}
-                <Link to="/dashboard/projects">פרויקטים</Link>
-                <Link to="/dashboard/feedbacks">פידבקים</Link>
-                <Link to="/dashboard/blog">בלוג</Link>
-                <Link to="/dashboard/reg">רישום משתמש חדש</Link>
+        <header>
+            <div className={desktop ? "container" : ''}>
+                {!desktop && (
+                    <button
+                        onClick={() => setToggleMenu(!toggleMenu)}
+                    >{toggleMenu ? <Close /> : <Menu />}</button>
+                )}
+                {
+                    (toggleMenu || desktop) && (
+                        <nav className={`dashboard_nav`}>
+                            <div className='dashboard_nav__links'>
+                                <Link to="/dashboard">עמוד ראשי</Link>
+                                <Link to="/dashboard/projects">פרויקטים</Link>
+                                <Link to="/dashboard/feedbacks">פידבקים</Link>
+                                <Link to="/dashboard/blog">בלוג</Link>
+                                <Link to="/dashboard/reg">רישום משתמש חדש</Link>
+                                <Button color="secondary" variant="outlined" onClick={hendleLogout}>יציאה</Button>
+                            </div>
+                        </nav>
+                    )
+                }
+
+                <div className='dashboard_nav__links--lefts-ide'>
+                    <Logo />
+                </div>
             </div>
-            <div className='dashboard_nav__links--lefts-ide'>
-                <Button color="secondary" variant="outlined" onClick={hendleLogout}>יציאה</Button>
-                <Link to="/dashboard">
-                    <img src={Logo} alt="weby logo" />
-                </Link>
-            </div>
-        </nav>
+        </header>
     )
 }
 

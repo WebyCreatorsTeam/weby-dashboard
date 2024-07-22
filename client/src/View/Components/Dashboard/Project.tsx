@@ -7,6 +7,9 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { IProject } from '../../Pages/Dashboard/UsersCalls/dashboardInterface'
 import { API_ENDPOINT } from '../../../utils/api-connect';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export interface IProjectProps {
     project: IProject
@@ -16,7 +19,7 @@ export interface IProjectProps {
 
 const ProjectItem: FC<IProjectProps> = ({ project, setGetProjects, projects }) => {
     const hendleDeleteProject = async (id: string, url: string) => {
-        const token = sessionStorage.getItem('token')
+        const token = cookies.get('token')
         const { data } = await axios.delete(`${API_ENDPOINT}/dashboard/projects/delete-project?token=${token}`, { data: { id, url } })
         const { continueWork } = data
         if (continueWork) return setGetProjects(projects.filter(pro => (pro._id !== id)))

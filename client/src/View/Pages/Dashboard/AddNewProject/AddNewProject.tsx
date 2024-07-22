@@ -10,6 +10,9 @@ import ProjectsForm from '../../../UI/ProjectsForm/ProjectsForm'
 import FormBtn from '../../../UI/FormBtn/FormBtn'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
 import SEO from '../../../Components/SEO/SEO';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const AddNewProject: FC = () => {
     const [projectDetails, setProjectDetails] = useState<IProjectDetails>({ name: "", description: "", urlSite: "", customerFeedback: "", customerName: "", projectType: "" })
@@ -48,7 +51,7 @@ const AddNewProject: FC = () => {
 
             const data = new FormData()
             data.append("my_file", file!)
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data: { continueWork, message } } = await axios.post(`${API_ENDPOINT}/dashboard/projects/save-new-project?token=${token}&name=${projectDetails.name}&description=${projectDetails.description}&urlSite=${projectDetails.urlSite}&draft=${draft}&customerFeedback=${projectDetails.customerFeedback}&customerName=${projectDetails.customerName}&projectType=${projectDetails.projectType}`, data, {
                 headers: { 'content-type': "mulpipart/form-data" }
             })

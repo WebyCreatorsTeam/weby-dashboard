@@ -1,0 +1,43 @@
+.blog {
+    margin: 5% 0% 10% 0%;
+    &__posts-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 2%;
+
+        &--post-item {
+            width: 95%;
+            margin: 0 auto;
+            border: 1px solid rgb(144, 59, 255);
+            border-radius: 15px;
+            box-sizing: border-box;
+            padding: 3% 1%;
+
+            &>p {
+                background-color: rgb(233, 233, 233);
+                text-align: center;
+                padding: 1%;
+                border-radius: 5px; 
+                font-weight: 600;
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+
+        &--actionBtns {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 5%;
+
+            a {
+                background-color: rgb(244, 232, 249);
+                color: rgb(66, 0, 120);
+                padding: 5px 10px;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,104 @@
+.dashboard_main {
+    @media screen and (max-width: 800px) {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    &__callList {
+        position: relative;
+        height: 60vh;
+        min-width: 1100px;
+        // width: 1440px;
+        // overflow-x: scroll;
+        // background-color: aqua;
+
+        &--headers,
+        &--users-items {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            align-items: center;
+            justify-items: center;
+            // display: grid;
+            // grid-template-columns: repeat(7, 1fr);
+            // justify-items: center;
+            // align-items: center;
+            // border-bottom: 1px solid $activeColor;
+        }
+
+        &--users-items {
+            width: 99%;
+
+            margin: 1% auto;
+            border-bottom: 1px solid rgb(144, 59, 255);
+            border-top: 1px solid rgb(221, 162, 255);
+            padding: 1% 0%;
+            border-radius: 0.5rem;
+
+            &--links {
+                display: flex;
+                justify-content: center;
+                width: 10%;
+                cursor: pointer;
+            }
+            
+            &:hover {
+                box-shadow: 0px 1px 2px 1px grey;
+            }
+        }
+
+        &--headers,
+        &--users {
+            position: absolute;
+
+        }
+
+        &--headers {
+            border-bottom: 1px solid black;
+            top: 0;
+            width: 99%;
+        }
+
+
+        &--users {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 85%;
+            bottom: 0;
+            // background-color: aqua;
+            // height: 60vh;
+            width: 100%;
+            // overflow-y: scroll;
+        }
+    }
+
+    &__filter {
+        display: flex;
+        justify-content: center;
+        background-color: rgb(255, 235, 255);
+        padding: .5% 1%;
+        border-radius: 15px;
+
+        &>div {
+            display: flex;
+            width: 30%;
+            justify-content: space-between;
+        }
+
+
+        button {
+            font-size: 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .active-btn {
+            color: $activeColor;
+            font-weight: 600;
+        }
+
+        .unactive-btn {
+            color: $unactiveColor;
+        }
+    }
+}

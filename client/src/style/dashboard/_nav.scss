@@ -1,22 +1,61 @@
+header {
+    background-color: $eggColor;
+    box-shadow: 1px 1px 5px 0px rgba(129, 129, 129, 0.75);
+    height: 80px;
+
+    &>div {
+        display: flex;
+        position: relative;
+        height: 100%;
+    }
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
 .dashboard_nav {
-    background-color: #fafafa;
-    // padding: 1% 2%;
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
 
-    a {
-        margin: 0% 2%;
+    @media screen and (max-width: 768px) {
+        width: 0px;
     }
 
     &__links {
-        width: 50%;
+        width: 70%;
         display: flex;
+        align-items: center;
+
+        @media screen and (max-width: 768px) {
+            width: 50%;
+            flex-direction: column;
+            z-index: 100;
+            position: absolute;
+            top: 80px;
+            background-color: $eggColor;
+            height: calc(100vh - 80px);
+            right: 0;
+            justify-content: space-evenly;
+            box-shadow: -1px 5px 5px 0px rgba(129, 129, 129, 0.75);
+        }
 
         &--lefts-ide {
             display: flex;
             align-items: center;
+
+            @media screen and (max-width: 768px) {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        a {
+            margin-left: 5%;
         }
     }
 }

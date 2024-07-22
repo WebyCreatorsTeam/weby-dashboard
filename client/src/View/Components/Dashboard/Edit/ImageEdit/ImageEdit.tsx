@@ -6,6 +6,9 @@ import SendIcon from '@mui/icons-material/Send';
 import { ImageEditProps } from './ImageEditInterface';
 import CloseIcon from '@mui/icons-material/Close';
 import { API_ENDPOINT } from '../../../../../utils/api-connect';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProject }) => {
     const [file, setFile] = useState<any>(null);
@@ -25,7 +28,7 @@ const ImageEdit: FC<ImageEditProps> = ({ setEditImagePop, id, oldUrl, setUrlProj
             setLoading(true);
             const data = new FormData()
             data.append("my_file", file!)
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
 
             const res = await axios.post(`${API_ENDPOINT}/dashboard/projects/replace-image-project?token=${token}&id=${id}&oldURL=${oldUrl}`, data, {
                 headers: {

@@ -8,6 +8,9 @@ import ArchiveIcon from '@mui/icons-material/Archive';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { red, yellow, blue } from '@mui/material/colors';
 import { API_ENDPOINT } from '../../../utils/api-connect';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export interface IUserCall {
     user: ICallUser
@@ -24,7 +27,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const [favorite, setFavorite] = useState<boolean>(user.favorite!)
 
     const hendleArchive = async (userId: string) => {
-        const token = sessionStorage.getItem('token')
+        const token = cookies.get('token')
         const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/archive-user?token=${token}`, {
             userId, archive: !archive, favorite: false
         })
@@ -36,7 +39,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     const hendleFavorite = async (userId: string) => {
-        const token = sessionStorage.getItem('token')
+        const token = cookies.get('token')
         const { data: { continueWork, archiveUser, favoriteUser } } = await axios.patch(`${API_ENDPOINT}/dashboard/users/favorite-user?token=${token}`, {
             userId, archive: false, favorite: !favorite
         })
@@ -51,7 +54,7 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     const deleteUser = async (userId: string) => {
         if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?")) {
             if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
-                const token = sessionStorage.getItem('token')
+                const token = cookies.get('token')
                 const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/users/delete-user?token=${token}`, { data: { userId } })
                 if (continueWork) return setUsersToCall((users: ICallUser[]) => users.filter(us => us._id !== userId))
             }
@@ -59,24 +62,35 @@ const UserCall: FC<IUserCall> = ({ user, setUsersToCall }) => {
     }
 
     return (
-        <>
+        <div className='dashboard_main__callList--users-items'>
             <p>{user.userName}</p>
             <p>{user.userPhone}</p>
             <p>{user.userEmail}</p>
             <p>{user.userHelp}</p>
-            <div onClick={() => hendleArchive(user._id)}>
+            <div
+                className='dashboard_main__callList--users-items--links'
+                onClick={() => hendleArchive(user._id)}
+            >
                 {archive ?
                     <ArchiveIcon sx={{ fontSize: iconsSize, color: blueOfArchive }} /> :
                     <ArchiveOutlinedIcon sx={{ fontSize: iconsSize, color: blueOfArchive }} />
-                }</div>
-            <div onClick={() => hendleFavorite(user._id)}>
+                }
+            </div>
+            <div
+                className='dashboard_main__callList--users-items--links'
+                onClick={() => hendleFavorite(user._id)}>
                 {favorite ?
                     <StarRateIcon sx={{ fontSize: iconsSize, color: yellowOfFavorite }} /> :
                     <StarBorderIcon sx={{ fontSize: iconsSize, color: yellowOfFavorite }} />
-                }</div>
-            <div onClick={() => deleteUser(user._id)}><DeleteForeverIcon sx={{ fontSize: iconsSize, color: red[900] }} /></div>
-        </>
+                }
+            </div>
+            <div
+                className='dashboard_main__callList--users-items--links'
+                onClick={() => deleteUser(user._id)}>
+                <DeleteForeverIcon sx={{ fontSize: iconsSize, color: red[900] }} />
+            </div>
+        </div>
     )
 }
 
-export default UserCall
+export default UserCall;

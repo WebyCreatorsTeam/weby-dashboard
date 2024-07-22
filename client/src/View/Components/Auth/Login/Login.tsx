@@ -8,11 +8,14 @@ import { useNavigate } from 'react-router-dom'
 import Logo from '../../../../images/logo-big.png'
 import { CardMedia } from '@mui/material'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
+import Cookies from 'universal-cookie';
+
 
 const Login = () => {
     const [userLoginData, setUserLoginData] = useState<IUserLoginData>({ email: "", password: "" })
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const cookies = new Cookies();
 
     const handleChangeInput = (ev: React.SyntheticEvent) => {
         let target = ev.target as HTMLInputElement;
@@ -25,7 +28,7 @@ const Login = () => {
             ev.preventDefault()
 
             const { data: { continueWork, message, token } } = await axios.post(`${API_ENDPOINT}/auth/login-admin`, { userLoginData })
-            await sessionStorage.setItem('token', token)
+            await cookies.set("token", token, { path: "/", expires: new Date(Date.now() + 1000 * 60 * 60 * 3)});
             if (continueWork) return navigate("/dashboard", { replace: true });
             if (!continueWork) return alert(message)
         } catch (error) {

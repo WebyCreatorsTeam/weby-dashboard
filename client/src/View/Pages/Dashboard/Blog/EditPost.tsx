@@ -6,6 +6,9 @@ import Tiptap from '../../../Components/Tiptap/Tiptap'
 import axios from 'axios'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import UploadFile from '../../../Components/UploadFile/UploadFile'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const EditPost = () => {
     const { post } = useLoaderData() as { post: IBlog }
@@ -21,7 +24,7 @@ const EditPost = () => {
         try {
             setLoader(true)
             if (content.length === 0) return alert('נא ללחוץ על "שמור לתצוגה" לפני השמירה')
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/update-post?token=${token}`, { title, content, draft, summerry, id: post._id, postBigImg, postSmallImg })
             if (continueWork) return navigate("/dashboard/blog", { replace: true });
         } catch (error) {
@@ -36,7 +39,7 @@ const EditPost = () => {
             if (window.confirm("האם את/ה בטוח/ה שאת/ה רוצה למחוק לקוח זה?")) {
                 if (prompt('נא להכניס מילה "תמחק"') === "תמחק") {
                     setLoader(true)
-                    const token = sessionStorage.getItem('token')
+                    const token = cookies.get('token')
                     const { data: { continueWork } } = await axios.delete(`${API_ENDPOINT}/dashboard/blog/delete-post?token=${token}`, { data: { id: post._id } })
                     if (continueWork) return navigate("/dashboard/blog", { replace: true });
                 }
@@ -55,7 +58,7 @@ const EditPost = () => {
             if (target.files && target.files[0]) {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
-                const token = sessionStorage.getItem('token')
+                const token = cookies.get('token')
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postBigImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostBigImg(url)
@@ -74,7 +77,7 @@ const EditPost = () => {
             if (target.files && target.files[0]) {
                 const imgData = new FormData()
                 imgData.append("my_file", target.files[0])
-                const token = sessionStorage.getItem('token')
+                const token = cookies.get('token')
                 const { data: { continueWork, url } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-image-post?token=${token}&oldUrl=${postSmallImg}`, imgData, { headers: { 'content-type': "mulpipart/form-data" } })
                 if (continueWork) {
                     return setPostSmallImg(url)
@@ -90,7 +93,7 @@ const EditPost = () => {
     const hendleDeletePostImage = async (img: string) => {
         try {
             setLoader(true)
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data: { continueWork } } = await axios.patch(`${API_ENDPOINT}/dashboard/blog/delete-image-post?token=${token}`, { id: post._id, postImg: img })
             // , url
             if (continueWork) return alert("תמונה נחמקה")

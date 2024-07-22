@@ -6,6 +6,9 @@ import { registerInputs } from '../inputsList'
 import Input from '../../../UI/Input/Input'
 import { API_ENDPOINT } from '../../../../utils/api-connect'
 import SEO from '../../SEO/SEO'
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const Register = () => {
     const [userRegData, setUserRegData] = useState<IUserRegData>({ userName: "", email: "", password: "", repeatPassword: "" })
@@ -21,7 +24,7 @@ const Register = () => {
         try {
             setLoading(true)
             ev.preventDefault()
-            const token = sessionStorage.getItem('token')
+            const token = cookies.get('token')
             const { data } = await axios.post(`${API_ENDPOINT}/auth/reg-admin?token=${token}`, { userRegData })
             const { continueWork, message } = data
             if (continueWork) return setMessage(data.message);
