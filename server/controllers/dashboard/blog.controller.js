@@ -1,9 +1,10 @@
-const cloudinary = require("cloudinary").v2;
 const { Post } = require("../../model/blog.model");
 const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
 const { httpCodes } = require("../../utils/httpCodes/index");
-const { getPublicId, imageUpdater } = require("./utils/file");
-// const { getPublicId, imageUpdater } = require("./projects.controller");
+const { updateImage, deleteImage } = require("./utils/editImage");
+const { imageToURI } = require("./utils/file");
+// const { imageToURI, deleteImage, updateImage } = require("./utils/file");
+// const sharp = require('sharp');
 
 exports.getBlog = async (req, res) => {
     try {
@@ -19,10 +20,26 @@ exports.getBlog = async (req, res) => {
 
 exports.addNewPost = async (req, res) => {
     try {
-        const { title, content, draft, summerry, postBigImg, postSmallImg } = req.body;
+        const image = req.file;
+        const data = req.body;
 
-        // console.log(title, content, draft, summerry, postImg)
-        const newPost = new Post({ title, content, draft, tldr: summerry, coverImg: postBigImg, smallImg: postSmallImg })
+        const bdataURI = await imageToURI(image, 540, 960)
+        const sdataURI = await imageToURI(image, 180, 320)
+
+        const bCldRes = await handleUpload(bdataURI);
+        const sCldRes = await handleUpload(sdataURI);
+
+        if (!bCldRes.secure_url) {
+            console.log(`none bCldRes.secure_url`)
+            return res.status(httpCodes.BAD_REQUEST).json({ continueWork: false, message: "שגיא" })
+        }
+
+        if (!sCldRes.secure_url) {
+            console.log(`none bCldRes.secure_url`)
+            return res.status(httpCodes.BAD_REQUEST).json({ continueWork: false, message: "שגיא" })
+        }
+
+        const newPost = new Post({ ...data, coverImg: bCldRes.secure_url, smallImg: sCldRes.secure_url })
         await newPost.save()
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
@@ -46,9 +63,8 @@ exports.getOnePost = async (req, res) => {
 
 exports.editPost = async (req, res) => {
     try {
-        const { title, content, draft, summerry, id, postBigImg, postSmallImg } = req.body;
-        // console.log(`12312`)
-        await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry, coverImg: postBigImg, smallImg: postSmallImg })
+        const { title, content, draft, summerry, id } = req.body;
+        await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry })
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
         console.log(`projects cont error editProductTexts`)
@@ -60,6 +76,11 @@ exports.editPost = async (req, res) => {
 exports.deletePost = async (req, res) => {
     try {
         const { id } = req.body;
+        const post = await Post.findById(id)
+
+        await deleteImage(post.coverImg)
+        await deleteImage(post.smallImg)
+
         await Post.findByIdAndDelete(id)
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
@@ -69,43 +90,23 @@ exports.deletePost = async (req, res) => {
     }
 }
 
-exports.saveImagePost = async (req, res) => {
+exports.changeImagePost = async (req, res) => {
     try {
-        const { oldUrl } = req.query
+        const { postId } = req.query
+        const image = req.file
 
-        if (!oldUrl) {
-            const b64 = Buffer.from(req.file.buffer).toString("base64");
-            let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-            const cldRes = await handleUpload(dataURI);
-            if (!cldRes.secure_url) {
-                console.error("project controller validation error of saveNewProject:", error.message)
-                return res.status(httpCodes.BAD_REQUEST).json({ continueWork: false, message: "שגיא" });
-            }
-            return res.status(httpCodes.OK).json({ continueWork: true, url: cldRes.secure_url })
-        }
+        const bdataURI = await imageToURI(image, 540, 960)
+        const sdataURI = await imageToURI(image, 180, 320)
 
-        const publicId = getPublicId(oldUrl)
-        const b64 = Buffer.from(req.file.buffer).toString("base64");
-        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-        const { secure_url } = await imageUpdater(publicId, dataURI)
+        const post = await Post.findById(postId)
 
-        return res.status(httpCodes.OK).json({ continueWork: true, url: secure_url })
+        const bImg = await updateImage(post.coverImg, bdataURI)
+        const sImg = await updateImage(post.smallImg, sdataURI)
+
+        await Post.findByIdAndUpdate(postId, { coverImg: bImg.secure_url, smallImg: sImg.secure_url })
+        return res.status(httpCodes.OK).json({ continueWork: true, url: bImg.secure_url })
     } catch (error) {
-        console.log(`blog cont error saveImagePost`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
-    }
-}
-
-exports.deletePostImage = async (req, res) => {
-    try {
-        const { id, postImg } = req.body
-        const publicId = getPublicId(postImg)
-        await cloudinary.uploader.destroy(`weby/${publicId}`);
-        await Post.findByIdAndUpdate(id, { img: '' })
-        return res.status(httpCodes.OK).json({ continueWork: true, url: "" })
-    } catch (error) {
-        console.log(`blog cont error saveImagePost`)
+        console.log(`projects cont error editProductTexts`)
         console.error(error);
         return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
     }

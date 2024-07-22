@@ -1,14 +1,17 @@
 require('dotenv').config()
-const express = require("express");
-const { dbconnect } = require("./dbconnect");
-const app = express();
 const PORT = process.env.PORT || 9090;
+const express = require("express");
+const app = express();
 const cookieParser = require('cookie-parser');
-const adminUser = require('./middleware/admin.user')
-const adminLogin = require('./middleware/admin.login')
 const cloudinary = require("cloudinary").v2;
 const cors = require('cors');
+const morgan = require('morgan')
+const { dbconnect } = require("./dbconnect");
+const adminUser = require('./middleware/admin.user')
+const adminLogin = require('./middleware/admin.login')
+const { NotFoundHandler, GlobalErrorHandler } = require('./utils/error-handler.mw');
 
+app.use(morgan('dev'))
 app.use(express.json());
 app.use(cookieParser());
 
@@ -37,6 +40,12 @@ app.get("/", (req, res) => {
 
 app.use('/auth', require("./router/admin/admin.route"))
 app.use('/dashboard', adminLogin, require("./router/dashboard/index.router"))
+
+// 404 handler
+app.use(NotFoundHandler)
+
+// Global Error Handler
+app.use(GlobalErrorHandler)
 
 app.listen(PORT, () => {
     console.log(`listen on http://localhost:${PORT}`);

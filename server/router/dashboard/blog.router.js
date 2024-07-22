@@ -1,16 +1,20 @@
 const router = require("express").Router();
-const { addNewPost, getBlog, getOnePost, editPost, deletePost, saveImagePost, deletePostImage } = require("../../controllers/dashboard/blog.controller");
+const {
+    addNewPost,
+    getBlog,
+    getOnePost,
+    editPost,
+    deletePost,
+    changeImagePost
+} = require("../../controllers/dashboard/blog.controller");
 const { upload } = require("../../utils/cloudinary/storage");
 
 router
-    .post("/add-new-post", addNewPost)
+    .post("/add-new-post", upload.single("my_file"), addNewPost)
     .get("/get-blog", getBlog)
     .post("/get-one-post", getOnePost)
     .patch('/update-post', editPost)
+    .patch('/change-image-post', upload.single("my_file"), changeImagePost)
     .delete('/delete-post', deletePost)
-    .post('/add-image-post', upload.single("my_file"), saveImagePost)
-    .patch('/delete-image-post', deletePostImage)
-
-
 
 module.exports = router;
