@@ -46,7 +46,7 @@ const BlogPage: FC = () => {
                                         <Link to={`/dashboard/blog/post/${bl._id}`}>
                                             המשך קריאה {'>'}
                                         </Link>
-                                        {bl.draft === false && <a href={`https://www.weby.team/blog/post/661e8813c6c334285716c1d4`}>פוסט באתר</a>}
+                                        {bl.draft === false && <a href={`https://www.weby.team/blog/post/${bl._id}`}>פוסט באתר</a>}
 
                                         <Link to={`/dashboard/blog/post/edit/${bl._id}`}>עריכת פוסט</Link>
                                     </div>
