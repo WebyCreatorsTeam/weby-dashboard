@@ -29,7 +29,7 @@ exports.registerAdmin = async (req, res, next) => {
 }
 
 // ---- Login Admin ---- //
-exports.loginAdmin = async (req, res) => {
+exports.loginAdmin = async (req, res, next) => {
     try {
         const { userLoginData: { email, password } } = req.body;
 

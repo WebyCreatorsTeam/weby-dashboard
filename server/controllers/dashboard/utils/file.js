@@ -16,10 +16,15 @@ exports.imageUpdater = async (imagePublicId, imagePath) => {
 }
 
 exports.imageToURI = async (img, height, width) => {
-    const image = await sharp(img.buffer).resize({ height: height, width: width }).webp({lossless: true, quality: 100}).toBuffer()
-    const b64 = Buffer.from(image).toString("base64")
-    const bdataURI = "data:" + img.mimetype + ";base64," + b64;
-    return bdataURI;
+    try {
+        const image = await sharp(img.buffer).resize({ height: height, width: width }).webp({ lossless: true, quality: 100 }).toBuffer()
+        const b64 = Buffer.from(image).toString("base64")
+        const bdataURI = "data:" + img.mimetype + ";base64," + b64;
+        return bdataURI;
+    } catch (error) {
+        console.log(error)
+        return error
+    }
 }
 
 // exports.deleteImage = async (image) => {

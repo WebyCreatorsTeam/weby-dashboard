@@ -2,7 +2,7 @@ const { Feedback } = require("../../model/feedback.model");
 const { Projects } = require("../../model/project.model");
 const { httpCodes } = require("../../utils/httpCodes/index");
 
-exports.saveNewFeedback = async (req, res) => {
+exports.saveNewFeedback = async (req, res, next) => {
     try {
         const { feedbackDetails: { projectId, customerName, webSiteName, customerFeedback } } = req.body
         const feedback = new Feedback({ projectId, customerName, webSiteName, customerFeedback })
@@ -17,7 +17,7 @@ exports.saveNewFeedback = async (req, res) => {
     }
 }
 
-exports.updateFeedback = async (req, res) => {
+exports.updateFeedback = async (req, res, next) => {
     try {
         const { feedbackUpdate: { customerFeedback, customerName, feedbackID } } = req.body
         await Feedback.findByIdAndUpdate(feedbackID, { customerFeedback, customerName })
@@ -27,7 +27,7 @@ exports.updateFeedback = async (req, res) => {
     }
 }
 
-exports.deleteFeedback = async (req, res) => {
+exports.deleteFeedback = async (req, res, next) => {
     try {
         const { feedbackID } = req.body
         await Feedback.findByIdAndUpdate(feedbackID, { customerFeedback: '' })
@@ -37,7 +37,7 @@ exports.deleteFeedback = async (req, res) => {
     }
 }
 
-exports.showAllFeedbacks = async (req, res) => {
+exports.showAllFeedbacks = async (req, res, next) => {
     try {
         const feedbacks = await Feedback.find({ "customerFeedback": { "$gt": 0 } })
         return res.status(httpCodes.OK).json({ continueWork: true, feedbacks })

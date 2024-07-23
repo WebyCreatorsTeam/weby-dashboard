@@ -5,7 +5,7 @@ const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
 const { httpCodes } = require("../../utils/httpCodes/index");
 const { getPublicId, imageUpdater } = require("./utils/file");
 
-exports.saveNewProject = async (req, res) => {
+exports.saveNewProject = async (req, res, next) => {
     try {
         const { name, description, urlSite, draft, customerName, customerFeedback, projectType } = req.query
 
@@ -32,7 +32,7 @@ exports.saveNewProject = async (req, res) => {
     }
 };
 
-exports.getAllProjects = async (req, res) => {
+exports.getAllProjects = async (req, res, next) => {
     try {
         const projects = await Projects.find({})
         return res.status(httpCodes.OK).json(projects)
@@ -41,7 +41,7 @@ exports.getAllProjects = async (req, res) => {
     }
 };
 
-exports.deleteProject = async (req, res) => {
+exports.deleteProject = async (req, res, next) => {
     try {
         const { id, url } = req.body
         const publicId = getPublicId(url)
@@ -54,7 +54,7 @@ exports.deleteProject = async (req, res) => {
     }
 };
 
-exports.showProjectToUpdate = async (req, res) => {
+exports.showProjectToUpdate = async (req, res, next) => {
     try {
         const { id } = req.body
         const projectOne = await Projects.findById(id)
@@ -68,7 +68,7 @@ exports.showProjectToUpdate = async (req, res) => {
     }
 }
 
-exports.hendleReplace = async (req, res) => {
+exports.hendleReplace = async (req, res, next) => {
     try {
         const { id, oldURL } = req.query
         const publicId = getPublicId(oldURL)
@@ -83,7 +83,7 @@ exports.hendleReplace = async (req, res) => {
     }
 }
 
-exports.editProductTexts = async (req, res) => {
+exports.editProductTexts = async (req, res, next) => {
     try {
         const { textUpdate: { name, description, urlSite, projectType }, id } = req.body
         await Projects.findByIdAndUpdate(id, { name, description, urlSite, projectType })
@@ -93,7 +93,7 @@ exports.editProductTexts = async (req, res) => {
     }
 }
 
-exports.saveAsDraftorNotToBe = async (req, res) => {
+exports.saveAsDraftorNotToBe = async (req, res, next) => {
     try {
         const { draft, id } = req.body
         await Projects.findByIdAndUpdate(id, { draft })

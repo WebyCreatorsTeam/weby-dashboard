@@ -5,10 +5,10 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const getPost = async (id: string) => {
+const getPost = async (title: string) => {
     try {
         const token = cookies.get('token')
-        const { data: { continueWork, post } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/get-one-post?token=${token}`, { id })
+        const { data: { continueWork, post } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/get-one-post?token=${token}`, { title })
         if (continueWork) return post
     } catch (error) {
         alert(error)
@@ -16,8 +16,9 @@ const getPost = async (id: string) => {
 }
 
 export const postLoader = async ({ params }: any) => {
-    const { id } = params
+    const { title } = params
+    console.log(title)
     return defer({
-        post: await getPost(id)
+        post: await getPost(title)
     })
 }

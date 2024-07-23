@@ -4,7 +4,7 @@ const { httpCodes } = require("../../utils/httpCodes/index");
 const { updateImage, deleteImage } = require("./utils/editImage");
 const { imageToURI } = require("./utils/file");
 
-exports.getBlog = async (req, res) => {
+exports.getBlog = async (req, res, next) => {
     try {
         const blogs = await Post.find({})
         const blog = blogs.map(bl => ({ ...bl._doc, content: bl.content.replace(/(<([^>]+)>)/gi, "").slice(0, 80) }))
@@ -14,7 +14,7 @@ exports.getBlog = async (req, res) => {
     }
 }
 
-exports.addNewPost = async (req, res) => {
+exports.addNewPost = async (req, res, next) => {
     try {
         const image = req.file;
         const data = req.body;
@@ -43,17 +43,18 @@ exports.addNewPost = async (req, res) => {
     }
 };
 
-exports.getOnePost = async (req, res) => {
+exports.getOnePost = async (req, res, next) => {
     try {
-        const { id } = req.body;
-        const post = await Post.findById(id)
+        const { title } = req.body;
+        const regex = new RegExp(title.replaceAll("-", " "), 'i')
+        const post = await Post.findOne({ title: { $regex: regex } })
         return res.status(httpCodes.OK).json({ continueWork: true, post })
     } catch (error) {
         next()
     }
 };
 
-exports.editPost = async (req, res) => {
+exports.editPost = async (req, res, next) => {
     try {
         const { title, content, draft, summerry, id } = req.body;
         await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry })
@@ -63,7 +64,7 @@ exports.editPost = async (req, res) => {
     }
 }
 
-exports.deletePost = async (req, res) => {
+exports.deletePost = async (req, res, next) => {
     try {
         const { id } = req.body;
         const post = await Post.findById(id)
@@ -78,7 +79,7 @@ exports.deletePost = async (req, res) => {
     }
 }
 
-exports.changeImagePost = async (req, res) => {
+exports.changeImagePost = async (req, res, next) => {
     try {
         const { postId } = req.query
         const image = req.file

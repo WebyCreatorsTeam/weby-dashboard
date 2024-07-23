@@ -41,8 +41,8 @@ const RouterPage = () => {
                     <Route path="feedbacks" element={< FeedbacksPage />} loader={feedbackLoader} />
                     <Route path="blog" element={< BlogPage />} loader={blogLoader} />
                     <Route path="blog/add-new-blog" element={< AddNewBlog />} />
-                    <Route path="blog/post/:id" element={< PostPage />} loader={postLoader} />
-                    <Route path="blog/post/edit/:id" element={< EditPost />} loader={postLoader} />
+                    <Route path="blog/post/:title" element={< PostPage />} loader={postLoader} />
+                    <Route path="blog/post/edit/:title" element={< EditPost />} loader={postLoader} />
                 </Route>
             </Route>
         )

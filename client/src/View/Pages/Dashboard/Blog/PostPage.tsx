@@ -5,12 +5,12 @@ import SEO from '../../../Components/SEO/SEO'
 
 const PostPage = () => {
     const { post } = useLoaderData() as { post: IBlog }
-
+    console.log(post)
     return (
         <Suspense fallback={<h1 className='no_data_text'>Loading...</h1>}>
             <Await resolve={post}>
-                <SEO title={post.title} />
-                <div>
+            <SEO title={post.title} />
+            <div>
                     <p>{post.draft ? "שמור כטיוטה" : "מוצג באתר"}</p>
                     <img src={post.coverImg} alt="post" />
                     <div>

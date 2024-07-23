@@ -2,7 +2,7 @@ const { httpCodes } = require("../../utils/httpCodes/index");
 const { User } = require('../../model/user.model');
 
 /* Get all customers details*/
-exports.getAllUsersDetails = async (req, res) => {
+exports.getAllUsersDetails = async (req, res, next) => {
     try {
         const usersCalls = await User.find({})
         return res.status(httpCodes.OK).json({ continueWork: true, usersCalls })
@@ -12,7 +12,7 @@ exports.getAllUsersDetails = async (req, res) => {
 };
 
 /* Archive customer */
-exports.arhiveUser = async (req, res) => {
+exports.arhiveUser = async (req, res, next) => {
     try {
         const { userId, archive, favorite } = req.body
         await User.findByIdAndUpdate(userId, { $set: { archive, favorite } })
@@ -23,7 +23,7 @@ exports.arhiveUser = async (req, res) => {
 }
 
 /* Save as favorite customer */
-exports.favoriteUser = async (req, res) => {
+exports.favoriteUser = async (req, res, next) => {
     try {
         const { userId, favorite, archive } = req.body
         await User.findByIdAndUpdate(userId, { $set: { archive, favorite } })
@@ -34,7 +34,7 @@ exports.favoriteUser = async (req, res) => {
 }
 
 /* Delete customer */
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res, next) => {
     try {
         const { userId } = req.body
         await User.findByIdAndDelete(userId)

@@ -38,17 +38,17 @@ const BlogPage: FC = () => {
                                 <div key={bl._id} className='blog__posts-section--post-item'>
                                     <p style={{ color: bl.draft ? "red" : "green" }}>{bl.draft ? "שמור כטיוטה" : "פורסם באתר"}</p>
                                     <img src={bl.smallImg} alt={`איור פוסט ${bl.title} `} />
-                                    <Link to={`/dashboard/blog/post/${bl._id}`}>
+                                    <Link to={`/dashboard/blog/post/${bl.title.replace(/ /g, "-")}`}>
                                         <h2>{bl.title}</h2>
                                     </Link>
                                     <div >{bl.content}...</div>
                                     <div className='blog__posts-section--actionBtns'>
-                                        <Link to={`/dashboard/blog/post/${bl._id}`}>
+                                        <Link to={`/dashboard/blog/post/${bl.title.replace(/ /g, "-")}`}>
                                             המשך קריאה {'>'}
                                         </Link>
                                         {bl.draft === false && <a href={`https://www.weby.team/blog/post/${bl._id}`}>פוסט באתר</a>}
 
-                                        <Link to={`/dashboard/blog/post/edit/${bl._id}`}>עריכת פוסט</Link>
+                                        <Link to={`/dashboard/blog/post/edit/${bl.title.replace(/ /g, "-")}`}>עריכת פוסט</Link>
                                     </div>
                                 </div>
                             ))
