@@ -28,9 +28,7 @@ exports.saveNewProject = async (req, res) => {
 
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`projects cont error saveNewProject`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 
@@ -39,9 +37,7 @@ exports.getAllProjects = async (req, res) => {
         const projects = await Projects.find({})
         return res.status(httpCodes.OK).json(projects)
     } catch (error) {
-        console.log(`projects cont error getAllProjects`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 
@@ -54,9 +50,7 @@ exports.deleteProject = async (req, res) => {
         await Projects.findByIdAndDelete(id)
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`projects cont error deleteProject`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 
@@ -70,9 +64,7 @@ exports.showProjectToUpdate = async (req, res) => {
 
         return res.status(httpCodes.OK).json(project)
     } catch (error) {
-        console.log(`projects cont error showProductToUpdate`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -87,9 +79,7 @@ exports.hendleReplace = async (req, res) => {
         await Projects.findByIdAndUpdate(id, { urlImage: secure_url })
         return res.status(httpCodes.OK).json({ continueWork: true, secure_url })
     } catch (error) {
-        console.log(`projects cont error hendleReplace`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -99,9 +89,7 @@ exports.editProductTexts = async (req, res) => {
         await Projects.findByIdAndUpdate(id, { name, description, urlSite, projectType })
         return res.status(httpCodes.OK).json({ continueWork: true, texts: { name, description, urlSite, projectType } })
     } catch (error) {
-        console.log(`projects cont error editProductTexts`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -111,8 +99,6 @@ exports.saveAsDraftorNotToBe = async (req, res) => {
         await Projects.findByIdAndUpdate(id, { draft })
         return res.status(httpCodes.OK).json({ continueWork: true, message: "הפרויקט עודכן" })
     } catch (error) {
-        console.log(`projects cont error editProductTexts`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }

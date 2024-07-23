@@ -3,8 +3,6 @@ const { handleUpload } = require("../../utils/cloudinary/uploadFunc");
 const { httpCodes } = require("../../utils/httpCodes/index");
 const { updateImage, deleteImage } = require("./utils/editImage");
 const { imageToURI } = require("./utils/file");
-// const { imageToURI, deleteImage, updateImage } = require("./utils/file");
-// const sharp = require('sharp');
 
 exports.getBlog = async (req, res) => {
     try {
@@ -12,9 +10,7 @@ exports.getBlog = async (req, res) => {
         const blog = blogs.map(bl => ({ ...bl._doc, content: bl.content.replace(/(<([^>]+)>)/gi, "").slice(0, 80) }))
         return res.status(httpCodes.OK).json({ continueWork: true, blog })
     } catch (error) {
-        console.log(`blog cont error addNewPost`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -43,9 +39,7 @@ exports.addNewPost = async (req, res) => {
         await newPost.save()
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`blog cont error addNewPost`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 
@@ -55,9 +49,7 @@ exports.getOnePost = async (req, res) => {
         const post = await Post.findById(id)
         return res.status(httpCodes.OK).json({ continueWork: true, post })
     } catch (error) {
-        console.log(`blog cont error addNewPost`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 
@@ -67,9 +59,7 @@ exports.editPost = async (req, res) => {
         await Post.findByIdAndUpdate(id, { title, content, draft, tldr: summerry })
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`projects cont error editProductTexts`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -84,9 +74,7 @@ exports.deletePost = async (req, res) => {
         await Post.findByIdAndDelete(id)
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`projects cont error editProductTexts`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -106,8 +94,6 @@ exports.changeImagePost = async (req, res) => {
         await Post.findByIdAndUpdate(postId, { coverImg: bImg.secure_url, smallImg: sImg.secure_url })
         return res.status(httpCodes.OK).json({ continueWork: true, url: bImg.secure_url })
     } catch (error) {
-        console.log(`projects cont error editProductTexts`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }

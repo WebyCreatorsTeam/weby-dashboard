@@ -13,9 +13,7 @@ exports.saveNewFeedback = async (req, res) => {
 
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`feedback cont error saveNewFeedback`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -25,9 +23,7 @@ exports.updateFeedback = async (req, res) => {
         await Feedback.findByIdAndUpdate(feedbackID, { customerFeedback, customerName })
         return res.status(httpCodes.OK).json({ continueWork: true, customerFeedback, customerName, feedbackID, message: "פידבק עודכן" })
     } catch (error) {
-        console.log(`feedback cont error updateFeedback`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -37,9 +33,7 @@ exports.deleteFeedback = async (req, res) => {
         await Feedback.findByIdAndUpdate(feedbackID, { customerFeedback: '' })
         return res.status(httpCodes.OK).json({ continueWork: true })
     } catch (error) {
-        console.log(`feedback cont error deleteFeedback`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -48,8 +42,6 @@ exports.showAllFeedbacks = async (req, res) => {
         const feedbacks = await Feedback.find({ "customerFeedback": { "$gt": 0 } })
         return res.status(httpCodes.OK).json({ continueWork: true, feedbacks })
     } catch (error) {
-        console.log(`feedback cont error showAllFeedbacks`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }

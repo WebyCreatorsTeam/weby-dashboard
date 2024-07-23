@@ -16,8 +16,6 @@ module.exports = (req, res, next) => {
 
         return next() //if the user logged and role admin continue
     } catch (error) {
-        console.log(`user.role.js error userRoleMiddlware`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }

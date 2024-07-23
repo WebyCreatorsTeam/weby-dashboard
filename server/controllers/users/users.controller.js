@@ -6,7 +6,7 @@ const { Login } = require("../../model/login.model")
 const { httpCodes } = require("../../utils/httpCodes");
 
 // ---- Register Admin ---- //
-exports.registerAdmin = async (req, res) => {
+exports.registerAdmin = async (req, res, next) => {
     try {
         const { userRegData: { userName, email, password, repeatPassword } } = req.body
 
@@ -24,9 +24,7 @@ exports.registerAdmin = async (req, res) => {
 
         return res.status(httpCodes.OK).json({ continueWork: true, message: "משתמש חדש נרשם" })
     } catch (error) {
-        console.log(`user/admin cont error registerAdmin`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
 
@@ -66,13 +64,10 @@ exports.loginAdmin = async (req, res) => {
 
         const cookiesData = { userID: existAdmin._id };
         const token = jwt.encode(cookiesData, process.env.SECRET);
-        // res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 3, httpOnly: true, })
 
         return res.status(httpCodes.OK).json({ continueWork: true, token })
     } catch (error) {
-        console.log(`user/admin cont error loginAdmin`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).json({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 };
 

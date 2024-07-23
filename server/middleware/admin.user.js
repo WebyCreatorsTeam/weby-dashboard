@@ -1,5 +1,4 @@
 const jwt = require('jwt-simple');
-const { httpCodes } = require('../utils/httpCodes');
 const { Admin } = require('../model/admin.model');
 
 module.exports = async (req, res, next) => {
@@ -15,8 +14,6 @@ module.exports = async (req, res, next) => {
 
         return next()
     } catch (error) {
-        console.log(`admin.user.js error userLoginMiddlware`)
-        console.error(error);
-        return res.status(httpCodes.SERVER_ERROR).send({ continueWork: false, message: "שגיא בסרבר, נא לנסות שנית" })
+        next()
     }
 }
