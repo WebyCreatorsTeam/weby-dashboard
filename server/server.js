@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' ? "https://www.weby-dashboard.site" : "http://localhost:3000", 
-    methods: ["POST", "GET", "DELETE", "PATCH"],
+    methods: ["POST", "GET", "DELETE", "PATCH"]
 }))
 
 dbconnect()
