@@ -20,7 +20,7 @@ exports.addNewPost = async (req, res, next) => {
         const data = req.body;
 
         const bdataURI = await imageToURI(image, 540, 960)
-        const sdataURI = await imageToURI(image, 180, 320)
+        const sdataURI = await imageToURI(image, 281, 500)
 
         const bCldRes = await handleUpload(bdataURI);
         const sCldRes = await handleUpload(sdataURI);
@@ -85,7 +85,7 @@ exports.changeImagePost = async (req, res, next) => {
         const image = req.file
 
         const bdataURI = await imageToURI(image, 540, 960)
-        const sdataURI = await imageToURI(image, 180, 320)
+        const sdataURI = await imageToURI(image, 281, 500)
 
         const post = await Post.findById(postId)
 
