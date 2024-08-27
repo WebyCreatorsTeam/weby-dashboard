@@ -29,7 +29,9 @@ const AddNewBlog: FC = () => {
             data.append("content", content)
             data.append("draft", String(draft))
             if (content === 'לחצ/י על "שמור לתצוגה" על מנת לראות תצוגה מקדימה' || content.length === 0) return alert('נא ללחוץ על "שמור לתצוגה" לפני השמירה')
-            if (!image) return alert("נא לבחור תמונה")
+            if (!draft) {
+                if (!image) return alert("נא לבחור תמונה")
+            }
             const token = cookies.get('token')
             const { data: { continueWork } } = await axios.post(`${API_ENDPOINT}/dashboard/blog/add-new-post?token=${token}`, data, {
                 headers: {
@@ -63,7 +65,7 @@ const AddNewBlog: FC = () => {
         <div className='add-post'>
             <SEO title={"הוספת פוסט"} />
             <div className='add-post__editing'>
-            <h1>הוספת פוסט</h1>
+                <h1>הוספת פוסט</h1>
                 <h2>בחירת תמונה</h2>
                 <UploadFile loader={loader}
                     handleSelectFile={handleSelectImage}
