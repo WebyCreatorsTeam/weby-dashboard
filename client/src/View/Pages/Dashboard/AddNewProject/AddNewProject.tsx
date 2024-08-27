@@ -44,11 +44,9 @@ const AddNewProject: FC = () => {
             ev.preventDefault()
             setLoading(true);
 
-            if (!draft) {
-                if (!file) {
-                    alert("חייב להוסיף תמונה")
-                    return setLoading(false);
-                }
+            if (!file) {
+                alert("חייב להוסיף תמונה")
+                return setLoading(false);
             }
 
             const data = new FormData()
